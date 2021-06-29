@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package messaging;
+
+message IMU { 
+    repeated double quaternion=1;
+    repeated double rpy=2;
+    repeated double gyro=3;
+    double time=4;
+}
+
+message PORTLIST { 
+    enum TOPICS {
+        HEADER = 0; 
+        IMU = 5000;
+    }
+}

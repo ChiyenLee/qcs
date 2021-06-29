@@ -1,0 +1,26 @@
+This is a simple library to do zmq messaing, logging, and playback for C++, Julia, and Python 
+
+ZMQ Installation 
+1. Install libsodium https://doc.libsodium.org/installation
+2. Maybe install autoconf. If not, just download a archive version of Zmq 
+        sudo apt install autoconf 
+3. Download latest zmq, and install it (http://wiki.zeromq.org/intro:get-the-software)
+    git clone git://github.com/zeromq/libzmq.git cd libzmq ./autogen.sh ./configure –with-libsodium && make sudo make install sudo ldconfig cd ../
+4. Install language specific bindings 
+    Download and build cppzmq https://github.com/zeromq/cppzmq
+    Download pyzmq source from here https://pypi.org/project/pyzmq/#files
+        install with pip3 install /path/to/package 
+    Install Julia zmq for your Julia package 
+
+Protobuf installation 
+1. https://github.com/protocolbuffers/protobuf/blob/master/src/README.md
+2. Looks like there is a separate thing for julia 
+3. Install protobuf for python 
+4. Install protobuf for Julia. Pkg.add("Protobuf")
+    # Note you must have a Protobuf installed in the 
+    # default environment as well. Otherwise it won't work 
+
+Install supervisord
+
+Generating Protobuf message in Julia
+https://github.com/JuliaIO/ProtoBuf.jl/blob/master/PROTOC.md
