@@ -53,5 +53,6 @@ void ViconDriverZMQ::vicon_callback(vicon_result_t res) {
     vicon_.SerializeToString(&msg_str_);
     memcpy((void *) msg_.data(), msg_str_.c_str(), msg_str_.size());
     socket_.send(msg_);
+    printf("%d \n", msg_str_.size());
     msg_.rebuild(msg_str_.size());
 }

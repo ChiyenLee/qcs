@@ -24,3 +24,5 @@ Install supervisord
 
 Generating Protobuf message in Julia
 https://github.com/JuliaIO/ProtoBuf.jl/blob/master/PROTOC.md
+
+sudo service network-manager restart

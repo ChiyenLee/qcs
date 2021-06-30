@@ -12,12 +12,12 @@ message IMU {
 message VICON {
     repeated double position=1;
     repeated double quaternion=2;
-    double time=4;
+    double time=3;
 }
 
-message PORTLIST { 
-    enum TOPICS {
-        HEADER = 0; 
-        IMU = 5000;
+message PROPERTY { 
+    enum NAME {
+        IMU = 0;
+        VICON = 1;
     }
 }

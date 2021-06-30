@@ -19,25 +19,25 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"B\n\x03IMU\x12\x12\n\nquaternion\x18\x01 \x03(\x01\x12\x0b\n\x03rpy\x18\x02 \x03(\x01\x12\x0c\n\x04gyro\x18\x03 \x03(\x01\x12\x0c\n\x04time\x18\x04 \x01(\x01\";\n\x05VICON\x12\x10\n\x08position\x18\x01 \x03(\x01\x12\x12\n\nquaternion\x18\x02 \x03(\x01\x12\x0c\n\x04time\x18\x04 \x01(\x01\"*\n\x08PORTLIST\"\x1e\n\x06TOPICS\x12\n\n\x06HEADER\x10\x00\x12\x08\n\x03IMU\x10\x88\'b\x06proto3'
+  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"B\n\x03IMU\x12\x12\n\nquaternion\x18\x01 \x03(\x01\x12\x0b\n\x03rpy\x18\x02 \x03(\x01\x12\x0c\n\x04gyro\x18\x03 \x03(\x01\x12\x0c\n\x04time\x18\x04 \x01(\x01\";\n\x05VICON\x12\x10\n\x08position\x18\x01 \x03(\x01\x12\x12\n\nquaternion\x18\x02 \x03(\x01\x12\x0c\n\x04time\x18\x03 \x01(\x01\"&\n\x08PROPERTY\"\x1a\n\x04NAME\x12\x07\n\x03IMU\x10\x00\x12\t\n\x05VICON\x10\x01\x62\x06proto3'
 )
 
 
 
-_PORTLIST_TOPICS = _descriptor.EnumDescriptor(
-  name='TOPICS',
-  full_name='messaging.PORTLIST.TOPICS',
+_PROPERTY_NAME = _descriptor.EnumDescriptor(
+  name='NAME',
+  full_name='messaging.PROPERTY.NAME',
   filename=None,
   file=DESCRIPTOR,
   create_key=_descriptor._internal_create_key,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='HEADER', index=0, number=0,
+      name='IMU', index=0, number=0,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
     _descriptor.EnumValueDescriptor(
-      name='IMU', index=1, number=5000,
+      name='VICON', index=1, number=1,
       serialized_options=None,
       type=None,
       create_key=_descriptor._internal_create_key),
@@ -45,9 +45,9 @@ _PORTLIST_TOPICS = _descriptor.EnumDescriptor(
   containing_type=None,
   serialized_options=None,
   serialized_start=169,
-  serialized_end=199,
+  serialized_end=195,
 )
-_sym_db.RegisterEnumDescriptor(_PORTLIST_TOPICS)
+_sym_db.RegisterEnumDescriptor(_PROPERTY_NAME)
 
 
 _IMU = _descriptor.Descriptor(
@@ -127,7 +127,7 @@ _VICON = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='time', full_name='messaging.VICON.time', index=2,
-      number=4, type=1, cpp_type=5, label=1,
+      number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -149,9 +149,9 @@ _VICON = _descriptor.Descriptor(
 )
 
 
-_PORTLIST = _descriptor.Descriptor(
-  name='PORTLIST',
-  full_name='messaging.PORTLIST',
+_PROPERTY = _descriptor.Descriptor(
+  name='PROPERTY',
+  full_name='messaging.PROPERTY',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -162,7 +162,7 @@ _PORTLIST = _descriptor.Descriptor(
   ],
   nested_types=[],
   enum_types=[
-    _PORTLIST_TOPICS,
+    _PROPERTY_NAME,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -171,13 +171,13 @@ _PORTLIST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=157,
-  serialized_end=199,
+  serialized_end=195,
 )
 
-_PORTLIST_TOPICS.containing_type = _PORTLIST
+_PROPERTY_NAME.containing_type = _PROPERTY
 DESCRIPTOR.message_types_by_name['IMU'] = _IMU
 DESCRIPTOR.message_types_by_name['VICON'] = _VICON
-DESCRIPTOR.message_types_by_name['PORTLIST'] = _PORTLIST
+DESCRIPTOR.message_types_by_name['PROPERTY'] = _PROPERTY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 IMU = _reflection.GeneratedProtocolMessageType('IMU', (_message.Message,), {
@@ -194,12 +194,12 @@ VICON = _reflection.GeneratedProtocolMessageType('VICON', (_message.Message,), {
   })
 _sym_db.RegisterMessage(VICON)
 
-PORTLIST = _reflection.GeneratedProtocolMessageType('PORTLIST', (_message.Message,), {
-  'DESCRIPTOR' : _PORTLIST,
+PROPERTY = _reflection.GeneratedProtocolMessageType('PROPERTY', (_message.Message,), {
+  'DESCRIPTOR' : _PROPERTY,
   '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.PORTLIST)
+  # @@protoc_insertion_point(class_scope:messaging.PROPERTY)
   })
-_sym_db.RegisterMessage(PORTLIST)
+_sym_db.RegisterMessage(PROPERTY)
 
 
 # @@protoc_insertion_point(module_scope)
