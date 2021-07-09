@@ -7,7 +7,15 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(cppzmq REQUIRED)
 find_package(Protobuf REQUIRED)
 
-add_subdirectory(extern/simple_vicon)
+# add_subdirectory(extern/simple_vicon)
+add_subdirectory(extern/simple_vicon/extern/vicon-datastream-sdk)
+add_library(vicon_driver
+  extern/simple_vicon/src/ViconDriver.cpp
+)
+target_include_directories(vicon_driver PUBLIC extern/simple_vicon/include ${catkin_INCLUDE_DIRS})
+target_link_libraries(vicon_driver PUBLIC
+  ViconDataStreamSDK_CPP
+)
 
 set(HEADERS proto/message.pb.h proto/message.pb.cc)
 

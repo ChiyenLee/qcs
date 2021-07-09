@@ -17,99 +17,133 @@
 
 PROTOBUF_PRAGMA_INIT_SEG
 namespace messaging {
-constexpr IMU::IMU(
+constexpr IMU_msg::IMU_msg(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : quaternion_()
-  , rpy_()
-  , gyro_()
+  : acceleration_(nullptr)
+  , gyroscope_(nullptr)
   , time_(0){}
-struct IMUDefaultTypeInternal {
-  constexpr IMUDefaultTypeInternal()
+struct IMU_msgDefaultTypeInternal {
+  constexpr IMU_msgDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~IMUDefaultTypeInternal() {}
+  ~IMU_msgDefaultTypeInternal() {}
   union {
-    IMU _instance;
+    IMU_msg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT IMUDefaultTypeInternal _IMU_default_instance_;
-constexpr VICON::VICON(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT IMU_msgDefaultTypeInternal _IMU_msg_default_instance_;
+constexpr Vicon_msg::Vicon_msg(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : position_()
-  , quaternion_()
+  : position_(nullptr)
+  , quaternion_(nullptr)
   , time_(0){}
-struct VICONDefaultTypeInternal {
-  constexpr VICONDefaultTypeInternal()
+struct Vicon_msgDefaultTypeInternal {
+  constexpr Vicon_msgDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~VICONDefaultTypeInternal() {}
+  ~Vicon_msgDefaultTypeInternal() {}
   union {
-    VICON _instance;
+    Vicon_msg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT VICONDefaultTypeInternal _VICON_default_instance_;
-constexpr PORTLIST::PORTLIST(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized){}
-struct PORTLISTDefaultTypeInternal {
-  constexpr PORTLISTDefaultTypeInternal()
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Vicon_msgDefaultTypeInternal _Vicon_msg_default_instance_;
+constexpr Vector3_msg::Vector3_msg(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : x_(0)
+  , y_(0)
+  , z_(0){}
+struct Vector3_msgDefaultTypeInternal {
+  constexpr Vector3_msgDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~PORTLISTDefaultTypeInternal() {}
+  ~Vector3_msgDefaultTypeInternal() {}
   union {
-    PORTLIST _instance;
+    Vector3_msg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PORTLISTDefaultTypeInternal _PORTLIST_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Vector3_msgDefaultTypeInternal _Vector3_msg_default_instance_;
+constexpr Quaternion_msg::Quaternion_msg(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : w_(0)
+  , x_(0)
+  , y_(0)
+  , z_(0){}
+struct Quaternion_msgDefaultTypeInternal {
+  constexpr Quaternion_msgDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~Quaternion_msgDefaultTypeInternal() {}
+  union {
+    Quaternion_msg _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Quaternion_msgDefaultTypeInternal _Quaternion_msg_default_instance_;
 }  // namespace messaging
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_message_2eproto[3];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_message_2eproto[1];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_message_2eproto[4];
+static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_message_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_message_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::messaging::IMU, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::messaging::IMU_msg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::messaging::IMU, quaternion_),
-  PROTOBUF_FIELD_OFFSET(::messaging::IMU, rpy_),
-  PROTOBUF_FIELD_OFFSET(::messaging::IMU, gyro_),
-  PROTOBUF_FIELD_OFFSET(::messaging::IMU, time_),
+  PROTOBUF_FIELD_OFFSET(::messaging::IMU_msg, acceleration_),
+  PROTOBUF_FIELD_OFFSET(::messaging::IMU_msg, gyroscope_),
+  PROTOBUF_FIELD_OFFSET(::messaging::IMU_msg, time_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::messaging::VICON, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vicon_msg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::messaging::VICON, position_),
-  PROTOBUF_FIELD_OFFSET(::messaging::VICON, quaternion_),
-  PROTOBUF_FIELD_OFFSET(::messaging::VICON, time_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vicon_msg, position_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vicon_msg, quaternion_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vicon_msg, time_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::messaging::PORTLIST, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vector3_msg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::messaging::Vector3_msg, x_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vector3_msg, y_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Vector3_msg, z_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, w_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, x_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, y_),
+  PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, z_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::messaging::IMU)},
-  { 9, -1, sizeof(::messaging::VICON)},
-  { 17, -1, sizeof(::messaging::PORTLIST)},
+  { 0, -1, sizeof(::messaging::IMU_msg)},
+  { 8, -1, sizeof(::messaging::Vicon_msg)},
+  { 16, -1, sizeof(::messaging::Vector3_msg)},
+  { 24, -1, sizeof(::messaging::Quaternion_msg)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_IMU_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_VICON_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_PORTLIST_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_IMU_msg_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_Vicon_msg_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_Vector3_msg_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_Quaternion_msg_default_instance_),
 };
 
 const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rmessage.proto\022\tmessaging\"B\n\003IMU\022\022\n\nqua"
-  "ternion\030\001 \003(\001\022\013\n\003rpy\030\002 \003(\001\022\014\n\004gyro\030\003 \003(\001"
-  "\022\014\n\004time\030\004 \001(\001\";\n\005VICON\022\020\n\010position\030\001 \003("
-  "\001\022\022\n\nquaternion\030\002 \003(\001\022\014\n\004time\030\004 \001(\001\"*\n\010P"
-  "ORTLIST\"\036\n\006TOPICS\022\n\n\006HEADER\020\000\022\010\n\003IMU\020\210\'b"
-  "\006proto3"
+  "\n\rmessage.proto\022\tmessaging\"p\n\007IMU_msg\022,\n"
+  "\014acceleration\030\001 \001(\0132\026.messaging.Vector3_"
+  "msg\022)\n\tgyroscope\030\002 \001(\0132\026.messaging.Vecto"
+  "r3_msg\022\014\n\004time\030\003 \001(\001\"r\n\tVicon_msg\022(\n\010pos"
+  "ition\030\001 \001(\0132\026.messaging.Vector3_msg\022-\n\nq"
+  "uaternion\030\002 \001(\0132\031.messaging.Quaternion_m"
+  "sg\022\014\n\004time\030\003 \001(\001\".\n\013Vector3_msg\022\t\n\001x\030\001 \001"
+  "(\001\022\t\n\001y\030\002 \001(\001\022\t\n\001z\030\003 \001(\001\"<\n\016Quaternion_m"
+  "sg\022\t\n\001w\030\001 \001(\001\022\t\n\001x\030\002 \001(\001\022\t\n\001y\030\003 \001(\001\022\t\n\001z"
+  "\030\004 \001(\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_message_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_message_2eproto = {
-  false, false, 207, descriptor_table_protodef_message_2eproto, "message.proto", 
-  &descriptor_table_message_2eproto_once, nullptr, 0, 3,
+  false, false, 374, descriptor_table_protodef_message_2eproto, "message.proto", 
+  &descriptor_table_message_2eproto_once, nullptr, 0, 4,
   schemas, file_default_instances, TableStruct_message_2eproto::offsets,
   file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto, file_level_service_descriptors_message_2eproto,
 };
@@ -120,129 +154,116 @@ PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_message_2eproto(&descriptor_table_message_2eproto);
 namespace messaging {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PORTLIST_TOPICS_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_message_2eproto);
-  return file_level_enum_descriptors_message_2eproto[0];
-}
-bool PORTLIST_TOPICS_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 5000:
-      return true;
-    default:
-      return false;
-  }
-}
-
-#if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
-constexpr PORTLIST_TOPICS PORTLIST::HEADER;
-constexpr PORTLIST_TOPICS PORTLIST::IMU;
-constexpr PORTLIST_TOPICS PORTLIST::TOPICS_MIN;
-constexpr PORTLIST_TOPICS PORTLIST::TOPICS_MAX;
-constexpr int PORTLIST::TOPICS_ARRAYSIZE;
-#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
 
 // ===================================================================
 
-class IMU::_Internal {
+class IMU_msg::_Internal {
  public:
+  static const ::messaging::Vector3_msg& acceleration(const IMU_msg* msg);
+  static const ::messaging::Vector3_msg& gyroscope(const IMU_msg* msg);
 };
 
-IMU::IMU(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  quaternion_(arena),
-  rpy_(arena),
-  gyro_(arena) {
+const ::messaging::Vector3_msg&
+IMU_msg::_Internal::acceleration(const IMU_msg* msg) {
+  return *msg->acceleration_;
+}
+const ::messaging::Vector3_msg&
+IMU_msg::_Internal::gyroscope(const IMU_msg* msg) {
+  return *msg->gyroscope_;
+}
+IMU_msg::IMU_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:messaging.IMU)
+  // @@protoc_insertion_point(arena_constructor:messaging.IMU_msg)
 }
-IMU::IMU(const IMU& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      quaternion_(from.quaternion_),
-      rpy_(from.rpy_),
-      gyro_(from.gyro_) {
+IMU_msg::IMU_msg(const IMU_msg& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_acceleration()) {
+    acceleration_ = new ::messaging::Vector3_msg(*from.acceleration_);
+  } else {
+    acceleration_ = nullptr;
+  }
+  if (from._internal_has_gyroscope()) {
+    gyroscope_ = new ::messaging::Vector3_msg(*from.gyroscope_);
+  } else {
+    gyroscope_ = nullptr;
+  }
   time_ = from.time_;
-  // @@protoc_insertion_point(copy_constructor:messaging.IMU)
+  // @@protoc_insertion_point(copy_constructor:messaging.IMU_msg)
 }
 
-void IMU::SharedCtor() {
-time_ = 0;
+void IMU_msg::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&acceleration_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&time_) -
+    reinterpret_cast<char*>(&acceleration_)) + sizeof(time_));
 }
 
-IMU::~IMU() {
-  // @@protoc_insertion_point(destructor:messaging.IMU)
+IMU_msg::~IMU_msg() {
+  // @@protoc_insertion_point(destructor:messaging.IMU_msg)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void IMU::SharedDtor() {
+void IMU_msg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete acceleration_;
+  if (this != internal_default_instance()) delete gyroscope_;
 }
 
-void IMU::ArenaDtor(void* object) {
-  IMU* _this = reinterpret_cast< IMU* >(object);
+void IMU_msg::ArenaDtor(void* object) {
+  IMU_msg* _this = reinterpret_cast< IMU_msg* >(object);
   (void)_this;
 }
-void IMU::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void IMU_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void IMU::SetCachedSize(int size) const {
+void IMU_msg::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void IMU::Clear() {
-// @@protoc_insertion_point(message_clear_start:messaging.IMU)
+void IMU_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.IMU_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  quaternion_.Clear();
-  rpy_.Clear();
-  gyro_.Clear();
+  if (GetArenaForAllocation() == nullptr && acceleration_ != nullptr) {
+    delete acceleration_;
+  }
+  acceleration_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && gyroscope_ != nullptr) {
+    delete gyroscope_;
+  }
+  gyroscope_ = nullptr;
   time_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* IMU::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* IMU_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // repeated double quaternion = 1;
+      // .messaging.Vector3_msg acceleration = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_quaternion(), ptr, ctx);
+          ptr = ctx->ParseMessage(_internal_mutable_acceleration(), ptr);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9) {
-          _internal_add_quaternion(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
-          ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // repeated double rpy = 2;
+      // .messaging.Vector3_msg gyroscope = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_rpy(), ptr, ctx);
+          ptr = ctx->ParseMessage(_internal_mutable_gyroscope(), ptr);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17) {
-          _internal_add_rpy(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
-          ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // repeated double gyro = 3;
+      // double time = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_gyro(), ptr, ctx);
-          CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25) {
-          _internal_add_gyro(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
-          ptr += sizeof(double);
-        } else goto handle_unusual;
-        continue;
-      // double time = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 33)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
           time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else goto handle_unusual;
@@ -270,86 +291,65 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* IMU::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* IMU_msg::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:messaging.IMU)
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.IMU_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated double quaternion = 1;
-  if (this->_internal_quaternion_size() > 0) {
-    target = stream->WriteFixedPacked(1, _internal_quaternion(), target);
+  // .messaging.Vector3_msg acceleration = 1;
+  if (this->has_acceleration()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::acceleration(this), target, stream);
   }
 
-  // repeated double rpy = 2;
-  if (this->_internal_rpy_size() > 0) {
-    target = stream->WriteFixedPacked(2, _internal_rpy(), target);
+  // .messaging.Vector3_msg gyroscope = 2;
+  if (this->has_gyroscope()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::gyroscope(this), target, stream);
   }
 
-  // repeated double gyro = 3;
-  if (this->_internal_gyro_size() > 0) {
-    target = stream->WriteFixedPacked(3, _internal_gyro(), target);
-  }
-
-  // double time = 4;
+  // double time = 3;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(4, this->_internal_time(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:messaging.IMU)
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.IMU_msg)
   return target;
 }
 
-size_t IMU::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:messaging.IMU)
+size_t IMU_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.IMU_msg)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated double quaternion = 1;
-  {
-    unsigned int count = static_cast<unsigned int>(this->_internal_quaternion_size());
-    size_t data_size = 8UL * count;
-    if (data_size > 0) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
-    }
-    total_size += data_size;
+  // .messaging.Vector3_msg acceleration = 1;
+  if (this->has_acceleration()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *acceleration_);
   }
 
-  // repeated double rpy = 2;
-  {
-    unsigned int count = static_cast<unsigned int>(this->_internal_rpy_size());
-    size_t data_size = 8UL * count;
-    if (data_size > 0) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
-    }
-    total_size += data_size;
+  // .messaging.Vector3_msg gyroscope = 2;
+  if (this->has_gyroscope()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *gyroscope_);
   }
 
-  // repeated double gyro = 3;
-  {
-    unsigned int count = static_cast<unsigned int>(this->_internal_gyro_size());
-    size_t data_size = 8UL * count;
-    if (data_size > 0) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
-    }
-    total_size += data_size;
-  }
-
-  // double time = 4;
+  // double time = 3;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     total_size += 1 + 8;
   }
@@ -363,64 +363,69 @@ size_t IMU::ByteSizeLong() const {
   return total_size;
 }
 
-void IMU::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:messaging.IMU)
+void IMU_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:messaging.IMU_msg)
   GOOGLE_DCHECK_NE(&from, this);
-  const IMU* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<IMU>(
+  const IMU_msg* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<IMU_msg>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.IMU)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.IMU_msg)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.IMU)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.IMU_msg)
     MergeFrom(*source);
   }
 }
 
-void IMU::MergeFrom(const IMU& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:messaging.IMU)
+void IMU_msg::MergeFrom(const IMU_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.IMU_msg)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  quaternion_.MergeFrom(from.quaternion_);
-  rpy_.MergeFrom(from.rpy_);
-  gyro_.MergeFrom(from.gyro_);
+  if (from.has_acceleration()) {
+    _internal_mutable_acceleration()->::messaging::Vector3_msg::MergeFrom(from._internal_acceleration());
+  }
+  if (from.has_gyroscope()) {
+    _internal_mutable_gyroscope()->::messaging::Vector3_msg::MergeFrom(from._internal_gyroscope());
+  }
   if (!(from.time() <= 0 && from.time() >= 0)) {
     _internal_set_time(from._internal_time());
   }
 }
 
-void IMU::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:messaging.IMU)
+void IMU_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:messaging.IMU_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void IMU::CopyFrom(const IMU& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:messaging.IMU)
+void IMU_msg::CopyFrom(const IMU_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.IMU_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool IMU::IsInitialized() const {
+bool IMU_msg::IsInitialized() const {
   return true;
 }
 
-void IMU::InternalSwap(IMU* other) {
+void IMU_msg::InternalSwap(IMU_msg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  quaternion_.InternalSwap(&other->quaternion_);
-  rpy_.InternalSwap(&other->rpy_);
-  gyro_.InternalSwap(&other->gyro_);
-  swap(time_, other->time_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(IMU_msg, time_)
+      + sizeof(IMU_msg::time_)
+      - PROTOBUF_FIELD_OFFSET(IMU_msg, acceleration_)>(
+          reinterpret_cast<char*>(&acceleration_),
+          reinterpret_cast<char*>(&other->acceleration_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata IMU::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata IMU_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
       file_level_metadata_message_2eproto[0]);
@@ -428,92 +433,113 @@ void IMU::InternalSwap(IMU* other) {
 
 // ===================================================================
 
-class VICON::_Internal {
+class Vicon_msg::_Internal {
  public:
+  static const ::messaging::Vector3_msg& position(const Vicon_msg* msg);
+  static const ::messaging::Quaternion_msg& quaternion(const Vicon_msg* msg);
 };
 
-VICON::VICON(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  position_(arena),
-  quaternion_(arena) {
+const ::messaging::Vector3_msg&
+Vicon_msg::_Internal::position(const Vicon_msg* msg) {
+  return *msg->position_;
+}
+const ::messaging::Quaternion_msg&
+Vicon_msg::_Internal::quaternion(const Vicon_msg* msg) {
+  return *msg->quaternion_;
+}
+Vicon_msg::Vicon_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:messaging.VICON)
+  // @@protoc_insertion_point(arena_constructor:messaging.Vicon_msg)
 }
-VICON::VICON(const VICON& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      position_(from.position_),
-      quaternion_(from.quaternion_) {
+Vicon_msg::Vicon_msg(const Vicon_msg& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_position()) {
+    position_ = new ::messaging::Vector3_msg(*from.position_);
+  } else {
+    position_ = nullptr;
+  }
+  if (from._internal_has_quaternion()) {
+    quaternion_ = new ::messaging::Quaternion_msg(*from.quaternion_);
+  } else {
+    quaternion_ = nullptr;
+  }
   time_ = from.time_;
-  // @@protoc_insertion_point(copy_constructor:messaging.VICON)
+  // @@protoc_insertion_point(copy_constructor:messaging.Vicon_msg)
 }
 
-void VICON::SharedCtor() {
-time_ = 0;
+void Vicon_msg::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&position_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&time_) -
+    reinterpret_cast<char*>(&position_)) + sizeof(time_));
 }
 
-VICON::~VICON() {
-  // @@protoc_insertion_point(destructor:messaging.VICON)
+Vicon_msg::~Vicon_msg() {
+  // @@protoc_insertion_point(destructor:messaging.Vicon_msg)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void VICON::SharedDtor() {
+void Vicon_msg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete position_;
+  if (this != internal_default_instance()) delete quaternion_;
 }
 
-void VICON::ArenaDtor(void* object) {
-  VICON* _this = reinterpret_cast< VICON* >(object);
+void Vicon_msg::ArenaDtor(void* object) {
+  Vicon_msg* _this = reinterpret_cast< Vicon_msg* >(object);
   (void)_this;
 }
-void VICON::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void Vicon_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void VICON::SetCachedSize(int size) const {
+void Vicon_msg::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void VICON::Clear() {
-// @@protoc_insertion_point(message_clear_start:messaging.VICON)
+void Vicon_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.Vicon_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  position_.Clear();
-  quaternion_.Clear();
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && quaternion_ != nullptr) {
+    delete quaternion_;
+  }
+  quaternion_ = nullptr;
   time_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* VICON::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* Vicon_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // repeated double position = 1;
+      // .messaging.Vector3_msg position = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_position(), ptr, ctx);
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9) {
-          _internal_add_position(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
-          ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // repeated double quaternion = 2;
+      // .messaging.Quaternion_msg quaternion = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedDoubleParser(_internal_mutable_quaternion(), ptr, ctx);
+          ptr = ctx->ParseMessage(_internal_mutable_quaternion(), ptr);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17) {
-          _internal_add_quaternion(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr));
-          ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // double time = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 33)) {
+      // double time = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
           time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else goto handle_unusual;
@@ -541,69 +567,65 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* VICON::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* Vicon_msg::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:messaging.VICON)
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.Vicon_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated double position = 1;
-  if (this->_internal_position_size() > 0) {
-    target = stream->WriteFixedPacked(1, _internal_position(), target);
+  // .messaging.Vector3_msg position = 1;
+  if (this->has_position()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::position(this), target, stream);
   }
 
-  // repeated double quaternion = 2;
-  if (this->_internal_quaternion_size() > 0) {
-    target = stream->WriteFixedPacked(2, _internal_quaternion(), target);
+  // .messaging.Quaternion_msg quaternion = 2;
+  if (this->has_quaternion()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::quaternion(this), target, stream);
   }
 
-  // double time = 4;
+  // double time = 3;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(4, this->_internal_time(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:messaging.VICON)
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.Vicon_msg)
   return target;
 }
 
-size_t VICON::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:messaging.VICON)
+size_t Vicon_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.Vicon_msg)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated double position = 1;
-  {
-    unsigned int count = static_cast<unsigned int>(this->_internal_position_size());
-    size_t data_size = 8UL * count;
-    if (data_size > 0) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
-    }
-    total_size += data_size;
+  // .messaging.Vector3_msg position = 1;
+  if (this->has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *position_);
   }
 
-  // repeated double quaternion = 2;
-  {
-    unsigned int count = static_cast<unsigned int>(this->_internal_quaternion_size());
-    size_t data_size = 8UL * count;
-    if (data_size > 0) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
-    }
-    total_size += data_size;
+  // .messaging.Quaternion_msg quaternion = 2;
+  if (this->has_quaternion()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *quaternion_);
   }
 
-  // double time = 4;
+  // double time = 3;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     total_size += 1 + 8;
   }
@@ -617,62 +639,69 @@ size_t VICON::ByteSizeLong() const {
   return total_size;
 }
 
-void VICON::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:messaging.VICON)
+void Vicon_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:messaging.Vicon_msg)
   GOOGLE_DCHECK_NE(&from, this);
-  const VICON* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<VICON>(
+  const Vicon_msg* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Vicon_msg>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.VICON)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.Vicon_msg)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.VICON)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.Vicon_msg)
     MergeFrom(*source);
   }
 }
 
-void VICON::MergeFrom(const VICON& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:messaging.VICON)
+void Vicon_msg::MergeFrom(const Vicon_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.Vicon_msg)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  position_.MergeFrom(from.position_);
-  quaternion_.MergeFrom(from.quaternion_);
+  if (from.has_position()) {
+    _internal_mutable_position()->::messaging::Vector3_msg::MergeFrom(from._internal_position());
+  }
+  if (from.has_quaternion()) {
+    _internal_mutable_quaternion()->::messaging::Quaternion_msg::MergeFrom(from._internal_quaternion());
+  }
   if (!(from.time() <= 0 && from.time() >= 0)) {
     _internal_set_time(from._internal_time());
   }
 }
 
-void VICON::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:messaging.VICON)
+void Vicon_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:messaging.Vicon_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void VICON::CopyFrom(const VICON& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:messaging.VICON)
+void Vicon_msg::CopyFrom(const Vicon_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.Vicon_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool VICON::IsInitialized() const {
+bool Vicon_msg::IsInitialized() const {
   return true;
 }
 
-void VICON::InternalSwap(VICON* other) {
+void Vicon_msg::InternalSwap(Vicon_msg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  position_.InternalSwap(&other->position_);
-  quaternion_.InternalSwap(&other->quaternion_);
-  swap(time_, other->time_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Vicon_msg, time_)
+      + sizeof(Vicon_msg::time_)
+      - PROTOBUF_FIELD_OFFSET(Vicon_msg, position_)>(
+          reinterpret_cast<char*>(&position_),
+          reinterpret_cast<char*>(&other->position_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata VICON::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata Vicon_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
       file_level_metadata_message_2eproto[1]);
@@ -680,59 +709,93 @@ void VICON::InternalSwap(VICON* other) {
 
 // ===================================================================
 
-class PORTLIST::_Internal {
+class Vector3_msg::_Internal {
  public:
 };
 
-PORTLIST::PORTLIST(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+Vector3_msg::Vector3_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:messaging.PORTLIST)
+  // @@protoc_insertion_point(arena_constructor:messaging.Vector3_msg)
 }
-PORTLIST::PORTLIST(const PORTLIST& from)
+Vector3_msg::Vector3_msg(const Vector3_msg& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:messaging.PORTLIST)
+  ::memcpy(&x_, &from.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  // @@protoc_insertion_point(copy_constructor:messaging.Vector3_msg)
 }
 
-void PORTLIST::SharedCtor() {
+void Vector3_msg::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
 }
 
-PORTLIST::~PORTLIST() {
-  // @@protoc_insertion_point(destructor:messaging.PORTLIST)
+Vector3_msg::~Vector3_msg() {
+  // @@protoc_insertion_point(destructor:messaging.Vector3_msg)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void PORTLIST::SharedDtor() {
+void Vector3_msg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void PORTLIST::ArenaDtor(void* object) {
-  PORTLIST* _this = reinterpret_cast< PORTLIST* >(object);
+void Vector3_msg::ArenaDtor(void* object) {
+  Vector3_msg* _this = reinterpret_cast< Vector3_msg* >(object);
   (void)_this;
 }
-void PORTLIST::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void Vector3_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void PORTLIST::SetCachedSize(int size) const {
+void Vector3_msg::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void PORTLIST::Clear() {
-// @@protoc_insertion_point(message_clear_start:messaging.PORTLIST)
+void Vector3_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.Vector3_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* PORTLIST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* Vector3_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // double x = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
+          x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double y = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+          y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double z = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+          z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
         if ((tag == 0) || ((tag & 7) == 4)) {
           CHK_(ptr);
           ctx->SetLastTag(tag);
@@ -743,6 +806,8 @@ const char* PORTLIST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
             ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
+      }
+    }  // switch
   }  // while
 success:
   return ptr;
@@ -752,27 +817,60 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* PORTLIST::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* Vector3_msg::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:messaging.PORTLIST)
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.Vector3_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
+
+  // double x = 1;
+  if (!(this->x() <= 0 && this->x() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_x(), target);
+  }
+
+  // double y = 2;
+  if (!(this->y() <= 0 && this->y() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_y(), target);
+  }
+
+  // double z = 3;
+  if (!(this->z() <= 0 && this->z() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_z(), target);
+  }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:messaging.PORTLIST)
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.Vector3_msg)
   return target;
 }
 
-size_t PORTLIST::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:messaging.PORTLIST)
+size_t Vector3_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.Vector3_msg)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // double x = 1;
+  if (!(this->x() <= 0 && this->x() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double y = 2;
+  if (!(this->y() <= 0 && this->y() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double z = 3;
+  if (!(this->z() <= 0 && this->z() >= 0)) {
+    total_size += 1 + 8;
+  }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
@@ -783,70 +881,351 @@ size_t PORTLIST::ByteSizeLong() const {
   return total_size;
 }
 
-void PORTLIST::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:messaging.PORTLIST)
+void Vector3_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:messaging.Vector3_msg)
   GOOGLE_DCHECK_NE(&from, this);
-  const PORTLIST* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<PORTLIST>(
+  const Vector3_msg* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Vector3_msg>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.PORTLIST)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.Vector3_msg)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.PORTLIST)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.Vector3_msg)
     MergeFrom(*source);
   }
 }
 
-void PORTLIST::MergeFrom(const PORTLIST& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:messaging.PORTLIST)
+void Vector3_msg::MergeFrom(const Vector3_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.Vector3_msg)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!(from.x() <= 0 && from.x() >= 0)) {
+    _internal_set_x(from._internal_x());
+  }
+  if (!(from.y() <= 0 && from.y() >= 0)) {
+    _internal_set_y(from._internal_y());
+  }
+  if (!(from.z() <= 0 && from.z() >= 0)) {
+    _internal_set_z(from._internal_z());
+  }
 }
 
-void PORTLIST::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:messaging.PORTLIST)
+void Vector3_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:messaging.Vector3_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void PORTLIST::CopyFrom(const PORTLIST& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:messaging.PORTLIST)
+void Vector3_msg::CopyFrom(const Vector3_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.Vector3_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool PORTLIST::IsInitialized() const {
+bool Vector3_msg::IsInitialized() const {
   return true;
 }
 
-void PORTLIST::InternalSwap(PORTLIST* other) {
+void Vector3_msg::InternalSwap(Vector3_msg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Vector3_msg, z_)
+      + sizeof(Vector3_msg::z_)
+      - PROTOBUF_FIELD_OFFSET(Vector3_msg, x_)>(
+          reinterpret_cast<char*>(&x_),
+          reinterpret_cast<char*>(&other->x_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PORTLIST::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata Vector3_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
       file_level_metadata_message_2eproto[2]);
 }
 
+// ===================================================================
+
+class Quaternion_msg::_Internal {
+ public:
+};
+
+Quaternion_msg::Quaternion_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:messaging.Quaternion_msg)
+}
+Quaternion_msg::Quaternion_msg(const Quaternion_msg& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&w_, &from.w_,
+    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&w_)) + sizeof(z_));
+  // @@protoc_insertion_point(copy_constructor:messaging.Quaternion_msg)
+}
+
+void Quaternion_msg::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&w_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&w_)) + sizeof(z_));
+}
+
+Quaternion_msg::~Quaternion_msg() {
+  // @@protoc_insertion_point(destructor:messaging.Quaternion_msg)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void Quaternion_msg::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Quaternion_msg::ArenaDtor(void* object) {
+  Quaternion_msg* _this = reinterpret_cast< Quaternion_msg* >(object);
+  (void)_this;
+}
+void Quaternion_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void Quaternion_msg::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void Quaternion_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.Quaternion_msg)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&w_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&w_)) + sizeof(z_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Quaternion_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // double w = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
+          w_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double x = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+          x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double y = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+          y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double z = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 33)) {
+          z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* Quaternion_msg::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.Quaternion_msg)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // double w = 1;
+  if (!(this->w() <= 0 && this->w() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_w(), target);
+  }
+
+  // double x = 2;
+  if (!(this->x() <= 0 && this->x() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_x(), target);
+  }
+
+  // double y = 3;
+  if (!(this->y() <= 0 && this->y() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_y(), target);
+  }
+
+  // double z = 4;
+  if (!(this->z() <= 0 && this->z() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(4, this->_internal_z(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.Quaternion_msg)
+  return target;
+}
+
+size_t Quaternion_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.Quaternion_msg)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // double w = 1;
+  if (!(this->w() <= 0 && this->w() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double x = 2;
+  if (!(this->x() <= 0 && this->x() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double y = 3;
+  if (!(this->y() <= 0 && this->y() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double z = 4;
+  if (!(this->z() <= 0 && this->z() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Quaternion_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:messaging.Quaternion_msg)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Quaternion_msg* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Quaternion_msg>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.Quaternion_msg)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.Quaternion_msg)
+    MergeFrom(*source);
+  }
+}
+
+void Quaternion_msg::MergeFrom(const Quaternion_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.Quaternion_msg)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!(from.w() <= 0 && from.w() >= 0)) {
+    _internal_set_w(from._internal_w());
+  }
+  if (!(from.x() <= 0 && from.x() >= 0)) {
+    _internal_set_x(from._internal_x());
+  }
+  if (!(from.y() <= 0 && from.y() >= 0)) {
+    _internal_set_y(from._internal_y());
+  }
+  if (!(from.z() <= 0 && from.z() >= 0)) {
+    _internal_set_z(from._internal_z());
+  }
+}
+
+void Quaternion_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:messaging.Quaternion_msg)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Quaternion_msg::CopyFrom(const Quaternion_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.Quaternion_msg)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Quaternion_msg::IsInitialized() const {
+  return true;
+}
+
+void Quaternion_msg::InternalSwap(Quaternion_msg* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Quaternion_msg, z_)
+      + sizeof(Quaternion_msg::z_)
+      - PROTOBUF_FIELD_OFFSET(Quaternion_msg, w_)>(
+          reinterpret_cast<char*>(&w_),
+          reinterpret_cast<char*>(&other->w_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Quaternion_msg::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
+      file_level_metadata_message_2eproto[3]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace messaging
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::messaging::IMU* Arena::CreateMaybeMessage< ::messaging::IMU >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::messaging::IMU >(arena);
+template<> PROTOBUF_NOINLINE ::messaging::IMU_msg* Arena::CreateMaybeMessage< ::messaging::IMU_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::IMU_msg >(arena);
 }
-template<> PROTOBUF_NOINLINE ::messaging::VICON* Arena::CreateMaybeMessage< ::messaging::VICON >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::messaging::VICON >(arena);
+template<> PROTOBUF_NOINLINE ::messaging::Vicon_msg* Arena::CreateMaybeMessage< ::messaging::Vicon_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::Vicon_msg >(arena);
 }
-template<> PROTOBUF_NOINLINE ::messaging::PORTLIST* Arena::CreateMaybeMessage< ::messaging::PORTLIST >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::messaging::PORTLIST >(arena);
+template<> PROTOBUF_NOINLINE ::messaging::Vector3_msg* Arena::CreateMaybeMessage< ::messaging::Vector3_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::Vector3_msg >(arena);
+}
+template<> PROTOBUF_NOINLINE ::messaging::Quaternion_msg* Arena::CreateMaybeMessage< ::messaging::Quaternion_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::Quaternion_msg >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

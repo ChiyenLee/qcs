@@ -22,7 +22,7 @@ class ViconDriverZMQ {
         void viconCallback(vicon_result_t vicon_result);
         ViconDriver driver_;
         std::thread vicon_thread_;
-        messaging::VICON vicon_;
+        messaging::Vicon_msg vicon_;
         std::string msg_str_;
         zmq::message_t msg_;
 

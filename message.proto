@@ -2,22 +2,47 @@ syntax = "proto3";
 
 package messaging;
 
-message IMU { 
-    repeated double quaternion=1;
-    repeated double rpy=2;
-    repeated double gyro=3;
-    double time=4;
+message IMU_msg {
+    Vector3_msg acceleration = 1;
+    Vector3_msg gyroscope = 2;
+    double time = 3;
 }
 
-message VICON {
-    repeated double position=1;
-    repeated double quaternion=2;
-    double time=3;
+message Vicon_msg { 
+    Vector3_msg position = 1;
+    Quaternion_msg quaternion = 2;
+    double time = 3;
 }
 
-message PROPERTY { 
-    enum NAME {
-        IMU = 0;
-        VICON = 1;
-    }
+message Vector3_msg {
+    double x = 1;
+    double y = 2;
+    double z = 3;
 }
+
+message Quaternion_msg {
+    double w = 1;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+}
+
+// message IMU { 
+//     repeated double quaternion=1;
+//     repeated double rpy=2;
+//     repeated double gyro=3;
+//     double time=4;
+// }
+
+// message VICON {
+//     repeated double position=1;
+//     repeated double quaternion=2;
+//     double time=3;
+// }
+
+// message PROPERTY { 
+//     enum NAME {
+//         IMU = 0;
+//         VICON = 1;
+//     }
+// }

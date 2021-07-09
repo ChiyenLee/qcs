@@ -30,7 +30,6 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
-#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -47,7 +46,7 @@ struct TableStruct_message_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,68 +54,47 @@ struct TableStruct_message_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_message_2eproto;
 namespace messaging {
-class IMU;
-struct IMUDefaultTypeInternal;
-extern IMUDefaultTypeInternal _IMU_default_instance_;
-class PORTLIST;
-struct PORTLISTDefaultTypeInternal;
-extern PORTLISTDefaultTypeInternal _PORTLIST_default_instance_;
-class VICON;
-struct VICONDefaultTypeInternal;
-extern VICONDefaultTypeInternal _VICON_default_instance_;
+class IMU_msg;
+struct IMU_msgDefaultTypeInternal;
+extern IMU_msgDefaultTypeInternal _IMU_msg_default_instance_;
+class Quaternion_msg;
+struct Quaternion_msgDefaultTypeInternal;
+extern Quaternion_msgDefaultTypeInternal _Quaternion_msg_default_instance_;
+class Vector3_msg;
+struct Vector3_msgDefaultTypeInternal;
+extern Vector3_msgDefaultTypeInternal _Vector3_msg_default_instance_;
+class Vicon_msg;
+struct Vicon_msgDefaultTypeInternal;
+extern Vicon_msgDefaultTypeInternal _Vicon_msg_default_instance_;
 }  // namespace messaging
 PROTOBUF_NAMESPACE_OPEN
-template<> ::messaging::IMU* Arena::CreateMaybeMessage<::messaging::IMU>(Arena*);
-template<> ::messaging::PORTLIST* Arena::CreateMaybeMessage<::messaging::PORTLIST>(Arena*);
-template<> ::messaging::VICON* Arena::CreateMaybeMessage<::messaging::VICON>(Arena*);
+template<> ::messaging::IMU_msg* Arena::CreateMaybeMessage<::messaging::IMU_msg>(Arena*);
+template<> ::messaging::Quaternion_msg* Arena::CreateMaybeMessage<::messaging::Quaternion_msg>(Arena*);
+template<> ::messaging::Vector3_msg* Arena::CreateMaybeMessage<::messaging::Vector3_msg>(Arena*);
+template<> ::messaging::Vicon_msg* Arena::CreateMaybeMessage<::messaging::Vicon_msg>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace messaging {
 
-enum PORTLIST_TOPICS : int {
-  PORTLIST_TOPICS_HEADER = 0,
-  PORTLIST_TOPICS_IMU = 5000,
-  PORTLIST_TOPICS_PORTLIST_TOPICS_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  PORTLIST_TOPICS_PORTLIST_TOPICS_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool PORTLIST_TOPICS_IsValid(int value);
-constexpr PORTLIST_TOPICS PORTLIST_TOPICS_TOPICS_MIN = PORTLIST_TOPICS_HEADER;
-constexpr PORTLIST_TOPICS PORTLIST_TOPICS_TOPICS_MAX = PORTLIST_TOPICS_IMU;
-constexpr int PORTLIST_TOPICS_TOPICS_ARRAYSIZE = PORTLIST_TOPICS_TOPICS_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PORTLIST_TOPICS_descriptor();
-template<typename T>
-inline const std::string& PORTLIST_TOPICS_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, PORTLIST_TOPICS>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function PORTLIST_TOPICS_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    PORTLIST_TOPICS_descriptor(), enum_t_value);
-}
-inline bool PORTLIST_TOPICS_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, PORTLIST_TOPICS* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PORTLIST_TOPICS>(
-    PORTLIST_TOPICS_descriptor(), name, value);
-}
 // ===================================================================
 
-class IMU final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.IMU) */ {
+class IMU_msg final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.IMU_msg) */ {
  public:
-  inline IMU() : IMU(nullptr) {}
-  ~IMU() override;
-  explicit constexpr IMU(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline IMU_msg() : IMU_msg(nullptr) {}
+  ~IMU_msg() override;
+  explicit constexpr IMU_msg(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  IMU(const IMU& from);
-  IMU(IMU&& from) noexcept
-    : IMU() {
+  IMU_msg(const IMU_msg& from);
+  IMU_msg(IMU_msg&& from) noexcept
+    : IMU_msg() {
     *this = ::std::move(from);
   }
 
-  inline IMU& operator=(const IMU& from) {
+  inline IMU_msg& operator=(const IMU_msg& from) {
     CopyFrom(from);
     return *this;
   }
-  inline IMU& operator=(IMU&& from) noexcept {
+  inline IMU_msg& operator=(IMU_msg&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()) {
       InternalSwap(&from);
@@ -135,20 +113,20 @@ class IMU final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const IMU& default_instance() {
+  static const IMU_msg& default_instance() {
     return *internal_default_instance();
   }
-  static inline const IMU* internal_default_instance() {
-    return reinterpret_cast<const IMU*>(
-               &_IMU_default_instance_);
+  static inline const IMU_msg* internal_default_instance() {
+    return reinterpret_cast<const IMU_msg*>(
+               &_IMU_msg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(IMU& a, IMU& b) {
+  friend void swap(IMU_msg& a, IMU_msg& b) {
     a.Swap(&b);
   }
-  inline void Swap(IMU* other) {
+  inline void Swap(IMU_msg* other) {
     if (other == this) return;
     if (GetOwningArena() == other->GetOwningArena()) {
       InternalSwap(other);
@@ -156,7 +134,7 @@ class IMU final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(IMU* other) {
+  void UnsafeArenaSwap(IMU_msg* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -164,17 +142,17 @@ class IMU final :
 
   // implements Message ----------------------------------------------
 
-  inline IMU* New() const final {
-    return new IMU();
+  inline IMU_msg* New() const final {
+    return new IMU_msg();
   }
 
-  IMU* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<IMU>(arena);
+  IMU_msg* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<IMU_msg>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const IMU& from);
-  void MergeFrom(const IMU& from);
+  void CopyFrom(const IMU_msg& from);
+  void MergeFrom(const IMU_msg& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -188,13 +166,13 @@ class IMU final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(IMU* other);
+  void InternalSwap(IMU_msg* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "messaging.IMU";
+    return "messaging.IMU_msg";
   }
   protected:
-  explicit IMU(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit IMU_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -207,78 +185,47 @@ class IMU final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kQuaternionFieldNumber = 1,
-    kRpyFieldNumber = 2,
-    kGyroFieldNumber = 3,
-    kTimeFieldNumber = 4,
+    kAccelerationFieldNumber = 1,
+    kGyroscopeFieldNumber = 2,
+    kTimeFieldNumber = 3,
   };
-  // repeated double quaternion = 1;
-  int quaternion_size() const;
+  // .messaging.Vector3_msg acceleration = 1;
+  bool has_acceleration() const;
   private:
-  int _internal_quaternion_size() const;
+  bool _internal_has_acceleration() const;
   public:
-  void clear_quaternion();
+  void clear_acceleration();
+  const ::messaging::Vector3_msg& acceleration() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::messaging::Vector3_msg* release_acceleration();
+  ::messaging::Vector3_msg* mutable_acceleration();
+  void set_allocated_acceleration(::messaging::Vector3_msg* acceleration);
   private:
-  double _internal_quaternion(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_quaternion() const;
-  void _internal_add_quaternion(double value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_quaternion();
+  const ::messaging::Vector3_msg& _internal_acceleration() const;
+  ::messaging::Vector3_msg* _internal_mutable_acceleration();
   public:
-  double quaternion(int index) const;
-  void set_quaternion(int index, double value);
-  void add_quaternion(double value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      quaternion() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      mutable_quaternion();
+  void unsafe_arena_set_allocated_acceleration(
+      ::messaging::Vector3_msg* acceleration);
+  ::messaging::Vector3_msg* unsafe_arena_release_acceleration();
 
-  // repeated double rpy = 2;
-  int rpy_size() const;
+  // .messaging.Vector3_msg gyroscope = 2;
+  bool has_gyroscope() const;
   private:
-  int _internal_rpy_size() const;
+  bool _internal_has_gyroscope() const;
   public:
-  void clear_rpy();
+  void clear_gyroscope();
+  const ::messaging::Vector3_msg& gyroscope() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::messaging::Vector3_msg* release_gyroscope();
+  ::messaging::Vector3_msg* mutable_gyroscope();
+  void set_allocated_gyroscope(::messaging::Vector3_msg* gyroscope);
   private:
-  double _internal_rpy(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_rpy() const;
-  void _internal_add_rpy(double value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_rpy();
+  const ::messaging::Vector3_msg& _internal_gyroscope() const;
+  ::messaging::Vector3_msg* _internal_mutable_gyroscope();
   public:
-  double rpy(int index) const;
-  void set_rpy(int index, double value);
-  void add_rpy(double value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      rpy() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      mutable_rpy();
+  void unsafe_arena_set_allocated_gyroscope(
+      ::messaging::Vector3_msg* gyroscope);
+  ::messaging::Vector3_msg* unsafe_arena_release_gyroscope();
 
-  // repeated double gyro = 3;
-  int gyro_size() const;
-  private:
-  int _internal_gyro_size() const;
-  public:
-  void clear_gyro();
-  private:
-  double _internal_gyro(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_gyro() const;
-  void _internal_add_gyro(double value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_gyro();
-  public:
-  double gyro(int index) const;
-  void set_gyro(int index, double value);
-  void add_gyro(double value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      gyro() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      mutable_gyro();
-
-  // double time = 4;
+  // double time = 3;
   void clear_time();
   double time() const;
   void set_time(double value);
@@ -287,40 +234,39 @@ class IMU final :
   void _internal_set_time(double value);
   public:
 
-  // @@protoc_insertion_point(class_scope:messaging.IMU)
+  // @@protoc_insertion_point(class_scope:messaging.IMU_msg)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > quaternion_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > rpy_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > gyro_;
+  ::messaging::Vector3_msg* acceleration_;
+  ::messaging::Vector3_msg* gyroscope_;
   double time_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_message_2eproto;
 };
 // -------------------------------------------------------------------
 
-class VICON final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.VICON) */ {
+class Vicon_msg final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.Vicon_msg) */ {
  public:
-  inline VICON() : VICON(nullptr) {}
-  ~VICON() override;
-  explicit constexpr VICON(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline Vicon_msg() : Vicon_msg(nullptr) {}
+  ~Vicon_msg() override;
+  explicit constexpr Vicon_msg(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  VICON(const VICON& from);
-  VICON(VICON&& from) noexcept
-    : VICON() {
+  Vicon_msg(const Vicon_msg& from);
+  Vicon_msg(Vicon_msg&& from) noexcept
+    : Vicon_msg() {
     *this = ::std::move(from);
   }
 
-  inline VICON& operator=(const VICON& from) {
+  inline Vicon_msg& operator=(const Vicon_msg& from) {
     CopyFrom(from);
     return *this;
   }
-  inline VICON& operator=(VICON&& from) noexcept {
+  inline Vicon_msg& operator=(Vicon_msg&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()) {
       InternalSwap(&from);
@@ -339,20 +285,20 @@ class VICON final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const VICON& default_instance() {
+  static const Vicon_msg& default_instance() {
     return *internal_default_instance();
   }
-  static inline const VICON* internal_default_instance() {
-    return reinterpret_cast<const VICON*>(
-               &_VICON_default_instance_);
+  static inline const Vicon_msg* internal_default_instance() {
+    return reinterpret_cast<const Vicon_msg*>(
+               &_Vicon_msg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(VICON& a, VICON& b) {
+  friend void swap(Vicon_msg& a, Vicon_msg& b) {
     a.Swap(&b);
   }
-  inline void Swap(VICON* other) {
+  inline void Swap(Vicon_msg* other) {
     if (other == this) return;
     if (GetOwningArena() == other->GetOwningArena()) {
       InternalSwap(other);
@@ -360,7 +306,7 @@ class VICON final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(VICON* other) {
+  void UnsafeArenaSwap(Vicon_msg* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -368,17 +314,17 @@ class VICON final :
 
   // implements Message ----------------------------------------------
 
-  inline VICON* New() const final {
-    return new VICON();
+  inline Vicon_msg* New() const final {
+    return new Vicon_msg();
   }
 
-  VICON* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<VICON>(arena);
+  Vicon_msg* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Vicon_msg>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const VICON& from);
-  void MergeFrom(const VICON& from);
+  void CopyFrom(const Vicon_msg& from);
+  void MergeFrom(const Vicon_msg& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -392,13 +338,13 @@ class VICON final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(VICON* other);
+  void InternalSwap(Vicon_msg* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "messaging.VICON";
+    return "messaging.Vicon_msg";
   }
   protected:
-  explicit VICON(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit Vicon_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -413,53 +359,45 @@ class VICON final :
   enum : int {
     kPositionFieldNumber = 1,
     kQuaternionFieldNumber = 2,
-    kTimeFieldNumber = 4,
+    kTimeFieldNumber = 3,
   };
-  // repeated double position = 1;
-  int position_size() const;
+  // .messaging.Vector3_msg position = 1;
+  bool has_position() const;
   private:
-  int _internal_position_size() const;
+  bool _internal_has_position() const;
   public:
   void clear_position();
+  const ::messaging::Vector3_msg& position() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::messaging::Vector3_msg* release_position();
+  ::messaging::Vector3_msg* mutable_position();
+  void set_allocated_position(::messaging::Vector3_msg* position);
   private:
-  double _internal_position(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_position() const;
-  void _internal_add_position(double value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_position();
+  const ::messaging::Vector3_msg& _internal_position() const;
+  ::messaging::Vector3_msg* _internal_mutable_position();
   public:
-  double position(int index) const;
-  void set_position(int index, double value);
-  void add_position(double value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      position() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      mutable_position();
+  void unsafe_arena_set_allocated_position(
+      ::messaging::Vector3_msg* position);
+  ::messaging::Vector3_msg* unsafe_arena_release_position();
 
-  // repeated double quaternion = 2;
-  int quaternion_size() const;
+  // .messaging.Quaternion_msg quaternion = 2;
+  bool has_quaternion() const;
   private:
-  int _internal_quaternion_size() const;
+  bool _internal_has_quaternion() const;
   public:
   void clear_quaternion();
+  const ::messaging::Quaternion_msg& quaternion() const;
+  PROTOBUF_FUTURE_MUST_USE_RESULT ::messaging::Quaternion_msg* release_quaternion();
+  ::messaging::Quaternion_msg* mutable_quaternion();
+  void set_allocated_quaternion(::messaging::Quaternion_msg* quaternion);
   private:
-  double _internal_quaternion(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_quaternion() const;
-  void _internal_add_quaternion(double value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_quaternion();
+  const ::messaging::Quaternion_msg& _internal_quaternion() const;
+  ::messaging::Quaternion_msg* _internal_mutable_quaternion();
   public:
-  double quaternion(int index) const;
-  void set_quaternion(int index, double value);
-  void add_quaternion(double value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      quaternion() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      mutable_quaternion();
+  void unsafe_arena_set_allocated_quaternion(
+      ::messaging::Quaternion_msg* quaternion);
+  ::messaging::Quaternion_msg* unsafe_arena_release_quaternion();
 
-  // double time = 4;
+  // double time = 3;
   void clear_time();
   double time() const;
   void set_time(double value);
@@ -468,39 +406,39 @@ class VICON final :
   void _internal_set_time(double value);
   public:
 
-  // @@protoc_insertion_point(class_scope:messaging.VICON)
+  // @@protoc_insertion_point(class_scope:messaging.Vicon_msg)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > position_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > quaternion_;
+  ::messaging::Vector3_msg* position_;
+  ::messaging::Quaternion_msg* quaternion_;
   double time_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_message_2eproto;
 };
 // -------------------------------------------------------------------
 
-class PORTLIST final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.PORTLIST) */ {
+class Vector3_msg final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.Vector3_msg) */ {
  public:
-  inline PORTLIST() : PORTLIST(nullptr) {}
-  ~PORTLIST() override;
-  explicit constexpr PORTLIST(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline Vector3_msg() : Vector3_msg(nullptr) {}
+  ~Vector3_msg() override;
+  explicit constexpr Vector3_msg(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  PORTLIST(const PORTLIST& from);
-  PORTLIST(PORTLIST&& from) noexcept
-    : PORTLIST() {
+  Vector3_msg(const Vector3_msg& from);
+  Vector3_msg(Vector3_msg&& from) noexcept
+    : Vector3_msg() {
     *this = ::std::move(from);
   }
 
-  inline PORTLIST& operator=(const PORTLIST& from) {
+  inline Vector3_msg& operator=(const Vector3_msg& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PORTLIST& operator=(PORTLIST&& from) noexcept {
+  inline Vector3_msg& operator=(Vector3_msg&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()) {
       InternalSwap(&from);
@@ -519,20 +457,20 @@ class PORTLIST final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PORTLIST& default_instance() {
+  static const Vector3_msg& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PORTLIST* internal_default_instance() {
-    return reinterpret_cast<const PORTLIST*>(
-               &_PORTLIST_default_instance_);
+  static inline const Vector3_msg* internal_default_instance() {
+    return reinterpret_cast<const Vector3_msg*>(
+               &_Vector3_msg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  friend void swap(PORTLIST& a, PORTLIST& b) {
+  friend void swap(Vector3_msg& a, Vector3_msg& b) {
     a.Swap(&b);
   }
-  inline void Swap(PORTLIST* other) {
+  inline void Swap(Vector3_msg* other) {
     if (other == this) return;
     if (GetOwningArena() == other->GetOwningArena()) {
       InternalSwap(other);
@@ -540,7 +478,7 @@ class PORTLIST final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PORTLIST* other) {
+  void UnsafeArenaSwap(Vector3_msg* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -548,17 +486,17 @@ class PORTLIST final :
 
   // implements Message ----------------------------------------------
 
-  inline PORTLIST* New() const final {
-    return new PORTLIST();
+  inline Vector3_msg* New() const final {
+    return new Vector3_msg();
   }
 
-  PORTLIST* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<PORTLIST>(arena);
+  Vector3_msg* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Vector3_msg>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const PORTLIST& from);
-  void MergeFrom(const PORTLIST& from);
+  void CopyFrom(const Vector3_msg& from);
+  void MergeFrom(const Vector3_msg& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -572,13 +510,13 @@ class PORTLIST final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(PORTLIST* other);
+  void InternalSwap(Vector3_msg* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "messaging.PORTLIST";
+    return "messaging.Vector3_msg";
   }
   protected:
-  explicit PORTLIST(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit Vector3_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -588,45 +526,215 @@ class PORTLIST final :
 
   // nested types ----------------------------------------------------
 
-  typedef PORTLIST_TOPICS TOPICS;
-  static constexpr TOPICS HEADER =
-    PORTLIST_TOPICS_HEADER;
-  static constexpr TOPICS IMU =
-    PORTLIST_TOPICS_IMU;
-  static inline bool TOPICS_IsValid(int value) {
-    return PORTLIST_TOPICS_IsValid(value);
-  }
-  static constexpr TOPICS TOPICS_MIN =
-    PORTLIST_TOPICS_TOPICS_MIN;
-  static constexpr TOPICS TOPICS_MAX =
-    PORTLIST_TOPICS_TOPICS_MAX;
-  static constexpr int TOPICS_ARRAYSIZE =
-    PORTLIST_TOPICS_TOPICS_ARRAYSIZE;
-  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
-  TOPICS_descriptor() {
-    return PORTLIST_TOPICS_descriptor();
-  }
-  template<typename T>
-  static inline const std::string& TOPICS_Name(T enum_t_value) {
-    static_assert(::std::is_same<T, TOPICS>::value ||
-      ::std::is_integral<T>::value,
-      "Incorrect type passed to function TOPICS_Name.");
-    return PORTLIST_TOPICS_Name(enum_t_value);
-  }
-  static inline bool TOPICS_Parse(::PROTOBUF_NAMESPACE_ID::ConstStringParam name,
-      TOPICS* value) {
-    return PORTLIST_TOPICS_Parse(name, value);
-  }
-
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:messaging.PORTLIST)
+  enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
+  };
+  // double x = 1;
+  void clear_x();
+  double x() const;
+  void set_x(double value);
+  private:
+  double _internal_x() const;
+  void _internal_set_x(double value);
+  public:
+
+  // double y = 2;
+  void clear_y();
+  double y() const;
+  void set_y(double value);
+  private:
+  double _internal_y() const;
+  void _internal_set_y(double value);
+  public:
+
+  // double z = 3;
+  void clear_z();
+  double z() const;
+  void set_z(double value);
+  private:
+  double _internal_z() const;
+  void _internal_set_z(double value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:messaging.Vector3_msg)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  double x_;
+  double y_;
+  double z_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_message_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Quaternion_msg final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:messaging.Quaternion_msg) */ {
+ public:
+  inline Quaternion_msg() : Quaternion_msg(nullptr) {}
+  ~Quaternion_msg() override;
+  explicit constexpr Quaternion_msg(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Quaternion_msg(const Quaternion_msg& from);
+  Quaternion_msg(Quaternion_msg&& from) noexcept
+    : Quaternion_msg() {
+    *this = ::std::move(from);
+  }
+
+  inline Quaternion_msg& operator=(const Quaternion_msg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Quaternion_msg& operator=(Quaternion_msg&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Quaternion_msg& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Quaternion_msg* internal_default_instance() {
+    return reinterpret_cast<const Quaternion_msg*>(
+               &_Quaternion_msg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(Quaternion_msg& a, Quaternion_msg& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Quaternion_msg* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Quaternion_msg* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Quaternion_msg* New() const final {
+    return new Quaternion_msg();
+  }
+
+  Quaternion_msg* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Quaternion_msg>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Quaternion_msg& from);
+  void MergeFrom(const Quaternion_msg& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Quaternion_msg* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "messaging.Quaternion_msg";
+  }
+  protected:
+  explicit Quaternion_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kWFieldNumber = 1,
+    kXFieldNumber = 2,
+    kYFieldNumber = 3,
+    kZFieldNumber = 4,
+  };
+  // double w = 1;
+  void clear_w();
+  double w() const;
+  void set_w(double value);
+  private:
+  double _internal_w() const;
+  void _internal_set_w(double value);
+  public:
+
+  // double x = 2;
+  void clear_x();
+  double x() const;
+  void set_x(double value);
+  private:
+  double _internal_x() const;
+  void _internal_set_x(double value);
+  public:
+
+  // double y = 3;
+  void clear_y();
+  double y() const;
+  void set_y(double value);
+  private:
+  double _internal_y() const;
+  void _internal_set_y(double value);
+  public:
+
+  // double z = 4;
+  void clear_z();
+  double z() const;
+  void set_z(double value);
+  private:
+  double _internal_z() const;
+  void _internal_set_z(double value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:messaging.Quaternion_msg)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  double w_;
+  double x_;
+  double y_;
+  double z_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_message_2eproto;
 };
@@ -639,290 +747,531 @@ class PORTLIST final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// IMU
+// IMU_msg
 
-// repeated double quaternion = 1;
-inline int IMU::_internal_quaternion_size() const {
-  return quaternion_.size();
+// .messaging.Vector3_msg acceleration = 1;
+inline bool IMU_msg::_internal_has_acceleration() const {
+  return this != internal_default_instance() && acceleration_ != nullptr;
 }
-inline int IMU::quaternion_size() const {
-  return _internal_quaternion_size();
+inline bool IMU_msg::has_acceleration() const {
+  return _internal_has_acceleration();
 }
-inline void IMU::clear_quaternion() {
-  quaternion_.Clear();
+inline void IMU_msg::clear_acceleration() {
+  if (GetArenaForAllocation() == nullptr && acceleration_ != nullptr) {
+    delete acceleration_;
+  }
+  acceleration_ = nullptr;
 }
-inline double IMU::_internal_quaternion(int index) const {
-  return quaternion_.Get(index);
+inline const ::messaging::Vector3_msg& IMU_msg::_internal_acceleration() const {
+  const ::messaging::Vector3_msg* p = acceleration_;
+  return p != nullptr ? *p : reinterpret_cast<const ::messaging::Vector3_msg&>(
+      ::messaging::_Vector3_msg_default_instance_);
 }
-inline double IMU::quaternion(int index) const {
-  // @@protoc_insertion_point(field_get:messaging.IMU.quaternion)
-  return _internal_quaternion(index);
+inline const ::messaging::Vector3_msg& IMU_msg::acceleration() const {
+  // @@protoc_insertion_point(field_get:messaging.IMU_msg.acceleration)
+  return _internal_acceleration();
 }
-inline void IMU::set_quaternion(int index, double value) {
-  quaternion_.Set(index, value);
-  // @@protoc_insertion_point(field_set:messaging.IMU.quaternion)
+inline void IMU_msg::unsafe_arena_set_allocated_acceleration(
+    ::messaging::Vector3_msg* acceleration) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(acceleration_);
+  }
+  acceleration_ = acceleration;
+  if (acceleration) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:messaging.IMU_msg.acceleration)
 }
-inline void IMU::_internal_add_quaternion(double value) {
-  quaternion_.Add(value);
+inline ::messaging::Vector3_msg* IMU_msg::release_acceleration() {
+  
+  ::messaging::Vector3_msg* temp = acceleration_;
+  acceleration_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline void IMU::add_quaternion(double value) {
-  _internal_add_quaternion(value);
-  // @@protoc_insertion_point(field_add:messaging.IMU.quaternion)
+inline ::messaging::Vector3_msg* IMU_msg::unsafe_arena_release_acceleration() {
+  // @@protoc_insertion_point(field_release:messaging.IMU_msg.acceleration)
+  
+  ::messaging::Vector3_msg* temp = acceleration_;
+  acceleration_ = nullptr;
+  return temp;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-IMU::_internal_quaternion() const {
-  return quaternion_;
+inline ::messaging::Vector3_msg* IMU_msg::_internal_mutable_acceleration() {
+  
+  if (acceleration_ == nullptr) {
+    auto* p = CreateMaybeMessage<::messaging::Vector3_msg>(GetArenaForAllocation());
+    acceleration_ = p;
+  }
+  return acceleration_;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-IMU::quaternion() const {
-  // @@protoc_insertion_point(field_list:messaging.IMU.quaternion)
-  return _internal_quaternion();
+inline ::messaging::Vector3_msg* IMU_msg::mutable_acceleration() {
+  // @@protoc_insertion_point(field_mutable:messaging.IMU_msg.acceleration)
+  return _internal_mutable_acceleration();
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-IMU::_internal_mutable_quaternion() {
-  return &quaternion_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-IMU::mutable_quaternion() {
-  // @@protoc_insertion_point(field_mutable_list:messaging.IMU.quaternion)
-  return _internal_mutable_quaternion();
-}
-
-// repeated double rpy = 2;
-inline int IMU::_internal_rpy_size() const {
-  return rpy_.size();
-}
-inline int IMU::rpy_size() const {
-  return _internal_rpy_size();
-}
-inline void IMU::clear_rpy() {
-  rpy_.Clear();
-}
-inline double IMU::_internal_rpy(int index) const {
-  return rpy_.Get(index);
-}
-inline double IMU::rpy(int index) const {
-  // @@protoc_insertion_point(field_get:messaging.IMU.rpy)
-  return _internal_rpy(index);
-}
-inline void IMU::set_rpy(int index, double value) {
-  rpy_.Set(index, value);
-  // @@protoc_insertion_point(field_set:messaging.IMU.rpy)
-}
-inline void IMU::_internal_add_rpy(double value) {
-  rpy_.Add(value);
-}
-inline void IMU::add_rpy(double value) {
-  _internal_add_rpy(value);
-  // @@protoc_insertion_point(field_add:messaging.IMU.rpy)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-IMU::_internal_rpy() const {
-  return rpy_;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-IMU::rpy() const {
-  // @@protoc_insertion_point(field_list:messaging.IMU.rpy)
-  return _internal_rpy();
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-IMU::_internal_mutable_rpy() {
-  return &rpy_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-IMU::mutable_rpy() {
-  // @@protoc_insertion_point(field_mutable_list:messaging.IMU.rpy)
-  return _internal_mutable_rpy();
+inline void IMU_msg::set_allocated_acceleration(::messaging::Vector3_msg* acceleration) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete acceleration_;
+  }
+  if (acceleration) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::messaging::Vector3_msg>::GetOwningArena(acceleration);
+    if (message_arena != submessage_arena) {
+      acceleration = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, acceleration, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  acceleration_ = acceleration;
+  // @@protoc_insertion_point(field_set_allocated:messaging.IMU_msg.acceleration)
 }
 
-// repeated double gyro = 3;
-inline int IMU::_internal_gyro_size() const {
-  return gyro_.size();
+// .messaging.Vector3_msg gyroscope = 2;
+inline bool IMU_msg::_internal_has_gyroscope() const {
+  return this != internal_default_instance() && gyroscope_ != nullptr;
 }
-inline int IMU::gyro_size() const {
-  return _internal_gyro_size();
+inline bool IMU_msg::has_gyroscope() const {
+  return _internal_has_gyroscope();
 }
-inline void IMU::clear_gyro() {
-  gyro_.Clear();
+inline void IMU_msg::clear_gyroscope() {
+  if (GetArenaForAllocation() == nullptr && gyroscope_ != nullptr) {
+    delete gyroscope_;
+  }
+  gyroscope_ = nullptr;
 }
-inline double IMU::_internal_gyro(int index) const {
-  return gyro_.Get(index);
+inline const ::messaging::Vector3_msg& IMU_msg::_internal_gyroscope() const {
+  const ::messaging::Vector3_msg* p = gyroscope_;
+  return p != nullptr ? *p : reinterpret_cast<const ::messaging::Vector3_msg&>(
+      ::messaging::_Vector3_msg_default_instance_);
 }
-inline double IMU::gyro(int index) const {
-  // @@protoc_insertion_point(field_get:messaging.IMU.gyro)
-  return _internal_gyro(index);
+inline const ::messaging::Vector3_msg& IMU_msg::gyroscope() const {
+  // @@protoc_insertion_point(field_get:messaging.IMU_msg.gyroscope)
+  return _internal_gyroscope();
 }
-inline void IMU::set_gyro(int index, double value) {
-  gyro_.Set(index, value);
-  // @@protoc_insertion_point(field_set:messaging.IMU.gyro)
+inline void IMU_msg::unsafe_arena_set_allocated_gyroscope(
+    ::messaging::Vector3_msg* gyroscope) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(gyroscope_);
+  }
+  gyroscope_ = gyroscope;
+  if (gyroscope) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:messaging.IMU_msg.gyroscope)
 }
-inline void IMU::_internal_add_gyro(double value) {
-  gyro_.Add(value);
+inline ::messaging::Vector3_msg* IMU_msg::release_gyroscope() {
+  
+  ::messaging::Vector3_msg* temp = gyroscope_;
+  gyroscope_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline void IMU::add_gyro(double value) {
-  _internal_add_gyro(value);
-  // @@protoc_insertion_point(field_add:messaging.IMU.gyro)
+inline ::messaging::Vector3_msg* IMU_msg::unsafe_arena_release_gyroscope() {
+  // @@protoc_insertion_point(field_release:messaging.IMU_msg.gyroscope)
+  
+  ::messaging::Vector3_msg* temp = gyroscope_;
+  gyroscope_ = nullptr;
+  return temp;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-IMU::_internal_gyro() const {
-  return gyro_;
+inline ::messaging::Vector3_msg* IMU_msg::_internal_mutable_gyroscope() {
+  
+  if (gyroscope_ == nullptr) {
+    auto* p = CreateMaybeMessage<::messaging::Vector3_msg>(GetArenaForAllocation());
+    gyroscope_ = p;
+  }
+  return gyroscope_;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-IMU::gyro() const {
-  // @@protoc_insertion_point(field_list:messaging.IMU.gyro)
-  return _internal_gyro();
+inline ::messaging::Vector3_msg* IMU_msg::mutable_gyroscope() {
+  // @@protoc_insertion_point(field_mutable:messaging.IMU_msg.gyroscope)
+  return _internal_mutable_gyroscope();
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-IMU::_internal_mutable_gyro() {
-  return &gyro_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-IMU::mutable_gyro() {
-  // @@protoc_insertion_point(field_mutable_list:messaging.IMU.gyro)
-  return _internal_mutable_gyro();
+inline void IMU_msg::set_allocated_gyroscope(::messaging::Vector3_msg* gyroscope) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete gyroscope_;
+  }
+  if (gyroscope) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::messaging::Vector3_msg>::GetOwningArena(gyroscope);
+    if (message_arena != submessage_arena) {
+      gyroscope = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, gyroscope, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  gyroscope_ = gyroscope;
+  // @@protoc_insertion_point(field_set_allocated:messaging.IMU_msg.gyroscope)
 }
 
-// double time = 4;
-inline void IMU::clear_time() {
+// double time = 3;
+inline void IMU_msg::clear_time() {
   time_ = 0;
 }
-inline double IMU::_internal_time() const {
+inline double IMU_msg::_internal_time() const {
   return time_;
 }
-inline double IMU::time() const {
-  // @@protoc_insertion_point(field_get:messaging.IMU.time)
+inline double IMU_msg::time() const {
+  // @@protoc_insertion_point(field_get:messaging.IMU_msg.time)
   return _internal_time();
 }
-inline void IMU::_internal_set_time(double value) {
+inline void IMU_msg::_internal_set_time(double value) {
   
   time_ = value;
 }
-inline void IMU::set_time(double value) {
+inline void IMU_msg::set_time(double value) {
   _internal_set_time(value);
-  // @@protoc_insertion_point(field_set:messaging.IMU.time)
+  // @@protoc_insertion_point(field_set:messaging.IMU_msg.time)
 }
 
 // -------------------------------------------------------------------
 
-// VICON
+// Vicon_msg
 
-// repeated double position = 1;
-inline int VICON::_internal_position_size() const {
-  return position_.size();
+// .messaging.Vector3_msg position = 1;
+inline bool Vicon_msg::_internal_has_position() const {
+  return this != internal_default_instance() && position_ != nullptr;
 }
-inline int VICON::position_size() const {
-  return _internal_position_size();
+inline bool Vicon_msg::has_position() const {
+  return _internal_has_position();
 }
-inline void VICON::clear_position() {
-  position_.Clear();
+inline void Vicon_msg::clear_position() {
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
 }
-inline double VICON::_internal_position(int index) const {
-  return position_.Get(index);
+inline const ::messaging::Vector3_msg& Vicon_msg::_internal_position() const {
+  const ::messaging::Vector3_msg* p = position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::messaging::Vector3_msg&>(
+      ::messaging::_Vector3_msg_default_instance_);
 }
-inline double VICON::position(int index) const {
-  // @@protoc_insertion_point(field_get:messaging.VICON.position)
-  return _internal_position(index);
-}
-inline void VICON::set_position(int index, double value) {
-  position_.Set(index, value);
-  // @@protoc_insertion_point(field_set:messaging.VICON.position)
-}
-inline void VICON::_internal_add_position(double value) {
-  position_.Add(value);
-}
-inline void VICON::add_position(double value) {
-  _internal_add_position(value);
-  // @@protoc_insertion_point(field_add:messaging.VICON.position)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-VICON::_internal_position() const {
-  return position_;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-VICON::position() const {
-  // @@protoc_insertion_point(field_list:messaging.VICON.position)
+inline const ::messaging::Vector3_msg& Vicon_msg::position() const {
+  // @@protoc_insertion_point(field_get:messaging.Vicon_msg.position)
   return _internal_position();
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-VICON::_internal_mutable_position() {
-  return &position_;
+inline void Vicon_msg::unsafe_arena_set_allocated_position(
+    ::messaging::Vector3_msg* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position_);
+  }
+  position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:messaging.Vicon_msg.position)
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-VICON::mutable_position() {
-  // @@protoc_insertion_point(field_mutable_list:messaging.VICON.position)
+inline ::messaging::Vector3_msg* Vicon_msg::release_position() {
+  
+  ::messaging::Vector3_msg* temp = position_;
+  position_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::messaging::Vector3_msg* Vicon_msg::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:messaging.Vicon_msg.position)
+  
+  ::messaging::Vector3_msg* temp = position_;
+  position_ = nullptr;
+  return temp;
+}
+inline ::messaging::Vector3_msg* Vicon_msg::_internal_mutable_position() {
+  
+  if (position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::messaging::Vector3_msg>(GetArenaForAllocation());
+    position_ = p;
+  }
+  return position_;
+}
+inline ::messaging::Vector3_msg* Vicon_msg::mutable_position() {
+  // @@protoc_insertion_point(field_mutable:messaging.Vicon_msg.position)
   return _internal_mutable_position();
 }
+inline void Vicon_msg::set_allocated_position(::messaging::Vector3_msg* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete position_;
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::messaging::Vector3_msg>::GetOwningArena(position);
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:messaging.Vicon_msg.position)
+}
 
-// repeated double quaternion = 2;
-inline int VICON::_internal_quaternion_size() const {
-  return quaternion_.size();
+// .messaging.Quaternion_msg quaternion = 2;
+inline bool Vicon_msg::_internal_has_quaternion() const {
+  return this != internal_default_instance() && quaternion_ != nullptr;
 }
-inline int VICON::quaternion_size() const {
-  return _internal_quaternion_size();
+inline bool Vicon_msg::has_quaternion() const {
+  return _internal_has_quaternion();
 }
-inline void VICON::clear_quaternion() {
-  quaternion_.Clear();
+inline void Vicon_msg::clear_quaternion() {
+  if (GetArenaForAllocation() == nullptr && quaternion_ != nullptr) {
+    delete quaternion_;
+  }
+  quaternion_ = nullptr;
 }
-inline double VICON::_internal_quaternion(int index) const {
-  return quaternion_.Get(index);
+inline const ::messaging::Quaternion_msg& Vicon_msg::_internal_quaternion() const {
+  const ::messaging::Quaternion_msg* p = quaternion_;
+  return p != nullptr ? *p : reinterpret_cast<const ::messaging::Quaternion_msg&>(
+      ::messaging::_Quaternion_msg_default_instance_);
 }
-inline double VICON::quaternion(int index) const {
-  // @@protoc_insertion_point(field_get:messaging.VICON.quaternion)
-  return _internal_quaternion(index);
-}
-inline void VICON::set_quaternion(int index, double value) {
-  quaternion_.Set(index, value);
-  // @@protoc_insertion_point(field_set:messaging.VICON.quaternion)
-}
-inline void VICON::_internal_add_quaternion(double value) {
-  quaternion_.Add(value);
-}
-inline void VICON::add_quaternion(double value) {
-  _internal_add_quaternion(value);
-  // @@protoc_insertion_point(field_add:messaging.VICON.quaternion)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-VICON::_internal_quaternion() const {
-  return quaternion_;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-VICON::quaternion() const {
-  // @@protoc_insertion_point(field_list:messaging.VICON.quaternion)
+inline const ::messaging::Quaternion_msg& Vicon_msg::quaternion() const {
+  // @@protoc_insertion_point(field_get:messaging.Vicon_msg.quaternion)
   return _internal_quaternion();
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-VICON::_internal_mutable_quaternion() {
-  return &quaternion_;
+inline void Vicon_msg::unsafe_arena_set_allocated_quaternion(
+    ::messaging::Quaternion_msg* quaternion) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(quaternion_);
+  }
+  quaternion_ = quaternion;
+  if (quaternion) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:messaging.Vicon_msg.quaternion)
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-VICON::mutable_quaternion() {
-  // @@protoc_insertion_point(field_mutable_list:messaging.VICON.quaternion)
+inline ::messaging::Quaternion_msg* Vicon_msg::release_quaternion() {
+  
+  ::messaging::Quaternion_msg* temp = quaternion_;
+  quaternion_ = nullptr;
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::messaging::Quaternion_msg* Vicon_msg::unsafe_arena_release_quaternion() {
+  // @@protoc_insertion_point(field_release:messaging.Vicon_msg.quaternion)
+  
+  ::messaging::Quaternion_msg* temp = quaternion_;
+  quaternion_ = nullptr;
+  return temp;
+}
+inline ::messaging::Quaternion_msg* Vicon_msg::_internal_mutable_quaternion() {
+  
+  if (quaternion_ == nullptr) {
+    auto* p = CreateMaybeMessage<::messaging::Quaternion_msg>(GetArenaForAllocation());
+    quaternion_ = p;
+  }
+  return quaternion_;
+}
+inline ::messaging::Quaternion_msg* Vicon_msg::mutable_quaternion() {
+  // @@protoc_insertion_point(field_mutable:messaging.Vicon_msg.quaternion)
   return _internal_mutable_quaternion();
 }
+inline void Vicon_msg::set_allocated_quaternion(::messaging::Quaternion_msg* quaternion) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete quaternion_;
+  }
+  if (quaternion) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::messaging::Quaternion_msg>::GetOwningArena(quaternion);
+    if (message_arena != submessage_arena) {
+      quaternion = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, quaternion, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  quaternion_ = quaternion;
+  // @@protoc_insertion_point(field_set_allocated:messaging.Vicon_msg.quaternion)
+}
 
-// double time = 4;
-inline void VICON::clear_time() {
+// double time = 3;
+inline void Vicon_msg::clear_time() {
   time_ = 0;
 }
-inline double VICON::_internal_time() const {
+inline double Vicon_msg::_internal_time() const {
   return time_;
 }
-inline double VICON::time() const {
-  // @@protoc_insertion_point(field_get:messaging.VICON.time)
+inline double Vicon_msg::time() const {
+  // @@protoc_insertion_point(field_get:messaging.Vicon_msg.time)
   return _internal_time();
 }
-inline void VICON::_internal_set_time(double value) {
+inline void Vicon_msg::_internal_set_time(double value) {
   
   time_ = value;
 }
-inline void VICON::set_time(double value) {
+inline void Vicon_msg::set_time(double value) {
   _internal_set_time(value);
-  // @@protoc_insertion_point(field_set:messaging.VICON.time)
+  // @@protoc_insertion_point(field_set:messaging.Vicon_msg.time)
 }
 
 // -------------------------------------------------------------------
 
-// PORTLIST
+// Vector3_msg
+
+// double x = 1;
+inline void Vector3_msg::clear_x() {
+  x_ = 0;
+}
+inline double Vector3_msg::_internal_x() const {
+  return x_;
+}
+inline double Vector3_msg::x() const {
+  // @@protoc_insertion_point(field_get:messaging.Vector3_msg.x)
+  return _internal_x();
+}
+inline void Vector3_msg::_internal_set_x(double value) {
+  
+  x_ = value;
+}
+inline void Vector3_msg::set_x(double value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:messaging.Vector3_msg.x)
+}
+
+// double y = 2;
+inline void Vector3_msg::clear_y() {
+  y_ = 0;
+}
+inline double Vector3_msg::_internal_y() const {
+  return y_;
+}
+inline double Vector3_msg::y() const {
+  // @@protoc_insertion_point(field_get:messaging.Vector3_msg.y)
+  return _internal_y();
+}
+inline void Vector3_msg::_internal_set_y(double value) {
+  
+  y_ = value;
+}
+inline void Vector3_msg::set_y(double value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:messaging.Vector3_msg.y)
+}
+
+// double z = 3;
+inline void Vector3_msg::clear_z() {
+  z_ = 0;
+}
+inline double Vector3_msg::_internal_z() const {
+  return z_;
+}
+inline double Vector3_msg::z() const {
+  // @@protoc_insertion_point(field_get:messaging.Vector3_msg.z)
+  return _internal_z();
+}
+inline void Vector3_msg::_internal_set_z(double value) {
+  
+  z_ = value;
+}
+inline void Vector3_msg::set_z(double value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:messaging.Vector3_msg.z)
+}
+
+// -------------------------------------------------------------------
+
+// Quaternion_msg
+
+// double w = 1;
+inline void Quaternion_msg::clear_w() {
+  w_ = 0;
+}
+inline double Quaternion_msg::_internal_w() const {
+  return w_;
+}
+inline double Quaternion_msg::w() const {
+  // @@protoc_insertion_point(field_get:messaging.Quaternion_msg.w)
+  return _internal_w();
+}
+inline void Quaternion_msg::_internal_set_w(double value) {
+  
+  w_ = value;
+}
+inline void Quaternion_msg::set_w(double value) {
+  _internal_set_w(value);
+  // @@protoc_insertion_point(field_set:messaging.Quaternion_msg.w)
+}
+
+// double x = 2;
+inline void Quaternion_msg::clear_x() {
+  x_ = 0;
+}
+inline double Quaternion_msg::_internal_x() const {
+  return x_;
+}
+inline double Quaternion_msg::x() const {
+  // @@protoc_insertion_point(field_get:messaging.Quaternion_msg.x)
+  return _internal_x();
+}
+inline void Quaternion_msg::_internal_set_x(double value) {
+  
+  x_ = value;
+}
+inline void Quaternion_msg::set_x(double value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:messaging.Quaternion_msg.x)
+}
+
+// double y = 3;
+inline void Quaternion_msg::clear_y() {
+  y_ = 0;
+}
+inline double Quaternion_msg::_internal_y() const {
+  return y_;
+}
+inline double Quaternion_msg::y() const {
+  // @@protoc_insertion_point(field_get:messaging.Quaternion_msg.y)
+  return _internal_y();
+}
+inline void Quaternion_msg::_internal_set_y(double value) {
+  
+  y_ = value;
+}
+inline void Quaternion_msg::set_y(double value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:messaging.Quaternion_msg.y)
+}
+
+// double z = 4;
+inline void Quaternion_msg::clear_z() {
+  z_ = 0;
+}
+inline double Quaternion_msg::_internal_z() const {
+  return z_;
+}
+inline double Quaternion_msg::z() const {
+  // @@protoc_insertion_point(field_get:messaging.Quaternion_msg.z)
+  return _internal_z();
+}
+inline void Quaternion_msg::_internal_set_z(double value) {
+  
+  z_ = value;
+}
+inline void Quaternion_msg::set_z(double value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:messaging.Quaternion_msg.z)
+}
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
@@ -931,20 +1280,12 @@ inline void VICON::set_time(double value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace messaging
-
-PROTOBUF_NAMESPACE_OPEN
-
-template <> struct is_proto_enum< ::messaging::PORTLIST_TOPICS> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::messaging::PORTLIST_TOPICS>() {
-  return ::messaging::PORTLIST_TOPICS_descriptor();
-}
-
-PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

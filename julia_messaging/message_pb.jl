@@ -2,13 +2,13 @@
 using ProtoBuf
 import ProtoBuf.meta
 
-mutable struct IMU <: ProtoType
+mutable struct Vector3_msg <: ProtoType
     __protobuf_jl_internal_meta::ProtoMeta
     __protobuf_jl_internal_values::Dict{Symbol,Any}
     __protobuf_jl_internal_defaultset::Set{Symbol}
 
-    function IMU(; kwargs...)
-        obj = new(meta(IMU), Dict{Symbol,Any}(), Set{Symbol}())
+    function Vector3_msg(; kwargs...)
+        obj = new(meta(Vector3_msg), Dict{Symbol,Any}(), Set{Symbol}())
         values = obj.__protobuf_jl_internal_values
         symdict = obj.__protobuf_jl_internal_meta.symdict
         for nv in kwargs
@@ -21,26 +21,66 @@ mutable struct IMU <: ProtoType
         end
         obj
     end
-end # mutable struct IMU
-const __meta_IMU = Ref{ProtoMeta}()
-function meta(::Type{IMU})
+end # mutable struct Vector3_msg
+const __meta_Vector3_msg = Ref{ProtoMeta}()
+function meta(::Type{Vector3_msg})
     ProtoBuf.metalock() do
-        if !isassigned(__meta_IMU)
-            __meta_IMU[] = target = ProtoMeta(IMU)
-            pack = Symbol[:quaternion,:rpy,:gyro]
-            allflds = Pair{Symbol,Union{Type,String}}[:quaternion => Base.Vector{Float64}, :rpy => Base.Vector{Float64}, :gyro => Base.Vector{Float64}, :time => Float64]
-            meta(target, IMU, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, pack, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        if !isassigned(__meta_Vector3_msg)
+            __meta_Vector3_msg[] = target = ProtoMeta(Vector3_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:x => Float64, :y => Float64, :z => Float64]
+            meta(target, Vector3_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
         end
-        __meta_IMU[]
+        __meta_Vector3_msg[]
     end
 end
-function Base.getproperty(obj::IMU, name::Symbol)
-    if name === :quaternion
-        return (obj.__protobuf_jl_internal_values[name])::Base.Vector{Float64}
-    elseif name === :rpy
-        return (obj.__protobuf_jl_internal_values[name])::Base.Vector{Float64}
-    elseif name === :gyro
-        return (obj.__protobuf_jl_internal_values[name])::Base.Vector{Float64}
+function Base.getproperty(obj::Vector3_msg, name::Symbol)
+    if name === :x
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :y
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :z
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    else
+        getfield(obj, name)
+    end
+end
+
+mutable struct IMU_msg <: ProtoType
+    __protobuf_jl_internal_meta::ProtoMeta
+    __protobuf_jl_internal_values::Dict{Symbol,Any}
+    __protobuf_jl_internal_defaultset::Set{Symbol}
+
+    function IMU_msg(; kwargs...)
+        obj = new(meta(IMU_msg), Dict{Symbol,Any}(), Set{Symbol}())
+        values = obj.__protobuf_jl_internal_values
+        symdict = obj.__protobuf_jl_internal_meta.symdict
+        for nv in kwargs
+            fldname, fldval = nv
+            fldtype = symdict[fldname].jtyp
+            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
+            if fldval !== nothing
+                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
+            end
+        end
+        obj
+    end
+end # mutable struct IMU_msg
+const __meta_IMU_msg = Ref{ProtoMeta}()
+function meta(::Type{IMU_msg})
+    ProtoBuf.metalock() do
+        if !isassigned(__meta_IMU_msg)
+            __meta_IMU_msg[] = target = ProtoMeta(IMU_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:acceleration => Vector3_msg, :gyroscope => Vector3_msg, :time => Float64]
+            meta(target, IMU_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        end
+        __meta_IMU_msg[]
+    end
+end
+function Base.getproperty(obj::IMU_msg, name::Symbol)
+    if name === :acceleration
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :gyroscope
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
     elseif name === :time
         return (obj.__protobuf_jl_internal_values[name])::Float64
     else
@@ -48,13 +88,13 @@ function Base.getproperty(obj::IMU, name::Symbol)
     end
 end
 
-mutable struct VICON <: ProtoType
+mutable struct Quaternion_msg <: ProtoType
     __protobuf_jl_internal_meta::ProtoMeta
     __protobuf_jl_internal_values::Dict{Symbol,Any}
     __protobuf_jl_internal_defaultset::Set{Symbol}
 
-    function VICON(; kwargs...)
-        obj = new(meta(VICON), Dict{Symbol,Any}(), Set{Symbol}())
+    function Quaternion_msg(; kwargs...)
+        obj = new(meta(Quaternion_msg), Dict{Symbol,Any}(), Set{Symbol}())
         values = obj.__protobuf_jl_internal_values
         symdict = obj.__protobuf_jl_internal_meta.symdict
         for nv in kwargs
@@ -67,24 +107,68 @@ mutable struct VICON <: ProtoType
         end
         obj
     end
-end # mutable struct VICON
-const __meta_VICON = Ref{ProtoMeta}()
-function meta(::Type{VICON})
+end # mutable struct Quaternion_msg
+const __meta_Quaternion_msg = Ref{ProtoMeta}()
+function meta(::Type{Quaternion_msg})
     ProtoBuf.metalock() do
-        if !isassigned(__meta_VICON)
-            __meta_VICON[] = target = ProtoMeta(VICON)
-            pack = Symbol[:position,:quaternion]
-            allflds = Pair{Symbol,Union{Type,String}}[:position => Base.Vector{Float64}, :quaternion => Base.Vector{Float64}, :time => Float64]
-            meta(target, VICON, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, pack, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        if !isassigned(__meta_Quaternion_msg)
+            __meta_Quaternion_msg[] = target = ProtoMeta(Quaternion_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:w => Float64, :x => Float64, :y => Float64, :z => Float64]
+            meta(target, Quaternion_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
         end
-        __meta_VICON[]
+        __meta_Quaternion_msg[]
     end
 end
-function Base.getproperty(obj::VICON, name::Symbol)
+function Base.getproperty(obj::Quaternion_msg, name::Symbol)
+    if name === :w
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :x
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :y
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :z
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    else
+        getfield(obj, name)
+    end
+end
+
+mutable struct Vicon_msg <: ProtoType
+    __protobuf_jl_internal_meta::ProtoMeta
+    __protobuf_jl_internal_values::Dict{Symbol,Any}
+    __protobuf_jl_internal_defaultset::Set{Symbol}
+
+    function Vicon_msg(; kwargs...)
+        obj = new(meta(Vicon_msg), Dict{Symbol,Any}(), Set{Symbol}())
+        values = obj.__protobuf_jl_internal_values
+        symdict = obj.__protobuf_jl_internal_meta.symdict
+        for nv in kwargs
+            fldname, fldval = nv
+            fldtype = symdict[fldname].jtyp
+            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
+            if fldval !== nothing
+                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
+            end
+        end
+        obj
+    end
+end # mutable struct Vicon_msg
+const __meta_Vicon_msg = Ref{ProtoMeta}()
+function meta(::Type{Vicon_msg})
+    ProtoBuf.metalock() do
+        if !isassigned(__meta_Vicon_msg)
+            __meta_Vicon_msg[] = target = ProtoMeta(Vicon_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:position => Vector3_msg, :quaternion => Quaternion_msg, :time => Float64]
+            meta(target, Vicon_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        end
+        __meta_Vicon_msg[]
+    end
+end
+function Base.getproperty(obj::Vicon_msg, name::Symbol)
     if name === :position
-        return (obj.__protobuf_jl_internal_values[name])::Base.Vector{Float64}
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
     elseif name === :quaternion
-        return (obj.__protobuf_jl_internal_values[name])::Base.Vector{Float64}
+        return (obj.__protobuf_jl_internal_values[name])::Quaternion_msg
     elseif name === :time
         return (obj.__protobuf_jl_internal_values[name])::Float64
     else
@@ -92,41 +176,4 @@ function Base.getproperty(obj::VICON, name::Symbol)
     end
 end
 
-const PROPERTY_NAME = (;[
-    Symbol("IMU") => Int32(0),
-    Symbol("VICON") => Int32(1),
-]...)
-
-mutable struct PROPERTY <: ProtoType
-    __protobuf_jl_internal_meta::ProtoMeta
-    __protobuf_jl_internal_values::Dict{Symbol,Any}
-    __protobuf_jl_internal_defaultset::Set{Symbol}
-
-    function PROPERTY(; kwargs...)
-        obj = new(meta(PROPERTY), Dict{Symbol,Any}(), Set{Symbol}())
-        values = obj.__protobuf_jl_internal_values
-        symdict = obj.__protobuf_jl_internal_meta.symdict
-        for nv in kwargs
-            fldname, fldval = nv
-            fldtype = symdict[fldname].jtyp
-            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
-            if fldval !== nothing
-                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
-            end
-        end
-        obj
-    end
-end # mutable struct PROPERTY
-const __meta_PROPERTY = Ref{ProtoMeta}()
-function meta(::Type{PROPERTY})
-    ProtoBuf.metalock() do
-        if !isassigned(__meta_PROPERTY)
-            __meta_PROPERTY[] = target = ProtoMeta(PROPERTY)
-            allflds = Pair{Symbol,Union{Type,String}}[]
-            meta(target, PROPERTY, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
-        end
-        __meta_PROPERTY[]
-    end
-end
-
-export IMU, VICON, PROPERTY_NAME, PROPERTY
+export IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg

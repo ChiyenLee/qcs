@@ -8,6 +8,6 @@ dir_path = @__DIR__
 ProtoBuf.protoc(`-I=$dir_path/../../ --julia_out=. message.proto`);
 include("../message_pb.jl")
 include("messaging.jl")
-export create_pub, create_sub
+export create_pub, create_sub, subscriber_thread
 
 end # module

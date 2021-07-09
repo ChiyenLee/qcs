@@ -19,114 +19,36 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"B\n\x03IMU\x12\x12\n\nquaternion\x18\x01 \x03(\x01\x12\x0b\n\x03rpy\x18\x02 \x03(\x01\x12\x0c\n\x04gyro\x18\x03 \x03(\x01\x12\x0c\n\x04time\x18\x04 \x01(\x01\";\n\x05VICON\x12\x10\n\x08position\x18\x01 \x03(\x01\x12\x12\n\nquaternion\x18\x02 \x03(\x01\x12\x0c\n\x04time\x18\x03 \x01(\x01\"&\n\x08PROPERTY\"\x1a\n\x04NAME\x12\x07\n\x03IMU\x10\x00\x12\t\n\x05VICON\x10\x01\x62\x06proto3'
+  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"p\n\x07IMU_msg\x12,\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12)\n\tgyroscope\x18\x02 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\"r\n\tVicon_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\".\n\x0bVector3_msg\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\x0eQuaternion_msg\x12\t\n\x01w\x18\x01 \x01(\x01\x12\t\n\x01x\x18\x02 \x01(\x01\x12\t\n\x01y\x18\x03 \x01(\x01\x12\t\n\x01z\x18\x04 \x01(\x01\x62\x06proto3'
 )
 
 
 
-_PROPERTY_NAME = _descriptor.EnumDescriptor(
-  name='NAME',
-  full_name='messaging.PROPERTY.NAME',
-  filename=None,
-  file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
-  values=[
-    _descriptor.EnumValueDescriptor(
-      name='IMU', index=0, number=0,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-    _descriptor.EnumValueDescriptor(
-      name='VICON', index=1, number=1,
-      serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
-  ],
-  containing_type=None,
-  serialized_options=None,
-  serialized_start=169,
-  serialized_end=195,
-)
-_sym_db.RegisterEnumDescriptor(_PROPERTY_NAME)
 
-
-_IMU = _descriptor.Descriptor(
-  name='IMU',
-  full_name='messaging.IMU',
+_IMU_MSG = _descriptor.Descriptor(
+  name='IMU_msg',
+  full_name='messaging.IMU_msg',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='quaternion', full_name='messaging.IMU.quaternion', index=0,
-      number=1, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
+      name='acceleration', full_name='messaging.IMU_msg.acceleration', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='rpy', full_name='messaging.IMU.rpy', index=1,
-      number=2, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
+      name='gyroscope', full_name='messaging.IMU_msg.gyroscope', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='gyro', full_name='messaging.IMU.gyro', index=2,
-      number=3, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.IMU.time', index=3,
-      number=4, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=28,
-  serialized_end=94,
-)
-
-
-_VICON = _descriptor.Descriptor(
-  name='VICON',
-  full_name='messaging.VICON',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='position', full_name='messaging.VICON.position', index=0,
-      number=1, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='quaternion', full_name='messaging.VICON.quaternion', index=1,
-      number=2, type=1, cpp_type=5, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.VICON.time', index=2,
+      name='time', full_name='messaging.IMU_msg.time', index=2,
       number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -144,25 +66,45 @@ _VICON = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=96,
-  serialized_end=155,
+  serialized_start=28,
+  serialized_end=140,
 )
 
 
-_PROPERTY = _descriptor.Descriptor(
-  name='PROPERTY',
-  full_name='messaging.PROPERTY',
+_VICON_MSG = _descriptor.Descriptor(
+  name='Vicon_msg',
+  full_name='messaging.Vicon_msg',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='position', full_name='messaging.Vicon_msg.position', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='quaternion', full_name='messaging.Vicon_msg.quaternion', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='time', full_name='messaging.Vicon_msg.time', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
-    _PROPERTY_NAME,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -170,36 +112,146 @@ _PROPERTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=157,
-  serialized_end=195,
+  serialized_start=142,
+  serialized_end=256,
 )
 
-_PROPERTY_NAME.containing_type = _PROPERTY
-DESCRIPTOR.message_types_by_name['IMU'] = _IMU
-DESCRIPTOR.message_types_by_name['VICON'] = _VICON
-DESCRIPTOR.message_types_by_name['PROPERTY'] = _PROPERTY
+
+_VECTOR3_MSG = _descriptor.Descriptor(
+  name='Vector3_msg',
+  full_name='messaging.Vector3_msg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='x', full_name='messaging.Vector3_msg.x', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='y', full_name='messaging.Vector3_msg.y', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='z', full_name='messaging.Vector3_msg.z', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=258,
+  serialized_end=304,
+)
+
+
+_QUATERNION_MSG = _descriptor.Descriptor(
+  name='Quaternion_msg',
+  full_name='messaging.Quaternion_msg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='w', full_name='messaging.Quaternion_msg.w', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='x', full_name='messaging.Quaternion_msg.x', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='y', full_name='messaging.Quaternion_msg.y', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='z', full_name='messaging.Quaternion_msg.z', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=306,
+  serialized_end=366,
+)
+
+_IMU_MSG.fields_by_name['acceleration'].message_type = _VECTOR3_MSG
+_IMU_MSG.fields_by_name['gyroscope'].message_type = _VECTOR3_MSG
+_VICON_MSG.fields_by_name['position'].message_type = _VECTOR3_MSG
+_VICON_MSG.fields_by_name['quaternion'].message_type = _QUATERNION_MSG
+DESCRIPTOR.message_types_by_name['IMU_msg'] = _IMU_MSG
+DESCRIPTOR.message_types_by_name['Vicon_msg'] = _VICON_MSG
+DESCRIPTOR.message_types_by_name['Vector3_msg'] = _VECTOR3_MSG
+DESCRIPTOR.message_types_by_name['Quaternion_msg'] = _QUATERNION_MSG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-IMU = _reflection.GeneratedProtocolMessageType('IMU', (_message.Message,), {
-  'DESCRIPTOR' : _IMU,
+IMU_msg = _reflection.GeneratedProtocolMessageType('IMU_msg', (_message.Message,), {
+  'DESCRIPTOR' : _IMU_MSG,
   '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.IMU)
+  # @@protoc_insertion_point(class_scope:messaging.IMU_msg)
   })
-_sym_db.RegisterMessage(IMU)
+_sym_db.RegisterMessage(IMU_msg)
 
-VICON = _reflection.GeneratedProtocolMessageType('VICON', (_message.Message,), {
-  'DESCRIPTOR' : _VICON,
+Vicon_msg = _reflection.GeneratedProtocolMessageType('Vicon_msg', (_message.Message,), {
+  'DESCRIPTOR' : _VICON_MSG,
   '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.VICON)
+  # @@protoc_insertion_point(class_scope:messaging.Vicon_msg)
   })
-_sym_db.RegisterMessage(VICON)
+_sym_db.RegisterMessage(Vicon_msg)
 
-PROPERTY = _reflection.GeneratedProtocolMessageType('PROPERTY', (_message.Message,), {
-  'DESCRIPTOR' : _PROPERTY,
+Vector3_msg = _reflection.GeneratedProtocolMessageType('Vector3_msg', (_message.Message,), {
+  'DESCRIPTOR' : _VECTOR3_MSG,
   '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.PROPERTY)
+  # @@protoc_insertion_point(class_scope:messaging.Vector3_msg)
   })
-_sym_db.RegisterMessage(PROPERTY)
+_sym_db.RegisterMessage(Vector3_msg)
+
+Quaternion_msg = _reflection.GeneratedProtocolMessageType('Quaternion_msg', (_message.Message,), {
+  'DESCRIPTOR' : _QUATERNION_MSG,
+  '__module__' : 'message_pb2'
+  # @@protoc_insertion_point(class_scope:messaging.Quaternion_msg)
+  })
+_sym_db.RegisterMessage(Quaternion_msg)
 
 
 # @@protoc_insertion_point(module_scope)

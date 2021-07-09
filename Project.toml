@@ -1,0 +1,3 @@
+[deps]
+julia_messaging = "c527aef6-4cdf-470b-ad7c-87f71793246a"
+quadruped_control = "d958cecb-4d0c-4584-990b-bebfe77f8d05"

@@ -1,3 +1,5 @@
+import sys 
+sys.path.append("..")
 from pymessaging import messaging
 from pymessaging import logger
 import zmq 
@@ -7,8 +9,8 @@ import pymessaging.message_pb2 as msg
 ctx = zmq.Context()
 vicon_sub = messaging.create_sub(ctx, "5000")
 imu_sub = messaging.create_sub(ctx, "5002")
-vicon = msg.VICON()
-imu = msg.IMU()
+vicon = msg.Vicon_msg()
+imu = msg.IMU_msg()
 
 print("waiting for data")
 poller = zmq.Poller()
@@ -27,6 +29,7 @@ try:
         if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN:
             data = vicon_sub.recv(zmq.DONTWAIT)
             vicon.ParseFromString(data)
+            print(vicon)
             
         
 
