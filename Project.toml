@@ -1,3 +1,4 @@
 [deps]
+ProtoBuf = "3349acd9-ac6a-5e09-bcdb-63829b23a429"
 julia_messaging = "c527aef6-4cdf-470b-ad7c-87f71793246a"
 quadruped_control = "d958cecb-4d0c-4584-990b-bebfe77f8d05"
