@@ -2,6 +2,11 @@ syntax = "proto3";
 
 package messaging;
 
+message EKF_msg { 
+    Vector3_msg position = 1; 
+    Vector3_msg quaternion = 2;
+}
+
 message IMU_msg {
     Vector3_msg acceleration = 1;
     Vector3_msg gyroscope = 2;
@@ -26,6 +31,7 @@ message Quaternion_msg {
     double y = 3;
     double z = 4;
 }
+
 
 // message IMU { 
 //     repeated double quaternion=1;

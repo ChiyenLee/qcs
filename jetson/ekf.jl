@@ -2,6 +2,7 @@ using quadruped_control: prediction!
 using julia_messaging
 using quadruped_control
 using quadruped_control: UnitQuaternion, RotXYZ
+using LinearAlgebra
 ## Subscribing example with ZMQ and Protobuf 
 function main()
     # Subscribe to Vicon topics
@@ -19,19 +20,25 @@ function main()
     v = Vicon{Float64}()
     s = TrunkState{Float64}()
     u_imu = IMU_IN{Float64}()
-    h = 0.05
     ekf = EKF(s)
-    v.R = v.R 
-    # s.W .= s.W * 1e3
-    # s.W .= s.W * 1e5
-    s.W[s.dβf.indices[1], s.dβf.indices[1]] .= s.W[s.dβf.indices[1], s.dβf.indices[1]] * 1e-2
-    s.W[s.dβω.indices[1], s.dβω.indices[1]] .= s.W[s.dβω.indices[1], s.dβω.indices[1]] * 1e-2
+    v.R = v.R * 1e-4
 
-    
+    s.W .= s.W * 1e2
+    s.W[s.dβf.indices[1], s.dβf.indices[1]] .= s.W[s.dβf.indices[1], s.dβf.indices[1]] * 1
+    s.W[s.dβω.indices[1], s.dβω.indices[1]] .= s.W[s.dβω.indices[1], s.dβω.indices[1]] * 1
+    # s.W[s.dr.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
+    # s.W[s.dβf.indices[1],  s.dr.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
+    # s.W[s.dϕ.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
+    # s.W[s.dβf.indices[1],  s.dϕ.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
+    # s.W[s.dv.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
+    # s.W[s.dβf.indices[1],  s.dv.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
 
+
+    P_init = Matrix(1.0I, 15,15) * 1e10
+    ekf.est_cov .= P_init
     # timing 
     vicon_time = 0.0
-    h = 0.01
+    h = 0.005
     try
         while true 
             A1Robot.getAcceleration(interface, accel_imu);
@@ -49,16 +56,15 @@ function main()
                             # vicon.quaternion.y]
                     v.q .= [vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z]
                     v.r .= [vicon.position.x, vicon.position.y, vicon.position.z]
-                    println(v.q)
                     update!(ekf, v, h)
                     vicon_time = vicon.time
                end  
             end
 
-            println(round.(ekf.est_state.q, digits=3))
+            # println(round.(ekf.est_state.q, digits=3))
             # println(round.(ekf.est_state.dϕ, digits=3))
             # println(round.(ekf.est_state.r, digits=3))
-            # println(round.(ekf.est_state.v , digits=3))
+            println(round.(ekf.est_state.v , digits=3))
             # println(round.(ekf.est_state.βω, digits=3))
             # println(ekf.est_state.βf)
             # println(round.(accel_imu, digits=3))
@@ -68,7 +74,7 @@ function main()
             # g = [0, 0, 9.81]
             # C = UnitQuaternion(q)
             # println(round.(ekf.est_state.βf, digits=3))
-            # println(C' * accel_imu - g)
+            # println(round.(C' * accel_imu - g, digits=2))
             sleep(h)
         end    
     catch e
