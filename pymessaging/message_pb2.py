@@ -19,10 +19,77 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"p\n\x07IMU_msg\x12,\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12)\n\tgyroscope\x18\x02 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\"r\n\tVicon_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\".\n\x0bVector3_msg\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\x0eQuaternion_msg\x12\t\n\x01w\x18\x01 \x01(\x01\x12\t\n\x01x\x18\x02 \x01(\x01\x12\t\n\x01y\x18\x03 \x01(\x01\x12\t\n\x01z\x18\x04 \x01(\x01\x62\x06proto3'
+  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"\x84\x02\n\x07\x45KF_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12(\n\x08velocity\x18\x03 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x31\n\x11\x61\x63\x63\x65leration_bias\x18\x04 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x35\n\x15\x61ngular_velocity_bias\x18\x05 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x06 \x01(\x01\"p\n\x07IMU_msg\x12,\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12)\n\tgyroscope\x18\x02 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\"r\n\tVicon_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\".\n\x0bVector3_msg\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\x0eQuaternion_msg\x12\t\n\x01w\x18\x01 \x01(\x01\x12\t\n\x01x\x18\x02 \x01(\x01\x12\t\n\x01y\x18\x03 \x01(\x01\x12\t\n\x01z\x18\x04 \x01(\x01\x62\x06proto3'
 )
 
 
+
+
+_EKF_MSG = _descriptor.Descriptor(
+  name='EKF_msg',
+  full_name='messaging.EKF_msg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='position', full_name='messaging.EKF_msg.position', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='quaternion', full_name='messaging.EKF_msg.quaternion', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='velocity', full_name='messaging.EKF_msg.velocity', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='acceleration_bias', full_name='messaging.EKF_msg.acceleration_bias', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='angular_velocity_bias', full_name='messaging.EKF_msg.angular_velocity_bias', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='time', full_name='messaging.EKF_msg.time', index=5,
+      number=6, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=29,
+  serialized_end=289,
+)
 
 
 _IMU_MSG = _descriptor.Descriptor(
@@ -66,8 +133,8 @@ _IMU_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=28,
-  serialized_end=140,
+  serialized_start=291,
+  serialized_end=403,
 )
 
 
@@ -112,8 +179,8 @@ _VICON_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=142,
-  serialized_end=256,
+  serialized_start=405,
+  serialized_end=519,
 )
 
 
@@ -158,8 +225,8 @@ _VECTOR3_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=258,
-  serialized_end=304,
+  serialized_start=521,
+  serialized_end=567,
 )
 
 
@@ -211,19 +278,32 @@ _QUATERNION_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=306,
-  serialized_end=366,
+  serialized_start=569,
+  serialized_end=629,
 )
 
+_EKF_MSG.fields_by_name['position'].message_type = _VECTOR3_MSG
+_EKF_MSG.fields_by_name['quaternion'].message_type = _QUATERNION_MSG
+_EKF_MSG.fields_by_name['velocity'].message_type = _VECTOR3_MSG
+_EKF_MSG.fields_by_name['acceleration_bias'].message_type = _VECTOR3_MSG
+_EKF_MSG.fields_by_name['angular_velocity_bias'].message_type = _VECTOR3_MSG
 _IMU_MSG.fields_by_name['acceleration'].message_type = _VECTOR3_MSG
 _IMU_MSG.fields_by_name['gyroscope'].message_type = _VECTOR3_MSG
 _VICON_MSG.fields_by_name['position'].message_type = _VECTOR3_MSG
 _VICON_MSG.fields_by_name['quaternion'].message_type = _QUATERNION_MSG
+DESCRIPTOR.message_types_by_name['EKF_msg'] = _EKF_MSG
 DESCRIPTOR.message_types_by_name['IMU_msg'] = _IMU_MSG
 DESCRIPTOR.message_types_by_name['Vicon_msg'] = _VICON_MSG
 DESCRIPTOR.message_types_by_name['Vector3_msg'] = _VECTOR3_MSG
 DESCRIPTOR.message_types_by_name['Quaternion_msg'] = _QUATERNION_MSG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+EKF_msg = _reflection.GeneratedProtocolMessageType('EKF_msg', (_message.Message,), {
+  'DESCRIPTOR' : _EKF_MSG,
+  '__module__' : 'message_pb2'
+  # @@protoc_insertion_point(class_scope:messaging.EKF_msg)
+  })
+_sym_db.RegisterMessage(EKF_msg)
 
 IMU_msg = _reflection.GeneratedProtocolMessageType('IMU_msg', (_message.Message,), {
   'DESCRIPTOR' : _IMU_MSG,

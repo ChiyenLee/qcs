@@ -33,6 +33,12 @@ function main()
     # s.W[s.dv.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
     # s.W[s.dβf.indices[1],  s.dv.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
 
+    # Publisher 
+    pub = create_pub(ctx,5002, "*")
+    iob = PipeBuffer()
+    ekf_msg = EKF_msg()
+    q_msg = Quaternion_msg()
+    v_msg = Vector3_msg()
 
     P_init = Matrix(1.0I, 15,15) * 1e10
     ekf.est_cov .= P_init
@@ -75,6 +81,13 @@ function main()
             # C = UnitQuaternion(q)
             # println(round.(ekf.est_state.βf, digits=3))
             # println(round.(C' * accel_imu - g, digits=2))
+            q_est =ekf.est_state.q
+            r_est = ekf.est_state.r
+            setproperty!(ekf_msg, :quaternion, Quaternion_msg(w=q_est[1]),x=q_est[2], y=q_est[3], z=q_est[4])
+            setproperty!(ekf_msg, :position, Quaternion_msg(w=q_est[1]),x=q_est[2], y=q_est[3], z=q_est[4])
+
+            writeproto(iob, ekf_msg)
+			ZMQ.send(pub,take!(iob))
             sleep(h)
         end    
     catch e

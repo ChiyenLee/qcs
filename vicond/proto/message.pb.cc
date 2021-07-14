@@ -17,6 +17,23 @@
 
 PROTOBUF_PRAGMA_INIT_SEG
 namespace messaging {
+constexpr EKF_msg::EKF_msg(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : position_(nullptr)
+  , quaternion_(nullptr)
+  , velocity_(nullptr)
+  , acceleration_bias_(nullptr)
+  , angular_velocity_bias_(nullptr)
+  , time_(0){}
+struct EKF_msgDefaultTypeInternal {
+  constexpr EKF_msgDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~EKF_msgDefaultTypeInternal() {}
+  union {
+    EKF_msg _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT EKF_msgDefaultTypeInternal _EKF_msg_default_instance_;
 constexpr IMU_msg::IMU_msg(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : acceleration_(nullptr)
@@ -75,11 +92,22 @@ struct Quaternion_msgDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Quaternion_msgDefaultTypeInternal _Quaternion_msg_default_instance_;
 }  // namespace messaging
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_message_2eproto[4];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_message_2eproto[5];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_message_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_message_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, position_),
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, quaternion_),
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, velocity_),
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, acceleration_bias_),
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, angular_velocity_bias_),
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, time_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::messaging::IMU_msg, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -115,13 +143,15 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, z_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::messaging::IMU_msg)},
-  { 8, -1, sizeof(::messaging::Vicon_msg)},
-  { 16, -1, sizeof(::messaging::Vector3_msg)},
-  { 24, -1, sizeof(::messaging::Quaternion_msg)},
+  { 0, -1, sizeof(::messaging::EKF_msg)},
+  { 11, -1, sizeof(::messaging::IMU_msg)},
+  { 19, -1, sizeof(::messaging::Vicon_msg)},
+  { 27, -1, sizeof(::messaging::Vector3_msg)},
+  { 35, -1, sizeof(::messaging::Quaternion_msg)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_EKF_msg_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_IMU_msg_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_Vicon_msg_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_Vector3_msg_default_instance_),
@@ -129,21 +159,27 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rmessage.proto\022\tmessaging\"p\n\007IMU_msg\022,\n"
-  "\014acceleration\030\001 \001(\0132\026.messaging.Vector3_"
-  "msg\022)\n\tgyroscope\030\002 \001(\0132\026.messaging.Vecto"
-  "r3_msg\022\014\n\004time\030\003 \001(\001\"r\n\tVicon_msg\022(\n\010pos"
-  "ition\030\001 \001(\0132\026.messaging.Vector3_msg\022-\n\nq"
-  "uaternion\030\002 \001(\0132\031.messaging.Quaternion_m"
-  "sg\022\014\n\004time\030\003 \001(\001\".\n\013Vector3_msg\022\t\n\001x\030\001 \001"
-  "(\001\022\t\n\001y\030\002 \001(\001\022\t\n\001z\030\003 \001(\001\"<\n\016Quaternion_m"
-  "sg\022\t\n\001w\030\001 \001(\001\022\t\n\001x\030\002 \001(\001\022\t\n\001y\030\003 \001(\001\022\t\n\001z"
-  "\030\004 \001(\001b\006proto3"
+  "\n\rmessage.proto\022\tmessaging\"\204\002\n\007EKF_msg\022("
+  "\n\010position\030\001 \001(\0132\026.messaging.Vector3_msg"
+  "\022-\n\nquaternion\030\002 \001(\0132\031.messaging.Quatern"
+  "ion_msg\022(\n\010velocity\030\003 \001(\0132\026.messaging.Ve"
+  "ctor3_msg\0221\n\021acceleration_bias\030\004 \001(\0132\026.m"
+  "essaging.Vector3_msg\0225\n\025angular_velocity"
+  "_bias\030\005 \001(\0132\026.messaging.Vector3_msg\022\014\n\004t"
+  "ime\030\006 \001(\001\"p\n\007IMU_msg\022,\n\014acceleration\030\001 \001"
+  "(\0132\026.messaging.Vector3_msg\022)\n\tgyroscope\030"
+  "\002 \001(\0132\026.messaging.Vector3_msg\022\014\n\004time\030\003 "
+  "\001(\001\"r\n\tVicon_msg\022(\n\010position\030\001 \001(\0132\026.mes"
+  "saging.Vector3_msg\022-\n\nquaternion\030\002 \001(\0132\031"
+  ".messaging.Quaternion_msg\022\014\n\004time\030\003 \001(\001\""
+  ".\n\013Vector3_msg\022\t\n\001x\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\t\n\001"
+  "z\030\003 \001(\001\"<\n\016Quaternion_msg\022\t\n\001w\030\001 \001(\001\022\t\n\001"
+  "x\030\002 \001(\001\022\t\n\001y\030\003 \001(\001\022\t\n\001z\030\004 \001(\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_message_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_message_2eproto = {
-  false, false, 374, descriptor_table_protodef_message_2eproto, "message.proto", 
-  &descriptor_table_message_2eproto_once, nullptr, 0, 4,
+  false, false, 637, descriptor_table_protodef_message_2eproto, "message.proto", 
+  &descriptor_table_message_2eproto_once, nullptr, 0, 5,
   schemas, file_default_instances, TableStruct_message_2eproto::offsets,
   file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto, file_level_service_descriptors_message_2eproto,
 };
@@ -154,6 +190,397 @@ PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_message_2eproto(&descriptor_table_message_2eproto);
 namespace messaging {
+
+// ===================================================================
+
+class EKF_msg::_Internal {
+ public:
+  static const ::messaging::Vector3_msg& position(const EKF_msg* msg);
+  static const ::messaging::Quaternion_msg& quaternion(const EKF_msg* msg);
+  static const ::messaging::Vector3_msg& velocity(const EKF_msg* msg);
+  static const ::messaging::Vector3_msg& acceleration_bias(const EKF_msg* msg);
+  static const ::messaging::Vector3_msg& angular_velocity_bias(const EKF_msg* msg);
+};
+
+const ::messaging::Vector3_msg&
+EKF_msg::_Internal::position(const EKF_msg* msg) {
+  return *msg->position_;
+}
+const ::messaging::Quaternion_msg&
+EKF_msg::_Internal::quaternion(const EKF_msg* msg) {
+  return *msg->quaternion_;
+}
+const ::messaging::Vector3_msg&
+EKF_msg::_Internal::velocity(const EKF_msg* msg) {
+  return *msg->velocity_;
+}
+const ::messaging::Vector3_msg&
+EKF_msg::_Internal::acceleration_bias(const EKF_msg* msg) {
+  return *msg->acceleration_bias_;
+}
+const ::messaging::Vector3_msg&
+EKF_msg::_Internal::angular_velocity_bias(const EKF_msg* msg) {
+  return *msg->angular_velocity_bias_;
+}
+EKF_msg::EKF_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:messaging.EKF_msg)
+}
+EKF_msg::EKF_msg(const EKF_msg& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_position()) {
+    position_ = new ::messaging::Vector3_msg(*from.position_);
+  } else {
+    position_ = nullptr;
+  }
+  if (from._internal_has_quaternion()) {
+    quaternion_ = new ::messaging::Quaternion_msg(*from.quaternion_);
+  } else {
+    quaternion_ = nullptr;
+  }
+  if (from._internal_has_velocity()) {
+    velocity_ = new ::messaging::Vector3_msg(*from.velocity_);
+  } else {
+    velocity_ = nullptr;
+  }
+  if (from._internal_has_acceleration_bias()) {
+    acceleration_bias_ = new ::messaging::Vector3_msg(*from.acceleration_bias_);
+  } else {
+    acceleration_bias_ = nullptr;
+  }
+  if (from._internal_has_angular_velocity_bias()) {
+    angular_velocity_bias_ = new ::messaging::Vector3_msg(*from.angular_velocity_bias_);
+  } else {
+    angular_velocity_bias_ = nullptr;
+  }
+  time_ = from.time_;
+  // @@protoc_insertion_point(copy_constructor:messaging.EKF_msg)
+}
+
+inline void EKF_msg::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&position_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&time_) -
+    reinterpret_cast<char*>(&position_)) + sizeof(time_));
+}
+
+EKF_msg::~EKF_msg() {
+  // @@protoc_insertion_point(destructor:messaging.EKF_msg)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void EKF_msg::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete position_;
+  if (this != internal_default_instance()) delete quaternion_;
+  if (this != internal_default_instance()) delete velocity_;
+  if (this != internal_default_instance()) delete acceleration_bias_;
+  if (this != internal_default_instance()) delete angular_velocity_bias_;
+}
+
+void EKF_msg::ArenaDtor(void* object) {
+  EKF_msg* _this = reinterpret_cast< EKF_msg* >(object);
+  (void)_this;
+}
+void EKF_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void EKF_msg::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void EKF_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.EKF_msg)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && quaternion_ != nullptr) {
+    delete quaternion_;
+  }
+  quaternion_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && velocity_ != nullptr) {
+    delete velocity_;
+  }
+  velocity_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && acceleration_bias_ != nullptr) {
+    delete acceleration_bias_;
+  }
+  acceleration_bias_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && angular_velocity_bias_ != nullptr) {
+    delete angular_velocity_bias_;
+  }
+  angular_velocity_bias_ = nullptr;
+  time_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* EKF_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .messaging.Vector3_msg position = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.Quaternion_msg quaternion = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_quaternion(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.Vector3_msg velocity = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_velocity(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.Vector3_msg acceleration_bias = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_acceleration_bias(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.Vector3_msg angular_velocity_bias = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          ptr = ctx->ParseMessage(_internal_mutable_angular_velocity_bias(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // double time = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 49)) {
+          time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* EKF_msg::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.EKF_msg)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .messaging.Vector3_msg position = 1;
+  if (this->_internal_has_position()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::position(this), target, stream);
+  }
+
+  // .messaging.Quaternion_msg quaternion = 2;
+  if (this->_internal_has_quaternion()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::quaternion(this), target, stream);
+  }
+
+  // .messaging.Vector3_msg velocity = 3;
+  if (this->_internal_has_velocity()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        3, _Internal::velocity(this), target, stream);
+  }
+
+  // .messaging.Vector3_msg acceleration_bias = 4;
+  if (this->_internal_has_acceleration_bias()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        4, _Internal::acceleration_bias(this), target, stream);
+  }
+
+  // .messaging.Vector3_msg angular_velocity_bias = 5;
+  if (this->_internal_has_angular_velocity_bias()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        5, _Internal::angular_velocity_bias(this), target, stream);
+  }
+
+  // double time = 6;
+  if (!(this->_internal_time() <= 0 && this->_internal_time() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(6, this->_internal_time(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.EKF_msg)
+  return target;
+}
+
+size_t EKF_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.EKF_msg)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .messaging.Vector3_msg position = 1;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *position_);
+  }
+
+  // .messaging.Quaternion_msg quaternion = 2;
+  if (this->_internal_has_quaternion()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *quaternion_);
+  }
+
+  // .messaging.Vector3_msg velocity = 3;
+  if (this->_internal_has_velocity()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *velocity_);
+  }
+
+  // .messaging.Vector3_msg acceleration_bias = 4;
+  if (this->_internal_has_acceleration_bias()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *acceleration_bias_);
+  }
+
+  // .messaging.Vector3_msg angular_velocity_bias = 5;
+  if (this->_internal_has_angular_velocity_bias()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *angular_velocity_bias_);
+  }
+
+  // double time = 6;
+  if (!(this->_internal_time() <= 0 && this->_internal_time() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData EKF_msg::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    EKF_msg::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EKF_msg::GetClassData() const { return &_class_data_; }
+
+void EKF_msg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+  static_cast<EKF_msg *>(to)->MergeFrom(
+      static_cast<const EKF_msg &>(from));
+}
+
+
+void EKF_msg::MergeFrom(const EKF_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.EKF_msg)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_position()) {
+    _internal_mutable_position()->::messaging::Vector3_msg::MergeFrom(from._internal_position());
+  }
+  if (from._internal_has_quaternion()) {
+    _internal_mutable_quaternion()->::messaging::Quaternion_msg::MergeFrom(from._internal_quaternion());
+  }
+  if (from._internal_has_velocity()) {
+    _internal_mutable_velocity()->::messaging::Vector3_msg::MergeFrom(from._internal_velocity());
+  }
+  if (from._internal_has_acceleration_bias()) {
+    _internal_mutable_acceleration_bias()->::messaging::Vector3_msg::MergeFrom(from._internal_acceleration_bias());
+  }
+  if (from._internal_has_angular_velocity_bias()) {
+    _internal_mutable_angular_velocity_bias()->::messaging::Vector3_msg::MergeFrom(from._internal_angular_velocity_bias());
+  }
+  if (!(from._internal_time() <= 0 && from._internal_time() >= 0)) {
+    _internal_set_time(from._internal_time());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void EKF_msg::CopyFrom(const EKF_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.EKF_msg)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool EKF_msg::IsInitialized() const {
+  return true;
+}
+
+void EKF_msg::InternalSwap(EKF_msg* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(EKF_msg, time_)
+      + sizeof(EKF_msg::time_)
+      - PROTOBUF_FIELD_OFFSET(EKF_msg, position_)>(
+          reinterpret_cast<char*>(&position_),
+          reinterpret_cast<char*>(&other->position_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata EKF_msg::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
+      file_level_metadata_message_2eproto[0]);
+}
 
 // ===================================================================
 
@@ -423,7 +850,7 @@ void IMU_msg::InternalSwap(IMU_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IMU_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[0]);
+      file_level_metadata_message_2eproto[1]);
 }
 
 // ===================================================================
@@ -694,7 +1121,7 @@ void Vicon_msg::InternalSwap(Vicon_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Vicon_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[1]);
+      file_level_metadata_message_2eproto[2]);
 }
 
 // ===================================================================
@@ -931,7 +1358,7 @@ void Vector3_msg::InternalSwap(Vector3_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Vector3_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[2]);
+      file_level_metadata_message_2eproto[3]);
 }
 
 // ===================================================================
@@ -1189,12 +1616,15 @@ void Quaternion_msg::InternalSwap(Quaternion_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Quaternion_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[3]);
+      file_level_metadata_message_2eproto[4]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace messaging
 PROTOBUF_NAMESPACE_OPEN
+template<> PROTOBUF_NOINLINE ::messaging::EKF_msg* Arena::CreateMaybeMessage< ::messaging::EKF_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::EKF_msg >(arena);
+}
 template<> PROTOBUF_NOINLINE ::messaging::IMU_msg* Arena::CreateMaybeMessage< ::messaging::IMU_msg >(Arena* arena) {
   return Arena::CreateMessageInternal< ::messaging::IMU_msg >(arena);
 }
