@@ -4,7 +4,11 @@ package messaging;
 
 message EKF_msg { 
     Vector3_msg position = 1; 
-    Vector3_msg quaternion = 2;
+    Quaternion_msg quaternion = 2;
+    Vector3_msg velocity = 3;
+    Vector3_msg acceleration_bias = 4; 
+    Vector3_msg angular_velocity_bias = 5;
+    double time = 6; 
 }
 
 message IMU_msg {

@@ -2,3 +2,4 @@ build/
 vicond/extern/simple_vicon/build/
 pymessaging/__pycache__/
 *.pyc
+*.bin
