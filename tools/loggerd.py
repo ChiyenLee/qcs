@@ -10,7 +10,7 @@ def main():
     ctx = zmq.Context()
     imu_sub = messaging.create_sub(ctx, 5001)
     ekf_sub = messaging.create_sub(ctx, 5002)
-    vicon_sub = messaging.create_sub(ctx,5000)
+    vicon_sub = messaging.create_sub(ctx, 5000, host="192.168.3.123")
 
     poller = zmq.Poller()
     poller.register(imu_sub, zmq.POLLIN)    
@@ -39,6 +39,7 @@ def main():
                 ekf_f.write(msg_size_b + data)
 
             if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN: 
+                print("!")
                 data = vicon_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
