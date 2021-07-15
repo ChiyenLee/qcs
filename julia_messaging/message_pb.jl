@@ -176,4 +176,53 @@ function Base.getproperty(obj::Vicon_msg, name::Symbol)
     end
 end
 
-export IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg
+mutable struct EKF_msg <: ProtoType
+    __protobuf_jl_internal_meta::ProtoMeta
+    __protobuf_jl_internal_values::Dict{Symbol,Any}
+    __protobuf_jl_internal_defaultset::Set{Symbol}
+
+    function EKF_msg(; kwargs...)
+        obj = new(meta(EKF_msg), Dict{Symbol,Any}(), Set{Symbol}())
+        values = obj.__protobuf_jl_internal_values
+        symdict = obj.__protobuf_jl_internal_meta.symdict
+        for nv in kwargs
+            fldname, fldval = nv
+            fldtype = symdict[fldname].jtyp
+            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
+            if fldval !== nothing
+                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
+            end
+        end
+        obj
+    end
+end # mutable struct EKF_msg
+const __meta_EKF_msg = Ref{ProtoMeta}()
+function meta(::Type{EKF_msg})
+    ProtoBuf.metalock() do
+        if !isassigned(__meta_EKF_msg)
+            __meta_EKF_msg[] = target = ProtoMeta(EKF_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:position => Vector3_msg, :quaternion => Quaternion_msg, :velocity => Vector3_msg, :acceleration_bias => Vector3_msg, :angular_velocity_bias => Vector3_msg, :time => Float64]
+            meta(target, EKF_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        end
+        __meta_EKF_msg[]
+    end
+end
+function Base.getproperty(obj::EKF_msg, name::Symbol)
+    if name === :position
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :quaternion
+        return (obj.__protobuf_jl_internal_values[name])::Quaternion_msg
+    elseif name === :velocity
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :acceleration_bias
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :angular_velocity_bias
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :time
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    else
+        getfield(obj, name)
+    end
+end
+
+export EKF_msg, IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg
