@@ -10,7 +10,8 @@ def main():
     ctx = zmq.Context()
     imu_sub = messaging.create_sub(ctx, 5001)
     ekf_sub = messaging.create_sub(ctx, 5002)
-    vicon_sub = messaging.create_sub(ctx,5000)
+    # vicon_sub = messaging.create_sub(ctx, 5000, host="192.168.3.123")
+    vicon_sub = messaging.create_sub(ctx, 5000)
 
     poller = zmq.Poller()
     poller.register(imu_sub, zmq.POLLIN)    
@@ -18,9 +19,8 @@ def main():
     poller.register(vicon_sub, zmq.POLLIN)
 
     # Main loop for logging data 
-    imu_f = open("imu.bin", "wb")
-    vicon_f = open("vicon.bin", "wb")
-    ekf_f = open("ekf.bin", "wb")
+    data_f = open("data.bin", "wb")
+ 
     try:
         while True: 
             socks = dict(poller.poll(0.01))
@@ -30,26 +30,25 @@ def main():
                 data = imu_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                imu_f.write(msg_size_b + data)
+                data_f.write(msg_size_b + data)
             
             if ekf_sub in socks.keys() and socks[ekf_sub] == zmq.POLLIN: 
                 data = ekf_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                ekf_f.write(msg_size_b + data)
+                data_f.write(msg_size_b + data)
 
             if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN: 
+                print("!")
                 data = vicon_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                vicon_f.write(msg_size_b + data)
+                data_f.write(msg_size_b + data)
 
             
 
     except KeyboardInterrupt:
-        imu_f.close()
-        vicon_f.close()
-        ekf_f.close()
+        data_f.close()
         print("interrupted!")
 
 

@@ -1,28 +1,34 @@
 import sys 
 sys.path.append("..")
-import pymessaging.message_pb2 as msg
+import pymessaging.message_pb2 as messaging
 import pdb
 
-# Initialize message 
-imu = msg.IMU_msg()
-vicon = msg.Vicon_msg()
+class DataPack:
+	def __init__(self, filename, proto_msg):
+		self.filename = filename
+		self.f = open(self.filename, "rb")
+		self.proto_msg = proto_msg
 
-def read_messages(filename, proto_msg):
-	f = open(filename, "rb")
-	while True:
-		first_msg_length = f.read(4)
+	def __iter__(self):
+		return self
 
-		if len(first_msg_length) == 0:
-			break
-
-		first_msg_length = int.from_bytes(first_msg_length, "big")
-		data = f.read(first_msg_length)
-		proto_msg.ParseFromString(data)
-		print(proto_msg)
-		pdb.set_trace()
-		# print(first_msg_length)
+	def __next__(self):
+		msg_length_bytes = self.f.read(4)
+		if len(msg_length_bytes) == 0:
+			raise StopIteration
+		else: 
+			msg_length = int.from_bytes(msg_length_bytes, "big")
+			data = self.f.read(msg_length)
+			self.proto_msg.ParseFromString(data)
+		return self.proto_msg
 	
-	f.close()
+	def close(self):
+		self.f.close()
 
+# Initialize message 
+imu = messaging.IMU_msg()
+vicon = messaging.Vicon_msg()
+bag = DataPack("data.bin", imu)
 
-read_messages("imu.bin", imu)
+i = 0
+# for m in bag:
