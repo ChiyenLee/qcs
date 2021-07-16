@@ -1,8 +1,11 @@
-using quadruped_control: prediction!
+using Revise
 using julia_messaging
 using quadruped_control
 using quadruped_control: UnitQuaternion, RotXYZ
 using LinearAlgebra
+using EKF
+using julia_messaging: writeproto, ZMQ
+include("../EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
 ## Subscribing example with ZMQ and Protobuf 
 function main()
     # Subscribe to Vicon topics
@@ -17,31 +20,25 @@ function main()
     gyro_imu = zeros(3);
 
     # Initialize EKF
-    v = Vicon{Float64}()
-    s = TrunkState{Float64}()
-    u_imu = IMU_IN{Float64}()
-    ekf = EKF(s)
-    v.R = v.R * 1e-4
+    state = TrunkState(zeros(length(TrunkState))); state.qw = 1.0
+    vicon_measurement = Vicon(zeros(length(Vicon))); vicon_measurement.qw = 1.0;
+    input = ImuInput(zeros(length(ImuInput)))
 
-    s.W .= s.W * 1e2
-    s.W[s.dβf.indices[1], s.dβf.indices[1]] .= s.W[s.dβf.indices[1], s.dβf.indices[1]] * 1
-    s.W[s.dβω.indices[1], s.dβω.indices[1]] .= s.W[s.dβω.indices[1], s.dβω.indices[1]] * 1
-    # s.W[s.dr.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
-    # s.W[s.dβf.indices[1],  s.dr.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
-    # s.W[s.dϕ.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
-    # s.W[s.dβf.indices[1],  s.dϕ.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
-    # s.W[s.dv.indices[1],  s.dβf.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
-    # s.W[s.dβf.indices[1],  s.dv.indices[1]] .= Matrix(1.0I, 3,3) * 1e-3
+    P = Matrix(1.0I(length(TrunkError))) * 1e10; 
+    W = Matrix(1.0I(length(TrunkError))) * 1e5;
+    W[end-5:end,end-5:end] = W[end-5:end,end-5:end] * 1e-5
+    R = Matrix(1.0I(length(ViconError))) * 1e-3;
+    ekf = ErrorStateFilter{TrunkState, TrunkError, ImuInput, Vicon, ViconError}(state, P, W, R) 
 
     # Publisher 
-    pub = create_pub(ctx,5002, "*")
+    ekf_pub = create_pub(ctx,5003, "*")
+    imu_pub = create_pub(ctx,5002, "*")
+    vicon_pub = create_pub(ctx,5001, "*")
     iob = PipeBuffer()
     ekf_msg = EKF_msg()
-    q_msg = Quaternion_msg()
-    v_msg = Vector3_msg()
+    imu_msg = IMU_msg()
+    vicon_msg = Vicon_msg()
 
-    P_init = Matrix(1.0I, 15,15) * 1e10
-    ekf.est_cov .= P_init
     # timing 
     vicon_time = 0.0
     h = 0.005
@@ -51,43 +48,46 @@ function main()
             A1Robot.getGyroscope(interface, gyro_imu); 
 
             # Prediction 
-            u_imu.f .= copy(accel_imu)    
-            u_imu.ω .= copy(gyro_imu)
-            prediction!(ekf, u_imu, h)
+            input[1:3] .= copy(accel_imu)    
+            input[4:end] .= copy(gyro_imu)
+            prediction!(ekf, input, dt=h)
 
             # Update 
             if hasproperty(vicon, :quaternion)
                if vicon.time != vicon_time 
                     # v.q .= [vicon.quaternion.z, vicon.quaternion.w, vicon.quaternion.x,
                             # vicon.quaternion.y]
-                    v.q .= [vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z]
-                    v.r .= [vicon.position.x, vicon.position.y, vicon.position.z]
-                    update!(ekf, v, h)
+                    vicon_measurement[4:end] .= [vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z]
+                    vicon_measurement[1:3] .= [vicon.position.x, vicon.position.y, vicon.position.z]
+                    update!(ekf, vicon_measurement)
                     vicon_time = vicon.time
                end  
             end
 
-            # println(round.(ekf.est_state.q, digits=3))
-            # println(round.(ekf.est_state.dϕ, digits=3))
-            # println(round.(ekf.est_state.r, digits=3))
-            println(round.(ekf.est_state.v , digits=3))
-            # println(round.(ekf.est_state.βω, digits=3))
-            # println(ekf.est_state.βf)
-            # println(round.(accel_imu, digits=3))
-            # println(ekf.est_state.q)
-            # q = ekf.est_state.q
-            # q = v.q
-            # g = [0, 0, 9.81]
-            # C = UnitQuaternion(q)
-            # println(round.(ekf.est_state.βf, digits=3))
-            # println(round.(C' * accel_imu - g, digits=2))
-            q_est =ekf.est_state.q
-            r_est = ekf.est_state.r
-            setproperty!(ekf_msg, :quaternion, Quaternion_msg(w=q_est[1]),x=q_est[2], y=q_est[3], z=q_est[4])
-            setproperty!(ekf_msg, :position, Quaternion_msg(w=q_est[1]),x=q_est[2], y=q_est[3], z=q_est[4])
-
+            # Publishing
+            r, v, q, α, β = getComponents(ekf.est_state)
+            setproperty!(ekf_msg, :quaternion, Quaternion_msg(w=q[1],x=q[2], y=q[3], z=q[4]))
+            setproperty!(ekf_msg, :position, Vector3_msg(x=r[1], y=r[2], z=r[3]))
+            setproperty!(ekf_msg, :acceleration_bias, Vector3_msg(x=α[1], y=α[2], z=α[3]))
+            setproperty!(ekf_msg, :angular_velocity_bias, Vector3_msg(x=β[1], y=β[2], z=β[3]))
+            setproperty!(ekf_msg, :velocity, Vector3_msg(x=v[1], y=v[2], z=v[3]))
+            setproperty!(ekf_msg, :time, time())
             writeproto(iob, ekf_msg)
-			ZMQ.send(pub,take!(iob))
+			ZMQ.send(ekf_pub,take!(iob))
+
+            setproperty!(vicon_msg, :quaternion, Quaternion_msg(w=vicon_measurement[4], 
+                                x=vicon_measurement[5], y=vicon_measurement[6], z=vicon_measurement[4]))
+            setproperty!(vicon_msg, :position, Vector3_msg(x=vicon_measurement[1], y=vicon_measurement[2], z=vicon_measurement[3]))
+            setproperty!(vicon_msg, :time, time())
+            writeproto(iob, vicon_msg)
+            ZMQ.send(vicon_pub,take!(iob))
+
+            setproperty!(imu_msg, :gyroscope, Vector3_msg(x=input[4],y=input[5], z=input[6]))
+            setproperty!(imu_msg, :acceleration, Vector3_msg(x=input[1], y=input[2], z=input[3]))
+            setproperty!(imu_msg, :time, time())
+            writeproto(iob, imu_msg)
+            ZMQ.send(imu_pub,take!(iob))
+            
             sleep(h)
         end    
     catch e
