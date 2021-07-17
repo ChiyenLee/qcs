@@ -4,14 +4,16 @@ from pymessaging import messaging
 import pymessaging.message_pb2 as msg
 import zmq 
 import pdb
+import os 
+from datetime import datetime
 
 def main():
 #     # Creating subscribers and poller
     ctx = zmq.Context()
-    imu_sub = messaging.create_sub(ctx, 5001)
-    ekf_sub = messaging.create_sub(ctx, 5002)
-    # vicon_sub = messaging.create_sub(ctx, 5000, host="192.168.3.123")
-    vicon_sub = messaging.create_sub(ctx, 5000)
+
+    vicon_sub = messaging.create_sub(ctx, "5001", host="192.168.3.123")
+    imu_sub = messaging.create_sub(ctx, "5002", host="192.168.3.123")
+    ekf_sub = messaging.create_sub(ctx, "5003", host="192.168.3.123")
 
     poller = zmq.Poller()
     poller.register(imu_sub, zmq.POLLIN)    
@@ -19,8 +21,13 @@ def main():
     poller.register(vicon_sub, zmq.POLLIN)
 
     # Main loop for logging data 
-    data_f = open("data.bin", "wb")
- 
+    now = datetime.now()
+    foldername = now.strftime("A1data-%Y-%m-%d--%H-%M-%S")
+    os.mkdir(foldername)
+    imu_f = open(os.path.join(foldername,"imu.bin"), "wb")
+    ekf_f = open(os.path.join(foldername,"ekf.bin"), "wb")
+    vicon_f = open(os.path.join(foldername,"vicon.bin"), "wb")
+
     try:
         while True: 
             socks = dict(poller.poll(0.01))
@@ -30,25 +37,27 @@ def main():
                 data = imu_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                data_f.write(msg_size_b + data)
+                imu_f.write(msg_size_b + data)
             
             if ekf_sub in socks.keys() and socks[ekf_sub] == zmq.POLLIN: 
                 data = ekf_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                data_f.write(msg_size_b + data)
+                ekf_f.write(msg_size_b + data)
 
             if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN: 
-                print("!")
                 data = vicon_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                data_f.write(msg_size_b + data)
+                vicon_f.write(msg_size_b + data)
 
             
 
     except KeyboardInterrupt:
-        data_f.close()
+        imu_f.close()
+        vicon_f.close()
+        ekf_f.close()
+        
         print("interrupted!")
 
 
