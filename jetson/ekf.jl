@@ -19,14 +19,19 @@ function main()
     accel_imu = zeros(3);
     gyro_imu = zeros(3);
 
+    # Timing 
+    h = 0.005
+    vicon_time = 0.0
+
     # Initialize EKF
     state = TrunkState(zeros(length(TrunkState))); state.qw = 1.0
     vicon_measurement = Vicon(zeros(length(Vicon))); vicon_measurement.qw = 1.0;
     input = ImuInput(zeros(length(ImuInput)))
 
     P = Matrix(1.0I(length(TrunkError))) * 1e10; 
-    W = Matrix(1.0I(length(TrunkError))) * 1e5;
-    W[end-5:end,end-5:end] = W[end-5:end,end-5:end] * 1e-5
+    W = Matrix(1.0I(length(TrunkError))) * 1e-3;
+    W[4:6, 4:6] .= I(3) * 1e-2 * h^2 
+    W[end-5:end,end-5:end] = I(6)*1e2
     R = Matrix(1.0I(length(ViconError))) * 1e-3;
     ekf = ErrorStateFilter{TrunkState, TrunkError, ImuInput, Vicon, ViconError}(state, P, W, R) 
 
@@ -39,9 +44,6 @@ function main()
     imu_msg = IMU_msg()
     vicon_msg = Vicon_msg()
 
-    # timing 
-    vicon_time = 0.0
-    h = 0.005
     try
         while true 
             A1Robot.getAcceleration(interface, accel_imu);
