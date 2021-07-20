@@ -28,7 +28,7 @@ try:
         if imu_sub in socks.keys() and socks[imu_sub] == zmq.POLLIN:
             data = imu_sub.recv(zmq.DONTWAIT) 
             imu.ParseFromString(data)
-            print(imu)
+            # print(imu)
 
         if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN:
             data = vicon_sub.recv(zmq.DONTWAIT)
@@ -41,7 +41,7 @@ try:
             data = ekf_sub.recv(zmq.DONTWAIT)
             ekf.ParseFromString(data)
             t_vicon = time.time()
-            # print(ekf)
+            print(ekf)
             
         
 
