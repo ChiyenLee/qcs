@@ -12,8 +12,8 @@ Kd = 5
 try
     while true 
         joint_pos_c = mapMotorArrays(joint_pos_rgb, MotorIDs_rgb, MotorIDs_c)
-        # setPositionCommands(interface, joint_pos_c, Kp, Kd)
-        # SendCommand(interface)
+        # A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
+        # A1Robot.SendCommand(interface)
         sleep(0.02)
     end 
 catch e
