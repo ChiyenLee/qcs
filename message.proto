@@ -17,6 +17,14 @@ message MotorTorqueCommands_msg {
     double time = 2; 
 }
 
+message MotorReadings_msg {
+    Motor_msg torques = 1; 
+    Motor_msg q = 2; 
+    Motor_msg dq = 3; 
+    Motor_msg ddq = 4; 
+    double time = 5; 
+}
+
 message Motor_msg { 
     double FR_Hip = 1;
     double FR_Thigh = 2;

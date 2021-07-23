@@ -1,4 +1,8 @@
-using quadruped_control
+using Revise
+using julia_messaging
+using quadruped_control 
+using LinearAlgebra
+using julia_messaging: writeproto, ZMQ
 
 function main()
     # Equilibrium pose 
@@ -9,13 +13,48 @@ function main()
 
     Kp = 100
     Kd = 5
+    
+    # Subscribe to ekf topic 
+    ctx = julia_messaging.ZMQ.Context(1)
+    ekf_msg = EKF_msg() 
+    ekf_sub() = subscriber_thread(ctx, ekf_msg, 5003)
+    ekf_thread= Task(vicon_sub)
+    schedule(ekf_thread)
+
+    # Publisher 
+    motor_state_pub = create_pub(ctx, 5004, "*")
+    iob = PipeBuffer()
+    motorR_msg = MotorReadings_msg()
+    motor_msg = Motor_msg() # these are in C indices 
+    [setproperty!(motor_msg, field,0) for field in propertynames(motor_msg)]
+
+    # timing  
+    h = 0.005
+
     # Control loop 
+
     try
         while true 
             joint_pos_c = mapMotorArrays(joint_pos_rgb, MotorIDs_rgb, MotorIDs_c)
+            qs, dqs, ddqs, τs = A1Robot.getMotorReadings(interface) 
+
+            # setting the values 
             # A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
             # A1Robot.SendCommand(interface)
-            sleep(0.02)
+
+            # Publishing 
+            [setproperty!(motor_msg, field, qs[i+1]) for (i, field) in propertynames(motor_msg) ]
+            setproperty!(motorR_msg, :q, motor_msg) 
+            [setproperty!(motor_msg, field, dqs[i+1]) for (i, field) in propertynames(motor_msg) ]
+            setproperty!(motorR_msg, :dq, motor_msg) 
+            [setproperty!(motor_msg, field, ddqs[i+1]) for (i, field) in propertynames(motor_msg) ]  
+            setproperty!(motorR_msg, :ddq, motor_msg) 
+            [setproperty!(motor_msg, field, torques[i+1]) for (i, field) in propertynames(motor_msg) ]
+            setproperty!(motorR_msg, :torques, motor_msg) 
+            writeproto!(iob, motorR_msg)
+            ZMQ.send(motor_state_pub, take!(iob))
+
+            sleep(h)
         end 
     catch e
         if e isa InterruptException
