@@ -57,12 +57,18 @@ function main()
             # Update 
             if hasproperty(vicon, :quaternion)
                if vicon.time != vicon_time 
-                    # v.q .= [vicon.quaternion.z, vicon.quaternion.w, vicon.quaternion.x,
-                            # vicon.quaternion.y]
                     vicon_measurement[4:end] .= [vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z]
                     vicon_measurement[1:3] .= [vicon.position.x, vicon.position.y, vicon.position.z]
                     update!(ekf, vicon_measurement)
                     vicon_time = vicon.time
+
+                    # Publishing 
+                    setproperty!(vicon_msg, :quaternion, Quaternion_msg(w=vicon_measurement[4], 
+                                x=vicon_measurement[5], y=vicon_measurement[6], z=vicon_measurement[4]))
+                    setproperty!(vicon_msg, :position, Vector3_msg(x=vicon_measurement[1], y=vicon_measurement[2], z=vicon_measurement[3]))
+                    setproperty!(vicon_msg, :time, time())
+                    writeproto(iob, vicon_msg)
+                    ZMQ.send(vicon_pub,take!(iob))
                end  
             end
 
@@ -76,13 +82,6 @@ function main()
             setproperty!(ekf_msg, :time, time())
             writeproto(iob, ekf_msg)
 			ZMQ.send(ekf_pub,take!(iob))
-
-            setproperty!(vicon_msg, :quaternion, Quaternion_msg(w=vicon_measurement[4], 
-                                x=vicon_measurement[5], y=vicon_measurement[6], z=vicon_measurement[4]))
-            setproperty!(vicon_msg, :position, Vector3_msg(x=vicon_measurement[1], y=vicon_measurement[2], z=vicon_measurement[3]))
-            setproperty!(vicon_msg, :time, time())
-            writeproto(iob, vicon_msg)
-            ZMQ.send(vicon_pub,take!(iob))
 
             setproperty!(imu_msg, :gyroscope, Vector3_msg(x=input[4],y=input[5], z=input[6]))
             setproperty!(imu_msg, :acceleration, Vector3_msg(x=input[1], y=input[2], z=input[3]))

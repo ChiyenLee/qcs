@@ -1,6 +1,47 @@
 syntax = "proto3";
 package messaging;
 
+/////////// Motor Messages /////////////////
+message MotorPos_msg { 
+    Motor_msg positions = 1;
+    double time = 2;
+}
+
+message MotorVelocities_msg { 
+    Motor_msg velocities = 1;
+    double time = 2;
+}
+
+message MotorTorqueCommands_msg {
+    Motor_msg torques = 1; 
+    double time = 2; 
+}
+
+message MotorReadings_msg {
+    Motor_msg torques = 1; 
+    Motor_msg q = 2; 
+    Motor_msg dq = 3; 
+    Motor_msg ddq = 4; 
+    double time = 5; 
+}
+
+message Motor_msg { 
+    double FR_Hip = 1;
+    double FR_Thigh = 2;
+    double FR_Calf = 3;
+    double FL_Hip = 4;
+    double FL_Thigh = 5;
+    double FL_Calf = 6;
+    double RR_Hip = 7;
+    double RR_Thigh = 8;
+    double RR_Calf = 9;
+    double RL_Hip = 10; 
+    double RL_Thigh = 11; 
+    double RL_Calf = 12;
+    double time = 13;
+}
+
+////////////// Sensors/ EKF Messages /////////////////
 message EKF_msg { 
     Vector3_msg position = 1; 
     Quaternion_msg quaternion = 2;
@@ -34,24 +75,3 @@ message Quaternion_msg {
     double y = 3;
     double z = 4;
 }
-
-
-// message IMU { 
-//     repeated double quaternion=1;
-//     repeated double rpy=2;
-//     repeated double gyro=3;
-//     double time=4;
-// }
-
-// message VICON {
-//     repeated double position=1;
-//     repeated double quaternion=2;
-//     double time=3;
-// }
-
-// message PROPERTY { 
-//     enum NAME {
-//         IMU = 0;
-//         VICON = 1;
-//     }
-// }
