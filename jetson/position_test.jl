@@ -5,6 +5,10 @@ xf = [0.9250087650676135, 0.00820427564681016, -0.3797694610033162, -0.008162775
 uf = [-0.5687407426035559, 0.6038632976405194, 3.0620134375539556, -3.1685288124879816, -0.5963893983544176, -0.5900199238480763, 8.903600886868457, 8.584255474441395, -0.2902253141866037, -0.28979532471656183, 9.52330678392854, 9.400048025157087]
 
 joint_pos_rgb = xf[8:20] # rigidbody indexing
+# joint_pos_rgb = zeros(12)
+torques = zeros(12)
+# torques[MotorIDs_c.FR_Calf] = 1.0
+torques[MotorIDs_c.FR_Thigh] = -1.0
 
 Kp = 100
 Kd = 5
@@ -13,8 +17,9 @@ try
     while true 
         joint_pos_c = mapMotorArrays(joint_pos_rgb, MotorIDs_rgb, MotorIDs_c)
         # A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
-        # A1Robot.SendCommand(interface)
-        sleep(0.02)
+        A1Robot.setTorqueCommands(interface, torques)
+        A1Robot.SendCommand(interface)
+        sleep(0.01)
     end 
 catch e
     if e isa InterruptException
