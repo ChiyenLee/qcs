@@ -3,6 +3,7 @@ using julia_messaging
 using quadruped_control 
 using LinearAlgebra
 using julia_messaging: writeproto, ZMQ
+using julia_messaging: ProtoBuf
 
 function main()
     # Equilibrium pose 
@@ -15,21 +16,26 @@ function main()
     Kd = 5
 
     torques = zeros(12)
-    # torques[MotorIDs_c.FR_Calf] = 1.0
+    torques[MotorIDs_c.FR_Calf] = 1.0
 
     # Subscribe to ekf topic 
-    ctx = julia_messaging.ZMQ.Context(1)
-    ekf_msg = EKF_msg() 
-    ekf_sub() = subscriber_thread(ctx, ekf_msg, 5003)
-    ekf_thread= Task(vicon_sub)
-    schedule(ekf_thread)
+    ctx = ZMQ.Context(1)
+    # ekf_msg = EKF_msg() 
+    # ekf_sub() = subscriber_thread(ctx, ekf_msg, 5003)
+    # ekf_thread= Task(ekf_sub)
+    # schedule(ekf_thread)
 
     # Publisher 
-    motor_state_pub = create_pub(ctx, 5004, "*")
+    motor_state_pub = create_pub(ctx, 5055, "*")
     iob = PipeBuffer()
     motorR_msg = MotorReadings_msg()
-    motor_msg = Motor_msg() # these are in C indices 
-    [setproperty!(motor_msg, field,0) for field in propertynames(motor_msg)]
+    motor_position_msg = Motor_msg() # these are in C indices 
+    motor_vel_msg = Motor_msg()
+    motor_torque_msg = Motor_msg()
+    motor_ddq_msg = Motor_msg()
+    [setproperty!(motor_position_msg, field,0) for field in propertynames(motor_position_msg)]
+    [setproperty!(motor_vel_msg, field,0) for field in propertynames(motor_vel_msg)]
+    [setproperty!(motor_torque_msg, field,0) for field in propertynames(motor_torque_msg)]
 
     # timing  
     h = 0.005
@@ -43,22 +49,27 @@ function main()
 
             # setting the values 
             # A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
-            # A1Robot.SendCommand(interface)
             # A1Robot.setTorqueCommands(interface, torques)
             # A1Robot.SendCommand(interface)
             
             # Publishing 
-            [setproperty!(motor_msg, field, qs[i+1]) for (i, field) in propertynames(motor_msg) ]
-            setproperty!(motorR_msg, :q, motor_msg) 
-            [setproperty!(motor_msg, field, dqs[i+1]) for (i, field) in propertynames(motor_msg) ]
-            setproperty!(motorR_msg, :dq, motor_msg) 
-            [setproperty!(motor_msg, field, ddqs[i+1]) for (i, field) in propertynames(motor_msg) ]  
-            setproperty!(motorR_msg, :ddq, motor_msg) 
-            [setproperty!(motor_msg, field, torques[i+1]) for (i, field) in propertynames(motor_msg) ]
-            setproperty!(motorR_msg, :torques, motor_msg) 
-            writeproto!(iob, motorR_msg)
-            ZMQ.send(motor_state_pub, take!(iob))
+            [setproperty!(motor_position_msg, field, qs[i]) for (i, field) in enumerate(propertynames(motor_position_msg)[1:12])]
+            setproperty!(motorR_msg, :q, motor_position_msg) 
+            [setproperty!(motor_vel_msg, field, dqs[i]) for (i, field) in enumerate(propertynames(motor_vel_msg)[1:12])]
+            setproperty!(motorR_msg, :dq, motor_vel_msg) 
+            # [setproperty!(motor_torque_msg, field, τs[i]) for (i, field) in enumerate(propertynames(motor_torque_msg)[1:12])]
+            # setproperty!(motorR_msg, :torques, motor_torque_msg) 
+            writeproto(iob, motorR_msg)
+            data = take!(iob)
+            try 
+                ZMQ.send(motor_state_pub, data)
+            catch e 
+                println(data)
+                println(typeof(motor_state_pub))
 
+                rethrow(e)
+                break
+            end 
             sleep(h)
         end 
     catch e
