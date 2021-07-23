@@ -4,32 +4,11 @@ sys.path.append("..")
 import numpy as np 
 from pyqtgraph.Qt import QtGui, QtCore
 import pyqtgraph as pg
-import pyqtgraph.opengl as gl
+# import pyqtgraph.opengl as gl
 import zmq 
 import pymessaging.message_pb2 as msg
 from pymessaging import messaging
 import time
-
-def make_cube():
-    vertexes = np.array([[1, 0, 0], #0
-                     [0, 0, 0], #1
-                     [0, 1, 0], #2
-                     [0, 0, 1], #3
-                     [1, 1, 0], #4
-                     [1, 1, 1], #5
-                     [0, 1, 1], #6
-                     [1, 0, 1]])#7
-    
-    faces = np.array([[1,0,7], [1,3,7],
-                  [1,2,4], [1,0,4],
-                  [1,2,6], [1,3,6],
-                  [0,4,5], [0,7,5],
-                  [2,4,5], [2,6,5],
-                  [3,6,5], [3,7,5]])
-    
-    colors = np.array([1,0,0,1] for in range(12))
-    cube = gl.GLMeshItem(vertexes=vertices, faces=faces, faceColors=colors, drawEdges=True, edgeColor=(0,0,0,1))
-    return cube 
 
 def update_plot(plot, l, value, ptr):
     l[:-1] = l[1:]
@@ -42,7 +21,7 @@ def update_plot(plot, l, value, ptr):
 try :
     # Initializing plots
     app = QtGui.QApplication([])            # you MUST do this once (initialize things)
-    win = pg.GraphicsWindow(title="Signal from serial port") # creates a window
+    win = pg.GraphicsWindow(title="ZMQ live plotting") # creates a window
     p = win.addPlot(title="Realtime plot")  # creates empty space for the plot in the window
     vx = p.plot()                        # create an empty "plot" (a curve to plot)
     vy = p.plot(pen="r") 
@@ -62,7 +41,7 @@ try :
     poller.register(ekf_sub, zmq.POLLIN)
     ekf_msg = msg.EKF_msg()
 
-    dt = 0.01
+    dt = 0.02
     t = time.time()
     while True: 
         socks = dict(poller.poll())
