@@ -10,15 +10,19 @@ ctx = zmq.Context()
 vicon_sub = messaging.create_sub(ctx, "5001", host="192.168.3.123")
 imu_sub = messaging.create_sub(ctx, "5002", host="192.168.3.123")
 ekf_sub = messaging.create_sub(ctx, "5003", host="192.168.3.123")
+motor_sub = messaging.create_sub(ctx, "5055", host="192.168.3.123")
+
 vicon = msg.Vicon_msg()
 imu = msg.IMU_msg()
 ekf = msg.EKF_msg()
+motor_msg = msg.MotorReadings_msg()
 
 print("waiting for data")
 poller = zmq.Poller()
 poller.register(imu_sub, zmq.POLLIN)
 poller.register(vicon_sub, zmq.POLLIN)
 poller.register(ekf_sub, zmq.POLLIN)
+poller.register(motor_sub, zmq.POLLIN)
 
 t_vicon = 0
 #f = open("out.bin", "wb")
@@ -41,8 +45,13 @@ try:
             data = ekf_sub.recv(zmq.DONTWAIT)
             ekf.ParseFromString(data)
             t_vicon = time.time()
-            print(ekf)
-            
+            # print(ekf)
+        
+        if motor_sub in socks.keys() and socks[motor_sub] == zmq.POLLIN:
+            # print(1/(time.time() - t_vicon))
+            data = motor_sub.recv(zmq.DONTWAIT)
+            motor_msg.ParseFromString(data)
+            print(motor_msg)
         
 
 except KeyboardInterrupt:
