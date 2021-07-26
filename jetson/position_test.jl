@@ -64,19 +64,21 @@ function main()
             try 
                 ZMQ.send(motor_state_pub, data)
             catch e 
-                println(data)
-                println(typeof(motor_state_pub))
-
-                rethrow(e)
-                break
+                if e isa ZMQ.StateError
+                    # some times it closes randomly. Use this to keep it open
+                    motor_state_pub = create_pub(ctx, 5055, "*")
+                    rethrow(e)
+                    break
+                end 
             end 
             sleep(h)
         end 
     catch e
         if e isa InterruptException
         # cleanup
-        println("control loop terminated by the user")
-        #    rethrow(e)
+            println("control loop terminated by the user")
+            close(motor_state_pub)
+            #    rethrow(e)
         else
             println(e)
             rethrow(e)
