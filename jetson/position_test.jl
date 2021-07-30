@@ -4,6 +4,9 @@ using quadruped_control
 using LinearAlgebra
 using julia_messaging: writeproto, ZMQ
 using julia_messaging: ProtoBuf
+using EKF 
+include("../EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
+include("proto_utils.jl")
 
 function main()
 
@@ -19,18 +22,6 @@ function main()
     torques[MotorIDs_c.FR_Calf] = 1.0
 
     ctx = ZMQ.Context(1)
-
-    # Publisher 
-    motor_state_pub = create_pub(ctx, 5004, "*")
-    iob = PipeBuffer()
-    motorR_msg = MotorReadings_msg()
-    motor_position_msg = Motor_msg() # these are in C indices 
-    motor_vel_msg = Motor_msg()
-    motor_torque_msg = Motor_msg()
-    motor_ddq_msg = Motor_msg()
-    [setproperty!(motor_position_msg, field,0) for field in propertynames(motor_position_msg)]
-    [setproperty!(motor_vel_msg, field,0) for field in propertynames(motor_vel_msg)]
-    [setproperty!(motor_torque_msg, field,0) for field in propertynames(motor_torque_msg)]
 
     ################## EKF stuff  ############
 	vicon = Vicon_msg()
@@ -62,9 +53,11 @@ function main()
     ekf_pub = create_pub(ctx,5003, "*")
     imu_pub = create_pub(ctx,5002, "*")
     vicon_pub = create_pub(ctx,5001, "*")
-    ekf_msg = EKF_msg()
-    imu_msg = IMU_msg()
-    vicon_msg = Vicon_msg()
+    motor_state_pub = create_pub(ctx, 5004, "*")
+    ekf_msg = init_ekf_msg()
+    imu_msg = init_imu_msg()
+    vicon_msg = init_vicon_msg()
+    iob = IOBuffer()
 
 
     ############ Control loop ###########
@@ -88,12 +81,11 @@ function main()
                     vicon_time = vicon.time
 
                     # Publishing 
-                    # setproperty!(vicon_msg, :quaternion, Quaternion_msg(w=vicon_measurement[4], 
-                    #             x=vicon_measurement[5], y=vicon_measurement[6], z=vicon_measurement[4]))
-                    # setproperty!(vicon_msg, :position, Vector3_msg(x=vicon_measurement[1], y=vicon_measurement[2], z=vicon_measurement[3]))
-                    # setproperty!(vicon_msg, :time, time())
-                    # writeproto(iob, vicon_msg)
-                    # ZMQ.send(vicon_pub,take!(iob))
+                    vicon_msg.quaternion.w, vicon_msg.quatenrion.x, vicon_msg.quaternion.y, vicon_msg.quaternion.z = vicon_measurement[4:end]
+                    vicon_msg.position.x, vicon_msg.position.y, vicon_msg.position.z = vicon_measurement[1:3]
+                    vicon_msg.time = time()
+
+                    publish(vicon_pub, vicon_msg, iob)
                end  
             end
 
@@ -107,32 +99,27 @@ function main()
             A1Robot.SendCommand(interface)
             
             ######## Controller  Publishing  ############
-            [setproperty!(motor_position_msg, field, qs[i]) for (i, field) in enumerate(propertynames(motor_position_msg)[1:12])]
-            setproperty!(motorR_msg, :q, motor_position_msg) 
-            [setproperty!(motor_vel_msg, field, dqs[i]) for (i, field) in enumerate(propertynames(motor_vel_msg)[1:12])]
-            setproperty!(motorR_msg, :dq, motor_vel_msg) 
-            # [setproperty!(motor_torque_msg, field, τs[i]) for (i, field) in enumerate(propertynames(motor_torque_msg)[1:12])]
-            # setproperty!(motorR_msg, :torques, motor_torque_msg) 
-            writeproto(iob, motorR_msg)
-            data = take!(iob)
-            
-            ######### EKF Publishing ##################
-            # r, v, q, α, β = getComponents(ekf.est_state)
-            # setproperty!(ekf_msg, :quaternion, Quaternion_msg(w=q[1],x=q[2], y=q[3], z=q[4]))
-            # setproperty!(ekf_msg, :position, Vector3_msg(x=r[1], y=r[2], z=r[3]))
-            # setproperty!(ekf_msg, :acceleration_bias, Vector3_msg(x=α[1], y=α[2], z=α[3]))
-            # setproperty!(ekf_msg, :angular_velocity_bias, Vector3_msg(x=β[1], y=β[2], z=β[3]))
-            # setproperty!(ekf_msg, :velocity, Vector3_msg(x=v[1], y=v[2], z=v[3]))
-            # setproperty!(ekf_msg, :time, time())
-            # writeproto(iob, ekf_msg)
-			# ZMQ.send(ekf_pub,take!(iob))
+            for (i, field) in enumerate(propertynames(motorR_msg.q))
+                setproperty!(motorR_msg.q, field, qs[i]) 
+                setproperty!(motorR_msg.dq, field, dqs[i])
+                setproperty!(motorR_msg.torques, field, τs[i] )
+            end 
+            publish(motor_state_pub, motorR_msg, iob) 
 
-            # setproperty!(imu_msg, :gyroscope, Vector3_msg(x=input[4],y=input[5], z=input[6]))
-            # setproperty!(imu_msg, :acceleration, Vector3_msg(x=input[1], y=input[2], z=input[3]))
-            # setproperty!(imu_msg, :time, time())
-            # writeproto(iob, imu_msg)
-            # ZMQ.send(imu_pub,take!(iob))
-            
+            ######### EKF Publishing ##################
+            r, v, q, α, β = getComponents(ekf.est_state)
+            ekf_msg.quaternion.w, ekf_msg.quaternion.x, ekf_msg.quaternion.y, ekf_msg.quaternion.z = q
+            ekf_msg.position.x, ekf_msg.position.y, ekf_msg.position.z = r 
+            ekf_msg.acceleration_bias.x, ekf_msg.acceleration_bias.y, ekf_msg.acceleration_bias.z = α
+            ekf_msg.angular_velocity_bias.x, ekf_msg.angular_velocity_bias.y, ekf_msg.angular_velocity_bias.z = β
+            ekf_msg.velocity.x, ekf_msg.velocity.y, ekf_msg.velocity.z = v 
+            ekf_msg.time = time()
+            publish(ekf_pub, ekf_msg, iob)            
+
+            imu_msg.gyroscope.x, imu_msg.gyroscope.y, imu_msg.gyroscope.z = input[4:6]
+            imu_msg.acceleration.x, imu_msg.acceleration.y, imu_msg.acceleration.z = input[1:3]
+            imu_msg.time = time()
+            publish(imu_pub, imu_msg, iob)
             
             try 
                 ZMQ.send(motor_state_pub, data)
@@ -145,22 +132,25 @@ function main()
                 end 
             end 
             sleep(h)
+
+            GC.gc(false) # collect garbage 
         end 
     catch e
-        close(ctx)
         if e isa InterruptException
         # cleanup
             println("control loop terminated by the user")
-            close(motor_state_pub)
-            close(imu_pub)
-            close(ekf_pub)
-            close(vicon_pub)
             Base.throwto(vicon_thread, InterruptException())
         else
             println(e)
             rethrow(e)
             # println("some other error")
         end
+    finally 
+        close(ctx)
+        close(imu_pub)
+        close(ekf_pub)
+        close(vicon_pub)
+        close(motor_state_pub)
     end
 end 
 

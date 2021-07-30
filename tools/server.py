@@ -31,4 +31,4 @@ while True:
     data = vicon.SerializeToString()
     vicon_pub.send(data)
 
-    time.sleep(0.01)
+    time.sleep(0.005)

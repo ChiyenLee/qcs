@@ -22,9 +22,6 @@ W[end-5:end,end-5:end] = I(6)*1e4
 R = Matrix(1.0I(length(ViconError))) * 1e-3;
 ekf = ErrorStateFilter{TrunkState, TrunkError, ImuInput, Vicon, ViconError}(state, P, W, R) 
 
-
-
-
 acc_corrected = zeros(3,ind_final)
 r_predicted = zeros(3, ind_final)
 bias_predicted = zeros(3, ind_final)
