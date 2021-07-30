@@ -38,7 +38,6 @@ function main()
     vicon_time = 0.0
 
     # Initialize EKF
-
     state_init = zeros(length(TrunkState)); state_init[7] = 1.0 
     state = TrunkState(state_init)
     vicon_init = zeros(7); vicon_init[4] = 1.0
@@ -61,7 +60,6 @@ function main()
     imu_msg = init_imu_msg()
     vicon_msg = init_vicon_msg()
     iob = IOBuffer()
-
 
     ############ Control loop ###########
     try
@@ -127,7 +125,7 @@ function main()
             catch e 
                 if e isa ZMQ.StateError
                     # some times it closes randomly. Use this to keep it open
-                    motor_state_pub = create_pub(ctx, 5055, "*")
+                    motor_state_pub = create_pub(ctx, 5004, "*")
                     rethrow(e)
                     break
                 end 

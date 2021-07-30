@@ -14,8 +14,8 @@ end
 # init an imu message 
 function init_imu_msg()
 	imu_msg = IMU_msg()
-	setproperty!(imu_msg, :gyroscope, Vector3_msg(x=input[4],y=input[5], z=input[6]))
-	setproperty!(imu_msg, :acceleration, Vector3_msg(x=input[1], y=input[2], z=input[3]))
+	setproperty!(imu_msg, :gyroscope, Vector3_msg(x=0.,y=0., z=0.))
+	setproperty!(imu_msg, :acceleration, Vector3_msg(x=0., y=0., z=0.))
 	setproperty!(imu_msg, :time, time())
 	return imu_msg
 end 
