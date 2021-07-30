@@ -24,8 +24,10 @@ function main()
     vicon_time = 0.0
 
     # Initialize EKF
-    state = TrunkState(zeros(length(TrunkState))); state.qw = 1.0
-    vicon_measurement = Vicon(zeros(length(Vicon))); vicon_measurement.qw = 1.0;
+    state_init = zeros(length(TrunkState)); state_init[7] = 1.0 
+    state = TrunkState(state_init)
+    vicon_init = zeros(7); vicon_init[4] = 1.0
+    vicon_measurement = Vicon(vicon_init);
     input = ImuInput(zeros(length(ImuInput)))
 
     P = Matrix(1.0I(length(TrunkError))) * 1e10; 
@@ -50,15 +52,13 @@ function main()
             A1Robot.getGyroscope(interface, gyro_imu); 
 
             # Prediction 
-            input[1:3] .= copy(accel_imu)    
-            input[4:end] .= copy(gyro_imu)
-            prediction!(ekf, input, dt=h)
+            input = ImuInput(accel_imu..., gyro_imu...)
+            prediction!(ekf, input, h)
 
             # Update 
             if hasproperty(vicon, :quaternion)
                if vicon.time != vicon_time 
-                    vicon_measurement[4:end] .= [vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z]
-                    vicon_measurement[1:3] .= [vicon.position.x, vicon.position.y, vicon.position.z]
+                    vicon_measurement = Vicon(vicon.position.x, vicon.position.y, vicon.position.z, vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z)
                     update!(ekf, vicon_measurement)
                     vicon_time = vicon.time
 
@@ -73,7 +73,7 @@ function main()
             end
 
             # Publishing
-            r, v, q, α, β = getComponents(ekf.est_state)
+            r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
             setproperty!(ekf_msg, :quaternion, Quaternion_msg(w=q[1],x=q[2], y=q[3], z=q[4]))
             setproperty!(ekf_msg, :position, Vector3_msg(x=r[1], y=r[2], z=r[3]))
             setproperty!(ekf_msg, :acceleration_bias, Vector3_msg(x=α[1], y=α[2], z=α[3]))
@@ -89,6 +89,7 @@ function main()
             writeproto(iob, imu_msg)
             ZMQ.send(imu_pub,take!(iob))
             
+
             sleep(h)
         end    
     catch e

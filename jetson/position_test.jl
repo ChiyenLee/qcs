@@ -15,7 +15,7 @@ function main()
     xf = [0.9250087650676135, 0.00820427564681016, -0.3797694610033162, -0.00816277516843245, 0.11172124479696591, -0.0008058608042655944, 0.44969568972519774, -0.011312524917513934, 0.00612999960696473, -0.026098431577256127, -0.026300826444390895, 0.29186645738457084, 0.3011565891540206, 0.8355314412321065, 0.8526119637361341, -0.916297857297, -0.916297857297, -0.9825729401405727, -0.9826692125518477, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     uf = [-0.5687407426035559, 0.6038632976405194, 3.0620134375539556, -3.1685288124879816, -0.5963893983544176, -0.5900199238480763, 8.903600886868457, 8.584255474441395, -0.2902253141866037, -0.28979532471656183, 9.52330678392854, 9.400048025157087]
     joint_pos_rgb = xf[8:20] # rigidbody indexing
-    Kp = 5
+    Kp = 100
     Kd = 5
 
     torques = zeros(12)
@@ -38,8 +38,11 @@ function main()
     vicon_time = 0.0
 
     # Initialize EKF
-    state = TrunkState(zeros(length(TrunkState))); state.qw = 1.0
-    vicon_measurement = Vicon(zeros(length(Vicon))); vicon_measurement.qw = 1.0;
+
+    state_init = zeros(length(TrunkState)); state_init[7] = 1.0 
+    state = TrunkState(state_init)
+    vicon_init = zeros(7); vicon_init[4] = 1.0
+    vicon_measurement = Vicon(vicon_init);
     input = ImuInput(zeros(length(ImuInput)))
 
     P = Matrix(1.0I(length(TrunkError))) * 1e10; 
@@ -68,16 +71,14 @@ function main()
             A1Robot.getGyroscope(interface, gyro_imu); 
 
             # Prediction 
-            input[1:3] .= copy(accel_imu)    
-            input[4:end] .= copy(gyro_imu)
-            prediction!(ekf, input, dt=h)
+            input = ImuInput(accel_imu..., gyro_imu...)
+            prediction!(ekf, input, h)
 
             # Update 
             if hasproperty(vicon, :quaternion)
                if vicon.time != vicon_time 
-                    vicon_measurement[4:end] .= [vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z]
-                    vicon_measurement[1:3] .= [vicon.position.x, vicon.position.y, vicon.position.z]
-                    @time update!(ekf, vicon_measurement)
+                    vicon_measurement = Vicon(vicon.position.x, vicon.position.y, vicon.position.z, vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z)
+                    update!(ekf, vicon_measurement)
                     vicon_time = vicon.time
 
                     # Publishing 
