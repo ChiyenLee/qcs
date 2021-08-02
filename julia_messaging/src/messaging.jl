@@ -23,10 +23,7 @@ function subscriber_thread(ctx::ZMQ.Context, proto_msg::ProtoBuf.ProtoType, port
         while true 
             bin_data = recv(sub)
             io = seek(convert(IOStream, bin_data),0)
-            @time begin 
             readproto(io, proto_msg)
-            end
-            println(length(bin_data))
             GC.gc(false) # does incremental garbage collection
 
             # not sure if this is the right way to do it. 
