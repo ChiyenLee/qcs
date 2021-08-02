@@ -15,9 +15,9 @@ function main()
     xf = [0.9250087650676135, 0.00820427564681016, -0.3797694610033162, -0.00816277516843245, 0.11172124479696591, -0.0008058608042655944, 0.44969568972519774, -0.011312524917513934, 0.00612999960696473, -0.026098431577256127, -0.026300826444390895, 0.29186645738457084, 0.3011565891540206, 0.8355314412321065, 0.8526119637361341, -0.916297857297, -0.916297857297, -0.9825729401405727, -0.9826692125518477, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     uf = [-0.5687407426035559, 0.6038632976405194, 3.0620134375539556, -3.1685288124879816, -0.5963893983544176, -0.5900199238480763, 8.903600886868457, 8.584255474441395, -0.2902253141866037, -0.28979532471656183, 9.52330678392854, 9.400048025157087]
     joint_pos_rgb = xf[8:20] # rigidbody indexing
-    Kp = 100
+    Kp = 10
     Kd = 5
-
+ 
     torques = zeros(12)
     torques[MotorIDs_c.FR_Calf] = 1.0
 
@@ -34,7 +34,7 @@ function main()
     gyro_imu = zeros(3);
 
     # Timing 
-    h = 0.005
+    h = 0.002
     vicon_time = 0.0
 
     # Initialize EKF
@@ -59,9 +59,14 @@ function main()
     ekf_msg = init_ekf_msg()
     imu_msg = init_imu_msg()
     vicon_msg = init_vicon_msg()
+    motorR_msg = init_motor_readings()
     iob = IOBuffer()
 
     ############ Control loop ###########
+    t_Kp = 0. 
+    dKp_dt = 5
+    command = ["a"]
+    @async command[1] = readline()
     try
         while true 
             ################## EKF ########################
@@ -80,7 +85,7 @@ function main()
                     vicon_time = vicon.time
 
                     # Publishing 
-                    vicon_msg.quaternion.w, vicon_msg.quatenrion.x, vicon_msg.quaternion.y, vicon_msg.quaternion.z = vicon_measurement[4:end]
+                    vicon_msg.quaternion.w, vicon_msg.quaternion.x, vicon_msg.quaternion.y, vicon_msg.quaternion.z = vicon_measurement[4:end]
                     vicon_msg.position.x, vicon_msg.position.y, vicon_msg.position.z = vicon_measurement[1:3]
                     vicon_msg.time = time()
 
@@ -93,20 +98,31 @@ function main()
             qs, dqs, ddqs, τs = A1Robot.getMotorReadings(interface) 
 
             # setting the values 
-            A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
+            if Kp < 100 
+                if t_Kp == 0
+                    t_Kp = time() 
+                end 
+                Kp = (time() - t_Kp) * dKp_dt 
+            else
+                Kp = 100
+            end 
+
+            # A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
             # A1Robot.setTorqueCommands(interface, torques)
-            A1Robot.SendCommand(interface)
+            # A1Robot.SendCommand(interface)
+            println(command)
             
             ######## Controller  Publishing  ############
-            for (i, field) in enumerate(propertynames(motorR_msg.q))
+            for (i, field) in enumerate(propertynames(motorR_msg.q)[1:12])
                 setproperty!(motorR_msg.q, field, qs[i]) 
                 setproperty!(motorR_msg.dq, field, dqs[i])
                 setproperty!(motorR_msg.torques, field, τs[i] )
             end 
+            motorR_msg.time = time()
             publish(motor_state_pub, motorR_msg, iob) 
 
             ######### EKF Publishing ##################
-            r, v, q, α, β = getComponents(ekf.est_state)
+            r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
             ekf_msg.quaternion.w, ekf_msg.quaternion.x, ekf_msg.quaternion.y, ekf_msg.quaternion.z = q
             ekf_msg.position.x, ekf_msg.position.y, ekf_msg.position.z = r 
             ekf_msg.acceleration_bias.x, ekf_msg.acceleration_bias.y, ekf_msg.acceleration_bias.z = α
@@ -120,16 +136,16 @@ function main()
             imu_msg.time = time()
             publish(imu_pub, imu_msg, iob)
             
-            try 
-                ZMQ.send(motor_state_pub, data)
-            catch e 
-                if e isa ZMQ.StateError
-                    # some times it closes randomly. Use this to keep it open
-                    motor_state_pub = create_pub(ctx, 5004, "*")
-                    rethrow(e)
-                    break
-                end 
-            end 
+            # try 
+            #     ZMQ.send(motor_state_pub, data)
+            # catch e 
+            #     if e isa ZMQ.StateError
+            #         # some times it closes randomly. Use this to keep it open
+            #         motor_state_pub = create_pub(ctx, 5004, "*")
+            #         rethrow(e)
+            #         break
+            #     end 
+            # end 
             sleep(h)
 
             GC.gc(false) # collect garbage 
