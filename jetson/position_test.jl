@@ -18,13 +18,13 @@ function main()
     # Current 
     x_now = zero(xf); x_now[1] = 1.0 
     Δx = zeros(36)
-    u_now = zero(uf); 
+    u_now = zero(uf); u_fb = zero(uf)
     joint_pos_rgb = xf[8:20] # rigidbody indexing
-    Kp = 10
+    Kp = 0
     Kd = 5
 
     # Load K 
-    K_dict = load("LQR_gain.jld")
+    K_dict = JLD.load("jetson/LQR_gain.jld")
     K = K_dict["K"]
     torques = zeros(12)
 
@@ -71,12 +71,14 @@ function main()
     ############ Control loop ###########
     t_Kp = 0. 
     dKp_dt = 5
-    command = ["a"]
-    @async while true command[1] = readline() end # for sending command  
+    command = ["position"]
+    command_reader() = while true command[1] = readline() end 
+    command_thread = Task(command_reader)
+    schedule(command_thread)
     
     ########### Preample ################ 
     # Run the commands at least once so the script doesn't gag at runtime 
-    A1Robot.setPositionCommands(interface, joint_pos_c, 0, 0)
+    A1Robot.setPositionCommands(interface, joint_pos_rgb, 0, 0)
     A1Robot.setTorqueCommands(interface, torques)
     A1Robot.getAcceleration(interface, accel_imu);
     A1Robot.getGyroscope(interface, gyro_imu); 
@@ -86,6 +88,7 @@ function main()
     vicon_measurement = Vicon(0., 0., 0., 1., 0., 0., 0.)
     update!(ekf, vicon_measurement)
 
+    println("Robot is live...")
     try
         while true 
             ################## EKF ########################
@@ -117,55 +120,63 @@ function main()
             qs, dqs, _, τs = A1Robot.getMotorReadings(interface) 
 
             # Gradually upping the position gain 
-            if Kp < 100 
+            if Kp < 200 
                 if t_Kp == 0
                     t_Kp = time() 
                 end 
                 Kp = (time() - t_Kp) * dKp_dt 
             else
-                Kp = 100
+                Kp = 200
             end 
             
             # Calculate state difference 
             r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
             Δx[1:3] .= rotation_error(UnitQuaternion(q), UnitQuaternion(xf[1:4]), CayleyMap())
-            Δx[4:6] .= r - xf 
-            Δx[20:22] .= gyro_imu 
-            Δx[23:25] .= v 
-            Δx[8:19] .= mapMotorArrays(qs, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
-            Δx[26:end] .= mapMotorArrays(dqs, MotorIDs_c, MotorIDs_rgb) 
-            u_now[:] .= uf -K * Δx 
+            Δx[4:6] .= r - xf[5:7]
+            Δx[19:21] .= UnitQuaternion(q) * gyro_imu 
+            Δx[22:24] .= v 
+            Δx[7:18] .= mapMotorArrays(qs, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
+            Δx[25:end] .= mapMotorArrays(dqs, MotorIDs_c, MotorIDs_rgb) 
+            u_fb[:] .= -K * Δx 
+            u_now[:] .= uf + u_fb 
             
+            # println(round.(u_fb[[MotorIDs_rgb.FR_Calf MotorIDs_rgb.FL_Calf]], digits=3))
+            # hips 
+            # println(round.(u_fb[[1,2,3,4]], digits=3))
+            # println(round.(u_fb[[5,6,7,8]], digits=3))
+            # println(round.(u_fb[[9,10,11,12]], digits=3))
+            println(round.(Δx[19:21], digits=3 ))
+
             # Positional Safety 
-            if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.1) 
+
+            if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
                 println("Position out of bounds!!")
                 u_now .= 0 
             end 
 
             # Command safety 
-            if any(abs.(u_now) .+ 15) 
+            if any(abs.(u_fb) .> 15) 
                 println("Control out of bounds!!")
                 u_now .= 0 
             end 
-            
-            if command == "position"
+             
+            if command[1] == "position"
                 A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
-            elseif command == "balance"
+            elseif command[1] == "balance"
                 # Convert calculation to C indices and set the command! 
+                println("entering torque mode!!")
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
-                A1Robot.setTorqueCommands(interface, torques)
-            elseif command == "capture"
-                xf[4:6] .= r
+                # A1Robot.setTorqueCommands(interface, torques)
+            elseif command[1] == "capture"
+                xf[5:7] .= r
                 # capture the current equilibrium point 
                 A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
-                command = "position"
+                command[1] = "position"
                 println("Position captured. Returning to position hold")
             else 
                 A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
             end 
-            # A1Robot.SendCommand(interface)
-            
-
+            A1Robot.SendCommand(interface)
 
             ################### Publishing  ############
             ### Motor ###
@@ -200,7 +211,6 @@ function main()
         if e isa InterruptException
         # cleanup
             println("control loop terminated by the user")
-            Base.throwto(vicon_thread, InterruptException())
         else
             println(e)
             rethrow(e)
@@ -212,6 +222,8 @@ function main()
         close(ekf_pub)
         close(vicon_pub)
         close(motor_state_pub)
+        Base.throwto(command_thread, InterruptException())
+        Base.throwto(vicon_thread, InterruptException())
     end
 end 
 
