@@ -37,13 +37,13 @@ try:
         if imu_sub in socks.keys() and socks[imu_sub] == zmq.POLLIN:
             data = imu_sub.recv(zmq.DONTWAIT) 
             imu.ParseFromString(data)
-            # print(imu)
+            print(imu)
 
         if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN:
             data = vicon_sub.recv(zmq.DONTWAIT)
             vicon.ParseFromString(data)
             # print("vicon " )
-            print(vicon)
+            # print(vicon)
         
         if ekf_sub in socks.keys() and socks[ekf_sub] == zmq.POLLIN:
             # print(1/(time.time() - t_vicon))
