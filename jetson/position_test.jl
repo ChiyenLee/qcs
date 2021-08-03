@@ -6,6 +6,7 @@ using LinearAlgebra
 using julia_messaging: writeproto, ZMQ
 using julia_messaging: ProtoBuf
 using EKF 
+using Logging
 include("../EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
 include("proto_utils.jl")
 
@@ -19,12 +20,12 @@ function main()
     x_now = zero(xf); x_now[1] = 1.0 
     Δx = zeros(36)
     u_now = zero(uf); u_fb = zero(uf)
-    joint_pos_rgb = xf[8:20] # rigidbody indexing
+    joint_pos_rgb = copy(xf[8:19]) # rigidbody indexing
     Kp = 0
     Kd = 5
 
     # Load K 
-    K_dict = JLD.load("jetson/LQR_gain.jld")
+    K_dict = JLD.load("jetson/LQR_gain2.jld")
     K = K_dict["K"]
     torques = zeros(12)
 
@@ -88,6 +89,12 @@ function main()
     vicon_measurement = Vicon(0., 0., 0., 1., 0., 0., 0.)
     update!(ekf, vicon_measurement)
 
+    ### Debug logging 
+    io = open("log.txt", "w+")
+    logger = SimpleLogger(io)
+    global_logger(logger)
+
+
     println("Robot is live...")
     try
         while true 
@@ -107,11 +114,10 @@ function main()
                     vicon_time = vicon.time
 
                     # Publishing 
-                    vicon_msg.quaternion.w, vicon_msg.quaternion.x, vicon_msg.quaternion.y, vicon_msg.quaternion.z = vicon_measurement[4:end]
-                    vicon_msg.position.x, vicon_msg.position.y, vicon_msg.position.z = vicon_measurement[1:3]
-                    vicon_msg.time = time()
-
-                    publish(vicon_pub, vicon_msg, iob)
+                    # vicon_msg.quaternion.w, vicon_msg.quaternion.x, vicon_msg.quaternion.y, vicon_msg.quaternion.z = vicon_measurement[4:end]
+                    # vicon_msg.position.x, vicon_msg.position.y, vicon_msg.position.z = vicon_measurement[1:3]
+                    # vicon_msg.time = time()
+                    # publish(vicon_pub, vicon_msg, iob)
                end  
             end
 
@@ -138,15 +144,20 @@ function main()
             Δx[7:18] .= mapMotorArrays(qs, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
             Δx[25:end] .= mapMotorArrays(dqs, MotorIDs_c, MotorIDs_rgb) 
             u_fb[:] .= -K * Δx 
-            u_now[:] .= uf + u_fb 
+            u_now[:] .= uf #+ u_fb 
             
             # println(round.(u_fb[[MotorIDs_rgb.FR_Calf MotorIDs_rgb.FL_Calf]], digits=3))
             # hips 
-            # println(round.(u_fb[[1,2,3,4]], digits=3))
-            # println(round.(u_fb[[5,6,7,8]], digits=3))
-            # println(round.(u_fb[[9,10,11,12]], digits=3))
-            println(round.(Δx[19:21], digits=3 ))
+            # println(round.(u_fb[[1,2,3,4]], digits=3)) # hip
+            # println(round.(u_fb[[5,6,7,8]], digits=3)) # thigh 
+            # println(round.(u_fb[[9,10,11,12]], digits=3)) # caf 
 
+            println("calf readings ", qs[9], τs[9])
+            if qs[9] < -1.2 
+                @info joint_pos_c 
+            end 
+
+            # println(round.(Δx[19:21], digits=3 ))
             # Positional Safety 
 
             if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
@@ -166,9 +177,12 @@ function main()
                 # Convert calculation to C indices and set the command! 
                 println("entering torque mode!!")
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
-                # A1Robot.setTorqueCommands(interface, torques)
+                # A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
+                @info round.(Δx, digits=3 )
+                @info round.(u_fb, digits=3 )
+                A1Robot.setTorqueCommands(interface, torques)
             elseif command[1] == "capture"
-                xf[5:7] .= r
+                xf[5:7] .= copy(r)
                 # capture the current equilibrium point 
                 A1Robot.setPositionCommands(interface, joint_pos_c, Kp, Kd)
                 command[1] = "position"
@@ -180,29 +194,29 @@ function main()
 
             ################### Publishing  ############
             ### Motor ###
-            for (i, field) in enumerate(propertynames(motorR_msg.q)[1:12])
-                setproperty!(motorR_msg.q, field, qs[i]) 
-                setproperty!(motorR_msg.dq, field, dqs[i])
-                setproperty!(motorR_msg.torques, field, τs[i] )
-            end 
-            motorR_msg.time = time()
-            publish(motor_state_pub, motorR_msg, iob) 
+            # for (i, field) in enumerate(propertynames(motorR_msg.q)[1:12])
+            #     setproperty!(motorR_msg.q, field, qs[i]) 
+            #     setproperty!(motorR_msg.dq, field, dqs[i])
+            #     setproperty!(motorR_msg.torques, field, τs[i] )
+            # end 
+            # motorR_msg.time = time()
+            # publish(motor_state_pub, motorR_msg, iob) 
 
-            ### EKF ###
-            # r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
-            ekf_msg.quaternion.w, ekf_msg.quaternion.x, ekf_msg.quaternion.y, ekf_msg.quaternion.z = q
-            ekf_msg.position.x, ekf_msg.position.y, ekf_msg.position.z = r 
-            ekf_msg.acceleration_bias.x, ekf_msg.acceleration_bias.y, ekf_msg.acceleration_bias.z = α
-            ekf_msg.angular_velocity_bias.x, ekf_msg.angular_velocity_bias.y, ekf_msg.angular_velocity_bias.z = β
-            ekf_msg.velocity.x, ekf_msg.velocity.y, ekf_msg.velocity.z = v 
-            ekf_msg.time = time()
-            publish(ekf_pub, ekf_msg, iob)    
+            # ### EKF ###
+            # # r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
+            # ekf_msg.quaternion.w, ekf_msg.quaternion.x, ekf_msg.quaternion.y, ekf_msg.quaternion.z = q
+            # ekf_msg.position.x, ekf_msg.position.y, ekf_msg.position.z = r 
+            # ekf_msg.acceleration_bias.x, ekf_msg.acceleration_bias.y, ekf_msg.acceleration_bias.z = α
+            # ekf_msg.angular_velocity_bias.x, ekf_msg.angular_velocity_bias.y, ekf_msg.angular_velocity_bias.z = β
+            # ekf_msg.velocity.x, ekf_msg.velocity.y, ekf_msg.velocity.z = v 
+            # ekf_msg.time = time()
+            # publish(ekf_pub, ekf_msg, iob)    
 
-            ### IMU ###
-            imu_msg.gyroscope.x, imu_msg.gyroscope.y, imu_msg.gyroscope.z = input[4:6]
-            imu_msg.acceleration.x, imu_msg.acceleration.y, imu_msg.acceleration.z = input[1:3]
-            imu_msg.time = time()
-            publish(imu_pub, imu_msg, iob)
+            # ### IMU ###
+            # imu_msg.gyroscope.x, imu_msg.gyroscope.y, imu_msg.gyroscope.z = input[4:6]
+            # imu_msg.acceleration.x, imu_msg.acceleration.y, imu_msg.acceleration.z = input[1:3]
+            # imu_msg.time = time()
+            # publish(imu_pub, imu_msg, iob)
             sleep(h)
 
             GC.gc(false) # collect garbage 
@@ -217,13 +231,15 @@ function main()
             # println("some other error")
         end
     finally 
-        close(ctx)
         close(imu_pub)
         close(ekf_pub)
         close(vicon_pub)
         close(motor_state_pub)
+        close(ctx)
         Base.throwto(command_thread, InterruptException())
         Base.throwto(vicon_thread, InterruptException())
+
+
     end
 end 
 
