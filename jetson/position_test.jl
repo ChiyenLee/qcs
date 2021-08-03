@@ -133,8 +133,8 @@ function main()
             r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
             Δx[1:3] .= rotation_error(UnitQuaternion(q), UnitQuaternion(xf[1:4]), CayleyMap())
             Δx[4:6] .= r - xf[5:7]
-            Δx[19:21] .= UnitQuaternion(q) * gyro_imu 
-            Δx[22:24] .= v 
+            Δx[19:21] .= gyro_imu # NOTE: \omega and velocity should both in body frame 
+            Δx[22:24] .= UnitQuaternion(q) * v  # in the KF, v is in world frame. 
             Δx[7:18] .= mapMotorArrays(qs, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
             Δx[25:end] .= mapMotorArrays(dqs, MotorIDs_c, MotorIDs_rgb) 
             u_fb[:] .= -K * Δx 
