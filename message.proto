@@ -2,26 +2,37 @@ syntax = "proto3";
 package messaging;
 
 /////////// Motor Messages /////////////////
-message MotorPos_msg { 
-    Motor_msg positions = 1;
-    double time = 2;
+
+/// Command 
+message MotorCmds_msg { 
+    MotorCmd_msg FR_Hip = 1;
+    MotorCmd_msg FR_Thigh = 2;
+    MotorCmd_msg FR_Calf = 3;
+    MotorCmd_msg FL_Hip = 4;
+    MotorCmd_msg FL_Thigh = 5;
+    MotorCmd_msg FL_Calf = 6;
+    MotorCmd_msg RR_Hip = 7;
+    MotorCmd_msg RR_Thigh = 8;
+    MotorCmd_msg RR_Calf = 9;
+    MotorCmd_msg RL_Hip = 10; 
+    MotorCmd_msg RL_Thigh = 11; 
+    MotorCmd_msg RL_Calf = 12;
+    double time = 13; 
 }
 
-message MotorVelocities_msg { 
-    Motor_msg velocities = 1;
-    double time = 2;
+message MotorCmd_msg { 
+    double Kp = 1; 
+    double Kd = 2; 
+    double pos = 3; 
+    double vel = 4; 
+    double tau = 5; 
 }
 
-message MotorTorqueCommands_msg {
-    Motor_msg torques = 1; 
-    double time = 2; 
-}
-
+/// Readings 
 message MotorReadings_msg {
     Motor_msg torques = 1; 
-    Motor_msg q = 2; 
-    Motor_msg dq = 3; 
-    Motor_msg ddq = 4; 
+    Motor_msg positions = 2; 
+    Motor_msg velocities = 3; 
     double time = 5; 
 }
 
@@ -48,7 +59,8 @@ message EKF_msg {
     Vector3_msg velocity = 3;
     Vector3_msg acceleration_bias = 4; 
     Vector3_msg angular_velocity_bias = 5;
-    double time = 6; 
+    Vector3_msg angular_velocity = 6;
+    double time = 7; 
 }
 
 message IMU_msg {

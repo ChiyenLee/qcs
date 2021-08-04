@@ -19,30 +19,107 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"E\n\x0cMotorPos_msg\x12\'\n\tpositions\x18\x01 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\x0c\n\x04time\x18\x02 \x01(\x01\"M\n\x13MotorVelocities_msg\x12(\n\nvelocities\x18\x01 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\x0c\n\x04time\x18\x02 \x01(\x01\"N\n\x17MotorTorqueCommands_msg\x12%\n\x07torques\x18\x01 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\x0c\n\x04time\x18\x02 \x01(\x01\"\xae\x01\n\x11MotorReadings_msg\x12%\n\x07torques\x18\x01 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\x1f\n\x01q\x18\x02 \x01(\x0b\x32\x14.messaging.Motor_msg\x12 \n\x02\x64q\x18\x03 \x01(\x0b\x32\x14.messaging.Motor_msg\x12!\n\x03\x64\x64q\x18\x04 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\x0c\n\x04time\x18\x05 \x01(\x01\"\xe5\x01\n\tMotor_msg\x12\x0e\n\x06\x46R_Hip\x18\x01 \x01(\x01\x12\x10\n\x08\x46R_Thigh\x18\x02 \x01(\x01\x12\x0f\n\x07\x46R_Calf\x18\x03 \x01(\x01\x12\x0e\n\x06\x46L_Hip\x18\x04 \x01(\x01\x12\x10\n\x08\x46L_Thigh\x18\x05 \x01(\x01\x12\x0f\n\x07\x46L_Calf\x18\x06 \x01(\x01\x12\x0e\n\x06RR_Hip\x18\x07 \x01(\x01\x12\x10\n\x08RR_Thigh\x18\x08 \x01(\x01\x12\x0f\n\x07RR_Calf\x18\t \x01(\x01\x12\x0e\n\x06RL_Hip\x18\n \x01(\x01\x12\x10\n\x08RL_Thigh\x18\x0b \x01(\x01\x12\x0f\n\x07RL_Calf\x18\x0c \x01(\x01\x12\x0c\n\x04time\x18\r \x01(\x01\"\x84\x02\n\x07\x45KF_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12(\n\x08velocity\x18\x03 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x31\n\x11\x61\x63\x63\x65leration_bias\x18\x04 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x35\n\x15\x61ngular_velocity_bias\x18\x05 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x06 \x01(\x01\"p\n\x07IMU_msg\x12,\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12)\n\tgyroscope\x18\x02 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\"r\n\tVicon_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\".\n\x0bVector3_msg\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\x0eQuaternion_msg\x12\t\n\x01w\x18\x01 \x01(\x01\x12\t\n\x01x\x18\x02 \x01(\x01\x12\t\n\x01y\x18\x03 \x01(\x01\x12\t\n\x01z\x18\x04 \x01(\x01\x62\x06proto3'
+  serialized_pb=b'\n\rmessage.proto\x12\tmessaging\"\x95\x04\n\rMotorCmds_msg\x12\'\n\x06\x46R_Hip\x18\x01 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12)\n\x08\x46R_Thigh\x18\x02 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12(\n\x07\x46R_Calf\x18\x03 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12\'\n\x06\x46L_Hip\x18\x04 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12)\n\x08\x46L_Thigh\x18\x05 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12(\n\x07\x46L_Calf\x18\x06 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12\'\n\x06RR_Hip\x18\x07 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12)\n\x08RR_Thigh\x18\x08 \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12(\n\x07RR_Calf\x18\t \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12\'\n\x06RL_Hip\x18\n \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12)\n\x08RL_Thigh\x18\x0b \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12(\n\x07RL_Calf\x18\x0c \x01(\x0b\x32\x17.messaging.MotorCmd_msg\x12\x0c\n\x04time\x18\r \x01(\x01\"M\n\x0cMotorCmd_msg\x12\n\n\x02Kp\x18\x01 \x01(\x01\x12\n\n\x02Kd\x18\x02 \x01(\x01\x12\x0b\n\x03pos\x18\x03 \x01(\x01\x12\x0b\n\x03vel\x18\x04 \x01(\x01\x12\x0b\n\x03tau\x18\x05 \x01(\x01\"\x9b\x01\n\x11MotorReadings_msg\x12%\n\x07torques\x18\x01 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\'\n\tpositions\x18\x02 \x01(\x0b\x32\x14.messaging.Motor_msg\x12(\n\nvelocities\x18\x03 \x01(\x0b\x32\x14.messaging.Motor_msg\x12\x0c\n\x04time\x18\x05 \x01(\x01\"\xe5\x01\n\tMotor_msg\x12\x0e\n\x06\x46R_Hip\x18\x01 \x01(\x01\x12\x10\n\x08\x46R_Thigh\x18\x02 \x01(\x01\x12\x0f\n\x07\x46R_Calf\x18\x03 \x01(\x01\x12\x0e\n\x06\x46L_Hip\x18\x04 \x01(\x01\x12\x10\n\x08\x46L_Thigh\x18\x05 \x01(\x01\x12\x0f\n\x07\x46L_Calf\x18\x06 \x01(\x01\x12\x0e\n\x06RR_Hip\x18\x07 \x01(\x01\x12\x10\n\x08RR_Thigh\x18\x08 \x01(\x01\x12\x0f\n\x07RR_Calf\x18\t \x01(\x01\x12\x0e\n\x06RL_Hip\x18\n \x01(\x01\x12\x10\n\x08RL_Thigh\x18\x0b \x01(\x01\x12\x0f\n\x07RL_Calf\x18\x0c \x01(\x01\x12\x0c\n\x04time\x18\r \x01(\x01\"\xb6\x02\n\x07\x45KF_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12(\n\x08velocity\x18\x03 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x31\n\x11\x61\x63\x63\x65leration_bias\x18\x04 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x35\n\x15\x61ngular_velocity_bias\x18\x05 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x30\n\x10\x61ngular_velocity\x18\x06 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x07 \x01(\x01\"p\n\x07IMU_msg\x12,\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12)\n\tgyroscope\x18\x02 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\"r\n\tVicon_msg\x12(\n\x08position\x18\x01 \x01(\x0b\x32\x16.messaging.Vector3_msg\x12-\n\nquaternion\x18\x02 \x01(\x0b\x32\x19.messaging.Quaternion_msg\x12\x0c\n\x04time\x18\x03 \x01(\x01\".\n\x0bVector3_msg\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x12\t\n\x01z\x18\x03 \x01(\x01\"<\n\x0eQuaternion_msg\x12\t\n\x01w\x18\x01 \x01(\x01\x12\t\n\x01x\x18\x02 \x01(\x01\x12\t\n\x01y\x18\x03 \x01(\x01\x12\t\n\x01z\x18\x04 \x01(\x01\x62\x06proto3'
 )
 
 
 
 
-_MOTORPOS_MSG = _descriptor.Descriptor(
-  name='MotorPos_msg',
-  full_name='messaging.MotorPos_msg',
+_MOTORCMDS_MSG = _descriptor.Descriptor(
+  name='MotorCmds_msg',
+  full_name='messaging.MotorCmds_msg',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='positions', full_name='messaging.MotorPos_msg.positions', index=0,
+      name='FR_Hip', full_name='messaging.MotorCmds_msg.FR_Hip', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.MotorPos_msg.time', index=1,
-      number=2, type=1, cpp_type=5, label=1,
+      name='FR_Thigh', full_name='messaging.MotorCmds_msg.FR_Thigh', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='FR_Calf', full_name='messaging.MotorCmds_msg.FR_Calf', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='FL_Hip', full_name='messaging.MotorCmds_msg.FL_Hip', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='FL_Thigh', full_name='messaging.MotorCmds_msg.FL_Thigh', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='FL_Calf', full_name='messaging.MotorCmds_msg.FL_Calf', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='RR_Hip', full_name='messaging.MotorCmds_msg.RR_Hip', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='RR_Thigh', full_name='messaging.MotorCmds_msg.RR_Thigh', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='RR_Calf', full_name='messaging.MotorCmds_msg.RR_Calf', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='RL_Hip', full_name='messaging.MotorCmds_msg.RL_Hip', index=9,
+      number=10, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='RL_Thigh', full_name='messaging.MotorCmds_msg.RL_Thigh', index=10,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='RL_Calf', full_name='messaging.MotorCmds_msg.RL_Calf', index=11,
+      number=12, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='time', full_name='messaging.MotorCmds_msg.time', index=12,
+      number=13, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -59,29 +136,50 @@ _MOTORPOS_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=28,
-  serialized_end=97,
+  serialized_start=29,
+  serialized_end=562,
 )
 
 
-_MOTORVELOCITIES_MSG = _descriptor.Descriptor(
-  name='MotorVelocities_msg',
-  full_name='messaging.MotorVelocities_msg',
+_MOTORCMD_MSG = _descriptor.Descriptor(
+  name='MotorCmd_msg',
+  full_name='messaging.MotorCmd_msg',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='velocities', full_name='messaging.MotorVelocities_msg.velocities', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='Kp', full_name='messaging.MotorCmd_msg.Kp', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.MotorVelocities_msg.time', index=1,
+      name='Kd', full_name='messaging.MotorCmd_msg.Kd', index=1,
       number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='pos', full_name='messaging.MotorCmd_msg.pos', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='vel', full_name='messaging.MotorCmd_msg.vel', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='tau', full_name='messaging.MotorCmd_msg.tau', index=4,
+      number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -98,47 +196,8 @@ _MOTORVELOCITIES_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=99,
-  serialized_end=176,
-)
-
-
-_MOTORTORQUECOMMANDS_MSG = _descriptor.Descriptor(
-  name='MotorTorqueCommands_msg',
-  full_name='messaging.MotorTorqueCommands_msg',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='torques', full_name='messaging.MotorTorqueCommands_msg.torques', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.MotorTorqueCommands_msg.time', index=1,
-      number=2, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=178,
-  serialized_end=256,
+  serialized_start=564,
+  serialized_end=641,
 )
 
 
@@ -158,28 +217,21 @@ _MOTORREADINGS_MSG = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='q', full_name='messaging.MotorReadings_msg.q', index=1,
+      name='positions', full_name='messaging.MotorReadings_msg.positions', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='dq', full_name='messaging.MotorReadings_msg.dq', index=2,
+      name='velocities', full_name='messaging.MotorReadings_msg.velocities', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='ddq', full_name='messaging.MotorReadings_msg.ddq', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.MotorReadings_msg.time', index=4,
+      name='time', full_name='messaging.MotorReadings_msg.time', index=3,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -197,8 +249,8 @@ _MOTORREADINGS_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=259,
-  serialized_end=433,
+  serialized_start=644,
+  serialized_end=799,
 )
 
 
@@ -313,8 +365,8 @@ _MOTOR_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=436,
-  serialized_end=665,
+  serialized_start=802,
+  serialized_end=1031,
 )
 
 
@@ -362,8 +414,15 @@ _EKF_MSG = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='time', full_name='messaging.EKF_msg.time', index=5,
-      number=6, type=1, cpp_type=5, label=1,
+      name='angular_velocity', full_name='messaging.EKF_msg.angular_velocity', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='time', full_name='messaging.EKF_msg.time', index=6,
+      number=7, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -380,8 +439,8 @@ _EKF_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=668,
-  serialized_end=928,
+  serialized_start=1034,
+  serialized_end=1344,
 )
 
 
@@ -426,8 +485,8 @@ _IMU_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=930,
-  serialized_end=1042,
+  serialized_start=1346,
+  serialized_end=1458,
 )
 
 
@@ -472,8 +531,8 @@ _VICON_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1044,
-  serialized_end=1158,
+  serialized_start=1460,
+  serialized_end=1574,
 )
 
 
@@ -518,8 +577,8 @@ _VECTOR3_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1160,
-  serialized_end=1206,
+  serialized_start=1576,
+  serialized_end=1622,
 )
 
 
@@ -571,29 +630,37 @@ _QUATERNION_MSG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1208,
-  serialized_end=1268,
+  serialized_start=1624,
+  serialized_end=1684,
 )
 
-_MOTORPOS_MSG.fields_by_name['positions'].message_type = _MOTOR_MSG
-_MOTORVELOCITIES_MSG.fields_by_name['velocities'].message_type = _MOTOR_MSG
-_MOTORTORQUECOMMANDS_MSG.fields_by_name['torques'].message_type = _MOTOR_MSG
+_MOTORCMDS_MSG.fields_by_name['FR_Hip'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['FR_Thigh'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['FR_Calf'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['FL_Hip'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['FL_Thigh'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['FL_Calf'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['RR_Hip'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['RR_Thigh'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['RR_Calf'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['RL_Hip'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['RL_Thigh'].message_type = _MOTORCMD_MSG
+_MOTORCMDS_MSG.fields_by_name['RL_Calf'].message_type = _MOTORCMD_MSG
 _MOTORREADINGS_MSG.fields_by_name['torques'].message_type = _MOTOR_MSG
-_MOTORREADINGS_MSG.fields_by_name['q'].message_type = _MOTOR_MSG
-_MOTORREADINGS_MSG.fields_by_name['dq'].message_type = _MOTOR_MSG
-_MOTORREADINGS_MSG.fields_by_name['ddq'].message_type = _MOTOR_MSG
+_MOTORREADINGS_MSG.fields_by_name['positions'].message_type = _MOTOR_MSG
+_MOTORREADINGS_MSG.fields_by_name['velocities'].message_type = _MOTOR_MSG
 _EKF_MSG.fields_by_name['position'].message_type = _VECTOR3_MSG
 _EKF_MSG.fields_by_name['quaternion'].message_type = _QUATERNION_MSG
 _EKF_MSG.fields_by_name['velocity'].message_type = _VECTOR3_MSG
 _EKF_MSG.fields_by_name['acceleration_bias'].message_type = _VECTOR3_MSG
 _EKF_MSG.fields_by_name['angular_velocity_bias'].message_type = _VECTOR3_MSG
+_EKF_MSG.fields_by_name['angular_velocity'].message_type = _VECTOR3_MSG
 _IMU_MSG.fields_by_name['acceleration'].message_type = _VECTOR3_MSG
 _IMU_MSG.fields_by_name['gyroscope'].message_type = _VECTOR3_MSG
 _VICON_MSG.fields_by_name['position'].message_type = _VECTOR3_MSG
 _VICON_MSG.fields_by_name['quaternion'].message_type = _QUATERNION_MSG
-DESCRIPTOR.message_types_by_name['MotorPos_msg'] = _MOTORPOS_MSG
-DESCRIPTOR.message_types_by_name['MotorVelocities_msg'] = _MOTORVELOCITIES_MSG
-DESCRIPTOR.message_types_by_name['MotorTorqueCommands_msg'] = _MOTORTORQUECOMMANDS_MSG
+DESCRIPTOR.message_types_by_name['MotorCmds_msg'] = _MOTORCMDS_MSG
+DESCRIPTOR.message_types_by_name['MotorCmd_msg'] = _MOTORCMD_MSG
 DESCRIPTOR.message_types_by_name['MotorReadings_msg'] = _MOTORREADINGS_MSG
 DESCRIPTOR.message_types_by_name['Motor_msg'] = _MOTOR_MSG
 DESCRIPTOR.message_types_by_name['EKF_msg'] = _EKF_MSG
@@ -603,26 +670,19 @@ DESCRIPTOR.message_types_by_name['Vector3_msg'] = _VECTOR3_MSG
 DESCRIPTOR.message_types_by_name['Quaternion_msg'] = _QUATERNION_MSG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-MotorPos_msg = _reflection.GeneratedProtocolMessageType('MotorPos_msg', (_message.Message,), {
-  'DESCRIPTOR' : _MOTORPOS_MSG,
+MotorCmds_msg = _reflection.GeneratedProtocolMessageType('MotorCmds_msg', (_message.Message,), {
+  'DESCRIPTOR' : _MOTORCMDS_MSG,
   '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.MotorPos_msg)
+  # @@protoc_insertion_point(class_scope:messaging.MotorCmds_msg)
   })
-_sym_db.RegisterMessage(MotorPos_msg)
+_sym_db.RegisterMessage(MotorCmds_msg)
 
-MotorVelocities_msg = _reflection.GeneratedProtocolMessageType('MotorVelocities_msg', (_message.Message,), {
-  'DESCRIPTOR' : _MOTORVELOCITIES_MSG,
+MotorCmd_msg = _reflection.GeneratedProtocolMessageType('MotorCmd_msg', (_message.Message,), {
+  'DESCRIPTOR' : _MOTORCMD_MSG,
   '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.MotorVelocities_msg)
+  # @@protoc_insertion_point(class_scope:messaging.MotorCmd_msg)
   })
-_sym_db.RegisterMessage(MotorVelocities_msg)
-
-MotorTorqueCommands_msg = _reflection.GeneratedProtocolMessageType('MotorTorqueCommands_msg', (_message.Message,), {
-  'DESCRIPTOR' : _MOTORTORQUECOMMANDS_MSG,
-  '__module__' : 'message_pb2'
-  # @@protoc_insertion_point(class_scope:messaging.MotorTorqueCommands_msg)
-  })
-_sym_db.RegisterMessage(MotorTorqueCommands_msg)
+_sym_db.RegisterMessage(MotorCmd_msg)
 
 MotorReadings_msg = _reflection.GeneratedProtocolMessageType('MotorReadings_msg', (_message.Message,), {
   'DESCRIPTOR' : _MOTORREADINGS_MSG,

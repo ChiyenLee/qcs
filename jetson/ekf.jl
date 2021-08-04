@@ -1,3 +1,5 @@
+using Pkg 
+Pkg.activate(".")
 using Revise
 using julia_messaging
 using quadruped_control
@@ -6,18 +8,21 @@ using LinearAlgebra
 using EKF
 using julia_messaging: writeproto, ZMQ
 include("../EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
+include("proto_utils.jl")
 ## Subscribing example with ZMQ and Protobuf 
 function main()
-    # Subscribe to Vicon topics
+    ##### Subscribe to Vicon topics #####
     ctx = julia_messaging.ZMQ.Context(1)
 	vicon = Vicon_msg()
 	vicon_sub() = subscriber_thread(ctx,vicon,5000)
 	vicon_thread = Task(vicon_sub)
 	schedule(vicon_thread)
 
-    # IMU readings 
-    accel_imu = zeros(3);
-    gyro_imu = zeros(3);
+    ##### Subscribe to IMU topics ####### 
+    imu_msg = init_imu_msg()
+    imu_sub() = subscriber_thread(ctx, imu_msg, 5002)
+    imu_thread = Task(imu_sub)
+    schedule(imu_thread)
 
     # Timing 
     h = 0.005
@@ -39,21 +44,19 @@ function main()
 
     # Publisher 
     ekf_pub = create_pub(ctx,5003, "*")
-    imu_pub = create_pub(ctx,5002, "*")
     vicon_pub = create_pub(ctx,5001, "*")
-    iob = PipeBuffer()
-    ekf_msg = EKF_msg()
-    imu_msg = IMU_msg()
-    vicon_msg = Vicon_msg()
+    iob = IOBuffer()
+    ekf_msg = init_ekf_msg()
+    vicon_msg = init_vicon_msg()
 
     try
         while true 
-            A1Robot.getAcceleration(interface, accel_imu);
-            A1Robot.getGyroscope(interface, gyro_imu); 
-
             # Prediction 
-            input = ImuInput(accel_imu..., gyro_imu...)
+            acc = getproperty(imu_msg, :acceleration)
+            gyro = getproperty(imu_msg, :gyroscope)
+            input = ImuInput(acc.x, acc.y, acc.z, gyro.x, gyro.y, gyro.z)
             prediction!(ekf, input, h)
+            println(acc.x)
 
             # Update 
             if hasproperty(vicon, :quaternion)
@@ -63,45 +66,41 @@ function main()
                     vicon_time = vicon.time
 
                     # Publishing 
-                    setproperty!(vicon_msg, :quaternion, Quaternion_msg(w=vicon_measurement[4], 
-                                x=vicon_measurement[5], y=vicon_measurement[6], z=vicon_measurement[4]))
-                    setproperty!(vicon_msg, :position, Vector3_msg(x=vicon_measurement[1], y=vicon_measurement[2], z=vicon_measurement[3]))
-                    setproperty!(vicon_msg, :time, time())
-                    writeproto(iob, vicon_msg)
-                    ZMQ.send(vicon_pub,take!(iob))
+                    vicon_msg.quaternion.w, vicon_msg.quaternion.x, vicon_msg.quaternion.y, vicon_msg.quaternion.z = vicon_measurement[4:end]
+                    vicon_msg.position.x, vicon_msg.position.y, vicon_msg.position.z = vicon_measurement[1:3]
+                    vicon_msg.time = time()
+                    publish(vicon_pub, vicon_msg, iob)
                end  
             end
 
             # Publishing
             r, v, q, α, β = getComponents(TrunkState(ekf.est_state))
-            setproperty!(ekf_msg, :quaternion, Quaternion_msg(w=q[1],x=q[2], y=q[3], z=q[4]))
-            setproperty!(ekf_msg, :position, Vector3_msg(x=r[1], y=r[2], z=r[3]))
-            setproperty!(ekf_msg, :acceleration_bias, Vector3_msg(x=α[1], y=α[2], z=α[3]))
-            setproperty!(ekf_msg, :angular_velocity_bias, Vector3_msg(x=β[1], y=β[2], z=β[3]))
-            setproperty!(ekf_msg, :velocity, Vector3_msg(x=v[1], y=v[2], z=v[3]))
-            setproperty!(ekf_msg, :time, time())
-            writeproto(iob, ekf_msg)
-			ZMQ.send(ekf_pub,take!(iob))
-
-            setproperty!(imu_msg, :gyroscope, Vector3_msg(x=input[4],y=input[5], z=input[6]))
-            setproperty!(imu_msg, :acceleration, Vector3_msg(x=input[1], y=input[2], z=input[3]))
-            setproperty!(imu_msg, :time, time())
-            writeproto(iob, imu_msg)
-            ZMQ.send(imu_pub,take!(iob))
-            
+            ekf_msg.quaternion.w, ekf_msg.quaternion.x, ekf_msg.quaternion.y, ekf_msg.quaternion.z = q
+            ekf_msg.position.x, ekf_msg.position.y, ekf_msg.position.z = r 
+            ekf_msg.acceleration_bias.x, ekf_msg.acceleration_bias.y, ekf_msg.acceleration_bias.z = α
+            ekf_msg.angular_velocity_bias.x, ekf_msg.angular_velocity_bias.y, ekf_msg.angular_velocity_bias.z = β
+            ekf_msg.velocity.x, ekf_msg.velocity.y, ekf_msg.velocity.z = v 
+            ekf_msg.angular_velocity.x, ekf_msg.angular_velocity.y, ekf_msg.angular_velocity.z = gyro.x, gyro.y, gyro.z
+            ekf_msg.time = time()
+            publish(ekf_pub, ekf_msg, iob)                
 
             sleep(h)
         end    
     catch e
+        close(ekf_pub)
+        close(vicon_pub)
+        # Base.throwto(imu_thread, InterruptException())
+        # Base.throwto(vicon_thread, InterruptException())
+        schedule(imu_thread, InterruptException(), error=true)
+        schedule(vicon_thread, InterruptException(), error=true)
         close(ctx)
         if e isa InterruptException
             # clean up 
             println("Process terminated by you")
-            Base.throwto(vicon_thread, InterruptException())
         else 
             rethrow(e)
         end 
-    end
+    end 
 end 
 
 main()

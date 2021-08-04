@@ -7,6 +7,7 @@ function init_ekf_msg()
 	setproperty!(ekf_msg, :acceleration_bias, Vector3_msg(x=0.0, y=0.0, z=0.0))
 	setproperty!(ekf_msg, :angular_velocity_bias, Vector3_msg(x=0.0, y=0.0, z=0.0))
 	setproperty!(ekf_msg, :velocity, Vector3_msg(x=0.0, y=0.0, z=0.0))
+	setproperty!(ekf_msg, :angular_velocity, Vector3_msg(x=0.0, y=0.0, z=0.0))
 	setproperty!(ekf_msg, :time, 0.0)
 	return ekf_msg
 end 
@@ -38,6 +39,19 @@ function init_motor_readings()
     [setproperty!(motor_position_msg, field,0) for field in propertynames(motor_position_msg)]
     [setproperty!(motor_vel_msg, field,0) for field in propertynames(motor_vel_msg)]
     [setproperty!(motor_torque_msg, field,0) for field in propertynames(motor_torque_msg)]
-	motorR_msg = MotorReadings_msg(q=motor_position_msg, dq=motor_vel_msg, torques=motor_torque_msg)
+	motorR_msg = MotorReadings_msg(positions=motor_position_msg, velocities=motor_vel_msg, torques=motor_torque_msg)
+	setproperty!(motorR_msg, :time, time())
 	return motorR_msg
+end 
+
+function init_motor_commands()
+	motor_cmds_msg = MotorCmds_msg(); 
+
+	for motor in propertynames(motor_cmds_msg)[1:12]
+		motor_cmd = MotorCmd_msg(Kp=0, Kd=0, pos=0, vel=0, tau=0)
+		setproperty!(motor_cmds_msg, motor, motor_cmd)
+	end 
+	setproperty!(motor_cmds_msg, :time, time())
+	return motor_cmds_msg
+
 end 

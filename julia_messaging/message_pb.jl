@@ -2,6 +2,116 @@
 using ProtoBuf
 import ProtoBuf.meta
 
+mutable struct MotorCmd_msg <: ProtoType
+    __protobuf_jl_internal_meta::ProtoMeta
+    __protobuf_jl_internal_values::Dict{Symbol,Any}
+    __protobuf_jl_internal_defaultset::Set{Symbol}
+
+    function MotorCmd_msg(; kwargs...)
+        obj = new(meta(MotorCmd_msg), Dict{Symbol,Any}(), Set{Symbol}())
+        values = obj.__protobuf_jl_internal_values
+        symdict = obj.__protobuf_jl_internal_meta.symdict
+        for nv in kwargs
+            fldname, fldval = nv
+            fldtype = symdict[fldname].jtyp
+            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
+            if fldval !== nothing
+                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
+            end
+        end
+        obj
+    end
+end # mutable struct MotorCmd_msg
+const __meta_MotorCmd_msg = Ref{ProtoMeta}()
+function meta(::Type{MotorCmd_msg})
+    ProtoBuf.metalock() do
+        if !isassigned(__meta_MotorCmd_msg)
+            __meta_MotorCmd_msg[] = target = ProtoMeta(MotorCmd_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:Kp => Float64, :Kd => Float64, :pos => Float64, :vel => Float64, :tau => Float64]
+            meta(target, MotorCmd_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        end
+        __meta_MotorCmd_msg[]
+    end
+end
+function Base.getproperty(obj::MotorCmd_msg, name::Symbol)
+    if name === :Kp
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :Kd
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :pos
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :vel
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    elseif name === :tau
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    else
+        getfield(obj, name)
+    end
+end
+
+mutable struct MotorCmds_msg <: ProtoType
+    __protobuf_jl_internal_meta::ProtoMeta
+    __protobuf_jl_internal_values::Dict{Symbol,Any}
+    __protobuf_jl_internal_defaultset::Set{Symbol}
+
+    function MotorCmds_msg(; kwargs...)
+        obj = new(meta(MotorCmds_msg), Dict{Symbol,Any}(), Set{Symbol}())
+        values = obj.__protobuf_jl_internal_values
+        symdict = obj.__protobuf_jl_internal_meta.symdict
+        for nv in kwargs
+            fldname, fldval = nv
+            fldtype = symdict[fldname].jtyp
+            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
+            if fldval !== nothing
+                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
+            end
+        end
+        obj
+    end
+end # mutable struct MotorCmds_msg
+const __meta_MotorCmds_msg = Ref{ProtoMeta}()
+function meta(::Type{MotorCmds_msg})
+    ProtoBuf.metalock() do
+        if !isassigned(__meta_MotorCmds_msg)
+            __meta_MotorCmds_msg[] = target = ProtoMeta(MotorCmds_msg)
+            allflds = Pair{Symbol,Union{Type,String}}[:FR_Hip => MotorCmd_msg, :FR_Thigh => MotorCmd_msg, :FR_Calf => MotorCmd_msg, :FL_Hip => MotorCmd_msg, :FL_Thigh => MotorCmd_msg, :FL_Calf => MotorCmd_msg, :RR_Hip => MotorCmd_msg, :RR_Thigh => MotorCmd_msg, :RR_Calf => MotorCmd_msg, :RL_Hip => MotorCmd_msg, :RL_Thigh => MotorCmd_msg, :RL_Calf => MotorCmd_msg, :time => Float64]
+            meta(target, MotorCmds_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        end
+        __meta_MotorCmds_msg[]
+    end
+end
+function Base.getproperty(obj::MotorCmds_msg, name::Symbol)
+    if name === :FR_Hip
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :FR_Thigh
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :FR_Calf
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :FL_Hip
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :FL_Thigh
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :FL_Calf
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :RR_Hip
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :RR_Thigh
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :RR_Calf
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :RL_Hip
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :RL_Thigh
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :RL_Calf
+        return (obj.__protobuf_jl_internal_values[name])::MotorCmd_msg
+    elseif name === :time
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    else
+        getfield(obj, name)
+    end
+end
+
 mutable struct Motor_msg <: ProtoType
     __protobuf_jl_internal_meta::ProtoMeta
     __protobuf_jl_internal_values::Dict{Symbol,Any}
@@ -65,47 +175,6 @@ function Base.getproperty(obj::Motor_msg, name::Symbol)
     end
 end
 
-mutable struct MotorPos_msg <: ProtoType
-    __protobuf_jl_internal_meta::ProtoMeta
-    __protobuf_jl_internal_values::Dict{Symbol,Any}
-    __protobuf_jl_internal_defaultset::Set{Symbol}
-
-    function MotorPos_msg(; kwargs...)
-        obj = new(meta(MotorPos_msg), Dict{Symbol,Any}(), Set{Symbol}())
-        values = obj.__protobuf_jl_internal_values
-        symdict = obj.__protobuf_jl_internal_meta.symdict
-        for nv in kwargs
-            fldname, fldval = nv
-            fldtype = symdict[fldname].jtyp
-            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
-            if fldval !== nothing
-                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
-            end
-        end
-        obj
-    end
-end # mutable struct MotorPos_msg
-const __meta_MotorPos_msg = Ref{ProtoMeta}()
-function meta(::Type{MotorPos_msg})
-    ProtoBuf.metalock() do
-        if !isassigned(__meta_MotorPos_msg)
-            __meta_MotorPos_msg[] = target = ProtoMeta(MotorPos_msg)
-            allflds = Pair{Symbol,Union{Type,String}}[:positions => Motor_msg, :time => Float64]
-            meta(target, MotorPos_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
-        end
-        __meta_MotorPos_msg[]
-    end
-end
-function Base.getproperty(obj::MotorPos_msg, name::Symbol)
-    if name === :positions
-        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :time
-        return (obj.__protobuf_jl_internal_values[name])::Float64
-    else
-        getfield(obj, name)
-    end
-end
-
 mutable struct MotorReadings_msg <: ProtoType
     __protobuf_jl_internal_meta::ProtoMeta
     __protobuf_jl_internal_values::Dict{Symbol,Any}
@@ -131,8 +200,9 @@ function meta(::Type{MotorReadings_msg})
     ProtoBuf.metalock() do
         if !isassigned(__meta_MotorReadings_msg)
             __meta_MotorReadings_msg[] = target = ProtoMeta(MotorReadings_msg)
-            allflds = Pair{Symbol,Union{Type,String}}[:torques => Motor_msg, :q => Motor_msg, :dq => Motor_msg, :ddq => Motor_msg, :tau => Motor_msg, :time => Float64]
-            meta(target, MotorReadings_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+            fnum = Int[1,2,3,5]
+            allflds = Pair{Symbol,Union{Type,String}}[:torques => Motor_msg, :positions => Motor_msg, :velocities => Motor_msg, :time => Float64]
+            meta(target, MotorReadings_msg, allflds, ProtoBuf.DEF_REQ, fnum, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
         end
         __meta_MotorReadings_msg[]
     end
@@ -140,95 +210,9 @@ end
 function Base.getproperty(obj::MotorReadings_msg, name::Symbol)
     if name === :torques
         return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :q
+    elseif name === :positions
         return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :dq
-        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :ddq
-        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :tau
-        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :time
-        return (obj.__protobuf_jl_internal_values[name])::Float64
-    else
-        getfield(obj, name)
-    end
-end
-
-mutable struct MotorTorqueCommands_msg <: ProtoType
-    __protobuf_jl_internal_meta::ProtoMeta
-    __protobuf_jl_internal_values::Dict{Symbol,Any}
-    __protobuf_jl_internal_defaultset::Set{Symbol}
-
-    function MotorTorqueCommands_msg(; kwargs...)
-        obj = new(meta(MotorTorqueCommands_msg), Dict{Symbol,Any}(), Set{Symbol}())
-        values = obj.__protobuf_jl_internal_values
-        symdict = obj.__protobuf_jl_internal_meta.symdict
-        for nv in kwargs
-            fldname, fldval = nv
-            fldtype = symdict[fldname].jtyp
-            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
-            if fldval !== nothing
-                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
-            end
-        end
-        obj
-    end
-end # mutable struct MotorTorqueCommands_msg
-const __meta_MotorTorqueCommands_msg = Ref{ProtoMeta}()
-function meta(::Type{MotorTorqueCommands_msg})
-    ProtoBuf.metalock() do
-        if !isassigned(__meta_MotorTorqueCommands_msg)
-            __meta_MotorTorqueCommands_msg[] = target = ProtoMeta(MotorTorqueCommands_msg)
-            allflds = Pair{Symbol,Union{Type,String}}[:torques => Motor_msg, :time => Float64]
-            meta(target, MotorTorqueCommands_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
-        end
-        __meta_MotorTorqueCommands_msg[]
-    end
-end
-function Base.getproperty(obj::MotorTorqueCommands_msg, name::Symbol)
-    if name === :torques
-        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
-    elseif name === :time
-        return (obj.__protobuf_jl_internal_values[name])::Float64
-    else
-        getfield(obj, name)
-    end
-end
-
-mutable struct MotorVelocities_msg <: ProtoType
-    __protobuf_jl_internal_meta::ProtoMeta
-    __protobuf_jl_internal_values::Dict{Symbol,Any}
-    __protobuf_jl_internal_defaultset::Set{Symbol}
-
-    function MotorVelocities_msg(; kwargs...)
-        obj = new(meta(MotorVelocities_msg), Dict{Symbol,Any}(), Set{Symbol}())
-        values = obj.__protobuf_jl_internal_values
-        symdict = obj.__protobuf_jl_internal_meta.symdict
-        for nv in kwargs
-            fldname, fldval = nv
-            fldtype = symdict[fldname].jtyp
-            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
-            if fldval !== nothing
-                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
-            end
-        end
-        obj
-    end
-end # mutable struct MotorVelocities_msg
-const __meta_MotorVelocities_msg = Ref{ProtoMeta}()
-function meta(::Type{MotorVelocities_msg})
-    ProtoBuf.metalock() do
-        if !isassigned(__meta_MotorVelocities_msg)
-            __meta_MotorVelocities_msg[] = target = ProtoMeta(MotorVelocities_msg)
-            allflds = Pair{Symbol,Union{Type,String}}[:velocities => Motor_msg, :time => Float64]
-            meta(target, MotorVelocities_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
-        end
-        __meta_MotorVelocities_msg[]
-    end
-end
-function Base.getproperty(obj::MotorVelocities_msg, name::Symbol)
-    if name === :velocities
+    elseif name === :velocities
         return (obj.__protobuf_jl_internal_values[name])::Motor_msg
     elseif name === :time
         return (obj.__protobuf_jl_internal_values[name])::Float64
@@ -436,7 +420,7 @@ function meta(::Type{EKF_msg})
     ProtoBuf.metalock() do
         if !isassigned(__meta_EKF_msg)
             __meta_EKF_msg[] = target = ProtoMeta(EKF_msg)
-            allflds = Pair{Symbol,Union{Type,String}}[:position => Vector3_msg, :quaternion => Quaternion_msg, :velocity => Vector3_msg, :acceleration_bias => Vector3_msg, :angular_velocity_bias => Vector3_msg, :time => Float64]
+            allflds = Pair{Symbol,Union{Type,String}}[:position => Vector3_msg, :quaternion => Quaternion_msg, :velocity => Vector3_msg, :acceleration_bias => Vector3_msg, :angular_velocity_bias => Vector3_msg, :angular_velocity => Vector3_msg, :time => Float64]
             meta(target, EKF_msg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
         end
         __meta_EKF_msg[]
@@ -453,6 +437,8 @@ function Base.getproperty(obj::EKF_msg, name::Symbol)
         return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
     elseif name === :angular_velocity_bias
         return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :angular_velocity
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
     elseif name === :time
         return (obj.__protobuf_jl_internal_values[name])::Float64
     else
@@ -460,4 +446,4 @@ function Base.getproperty(obj::EKF_msg, name::Symbol)
     end
 end
 
-export MotorPos_msg, MotorVelocities_msg, MotorTorqueCommands_msg, MotorReadings_msg, Motor_msg, EKF_msg, IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg
+export MotorCmds_msg, MotorCmd_msg, MotorReadings_msg, Motor_msg, EKF_msg, IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg

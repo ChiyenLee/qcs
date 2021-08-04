@@ -17,51 +17,51 @@
 
 PROTOBUF_PRAGMA_INIT_SEG
 namespace messaging {
-constexpr MotorPos_msg::MotorPos_msg(
+constexpr MotorCmds_msg::MotorCmds_msg(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : positions_(nullptr)
+  : fr_hip_(nullptr)
+  , fr_thigh_(nullptr)
+  , fr_calf_(nullptr)
+  , fl_hip_(nullptr)
+  , fl_thigh_(nullptr)
+  , fl_calf_(nullptr)
+  , rr_hip_(nullptr)
+  , rr_thigh_(nullptr)
+  , rr_calf_(nullptr)
+  , rl_hip_(nullptr)
+  , rl_thigh_(nullptr)
+  , rl_calf_(nullptr)
   , time_(0){}
-struct MotorPos_msgDefaultTypeInternal {
-  constexpr MotorPos_msgDefaultTypeInternal()
+struct MotorCmds_msgDefaultTypeInternal {
+  constexpr MotorCmds_msgDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~MotorPos_msgDefaultTypeInternal() {}
+  ~MotorCmds_msgDefaultTypeInternal() {}
   union {
-    MotorPos_msg _instance;
+    MotorCmds_msg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT MotorPos_msgDefaultTypeInternal _MotorPos_msg_default_instance_;
-constexpr MotorVelocities_msg::MotorVelocities_msg(
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT MotorCmds_msgDefaultTypeInternal _MotorCmds_msg_default_instance_;
+constexpr MotorCmd_msg::MotorCmd_msg(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : velocities_(nullptr)
-  , time_(0){}
-struct MotorVelocities_msgDefaultTypeInternal {
-  constexpr MotorVelocities_msgDefaultTypeInternal()
+  : kp_(0)
+  , kd_(0)
+  , pos_(0)
+  , vel_(0)
+  , tau_(0){}
+struct MotorCmd_msgDefaultTypeInternal {
+  constexpr MotorCmd_msgDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~MotorVelocities_msgDefaultTypeInternal() {}
+  ~MotorCmd_msgDefaultTypeInternal() {}
   union {
-    MotorVelocities_msg _instance;
+    MotorCmd_msg _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT MotorVelocities_msgDefaultTypeInternal _MotorVelocities_msg_default_instance_;
-constexpr MotorTorqueCommands_msg::MotorTorqueCommands_msg(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : torques_(nullptr)
-  , time_(0){}
-struct MotorTorqueCommands_msgDefaultTypeInternal {
-  constexpr MotorTorqueCommands_msgDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~MotorTorqueCommands_msgDefaultTypeInternal() {}
-  union {
-    MotorTorqueCommands_msg _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT MotorTorqueCommands_msgDefaultTypeInternal _MotorTorqueCommands_msg_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT MotorCmd_msgDefaultTypeInternal _MotorCmd_msg_default_instance_;
 constexpr MotorReadings_msg::MotorReadings_msg(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : torques_(nullptr)
-  , q_(nullptr)
-  , dq_(nullptr)
-  , ddq_(nullptr)
+  , positions_(nullptr)
+  , velocities_(nullptr)
   , time_(0){}
 struct MotorReadings_msgDefaultTypeInternal {
   constexpr MotorReadings_msgDefaultTypeInternal()
@@ -103,6 +103,7 @@ constexpr EKF_msg::EKF_msg(
   , velocity_(nullptr)
   , acceleration_bias_(nullptr)
   , angular_velocity_bias_(nullptr)
+  , angular_velocity_(nullptr)
   , time_(0){}
 struct EKF_msgDefaultTypeInternal {
   constexpr EKF_msgDefaultTypeInternal()
@@ -171,41 +172,47 @@ struct Quaternion_msgDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT Quaternion_msgDefaultTypeInternal _Quaternion_msg_default_instance_;
 }  // namespace messaging
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_message_2eproto[10];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_message_2eproto[9];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_message_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_message_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorPos_msg, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorPos_msg, positions_),
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorPos_msg, time_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, fr_hip_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, fr_thigh_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, fr_calf_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, fl_hip_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, fl_thigh_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, fl_calf_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, rr_hip_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, rr_thigh_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, rr_calf_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, rl_hip_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, rl_thigh_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, rl_calf_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmds_msg, time_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorVelocities_msg, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmd_msg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorVelocities_msg, velocities_),
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorVelocities_msg, time_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorTorqueCommands_msg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorTorqueCommands_msg, torques_),
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorTorqueCommands_msg, time_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmd_msg, kp_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmd_msg, kd_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmd_msg, pos_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmd_msg, vel_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorCmd_msg, tau_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, torques_),
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, q_),
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, dq_),
-  PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, ddq_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, positions_),
+  PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, velocities_),
   PROTOBUF_FIELD_OFFSET(::messaging::MotorReadings_msg, time_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::messaging::Motor_msg, _internal_metadata_),
@@ -235,6 +242,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, velocity_),
   PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, acceleration_bias_),
   PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, angular_velocity_bias_),
+  PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, angular_velocity_),
   PROTOBUF_FIELD_OFFSET(::messaging::EKF_msg, time_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::messaging::IMU_msg, _internal_metadata_),
@@ -271,22 +279,20 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_message_2eproto::offsets[] PRO
   PROTOBUF_FIELD_OFFSET(::messaging::Quaternion_msg, z_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::messaging::MotorPos_msg)},
-  { 7, -1, sizeof(::messaging::MotorVelocities_msg)},
-  { 14, -1, sizeof(::messaging::MotorTorqueCommands_msg)},
-  { 21, -1, sizeof(::messaging::MotorReadings_msg)},
-  { 31, -1, sizeof(::messaging::Motor_msg)},
-  { 49, -1, sizeof(::messaging::EKF_msg)},
-  { 60, -1, sizeof(::messaging::IMU_msg)},
-  { 68, -1, sizeof(::messaging::Vicon_msg)},
-  { 76, -1, sizeof(::messaging::Vector3_msg)},
-  { 84, -1, sizeof(::messaging::Quaternion_msg)},
+  { 0, -1, sizeof(::messaging::MotorCmds_msg)},
+  { 18, -1, sizeof(::messaging::MotorCmd_msg)},
+  { 28, -1, sizeof(::messaging::MotorReadings_msg)},
+  { 37, -1, sizeof(::messaging::Motor_msg)},
+  { 55, -1, sizeof(::messaging::EKF_msg)},
+  { 67, -1, sizeof(::messaging::IMU_msg)},
+  { 75, -1, sizeof(::messaging::Vicon_msg)},
+  { 83, -1, sizeof(::messaging::Vector3_msg)},
+  { 91, -1, sizeof(::messaging::Quaternion_msg)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_MotorPos_msg_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_MotorVelocities_msg_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_MotorTorqueCommands_msg_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_MotorCmds_msg_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_MotorCmd_msg_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_MotorReadings_msg_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_Motor_msg_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::messaging::_EKF_msg_default_instance_),
@@ -297,43 +303,54 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rmessage.proto\022\tmessaging\"E\n\014MotorPos_m"
-  "sg\022\'\n\tpositions\030\001 \001(\0132\024.messaging.Motor_"
-  "msg\022\014\n\004time\030\002 \001(\001\"M\n\023MotorVelocities_msg"
-  "\022(\n\nvelocities\030\001 \001(\0132\024.messaging.Motor_m"
-  "sg\022\014\n\004time\030\002 \001(\001\"N\n\027MotorTorqueCommands_"
-  "msg\022%\n\007torques\030\001 \001(\0132\024.messaging.Motor_m"
-  "sg\022\014\n\004time\030\002 \001(\001\"\256\001\n\021MotorReadings_msg\022%"
-  "\n\007torques\030\001 \001(\0132\024.messaging.Motor_msg\022\037\n"
-  "\001q\030\002 \001(\0132\024.messaging.Motor_msg\022 \n\002dq\030\003 \001"
-  "(\0132\024.messaging.Motor_msg\022!\n\003ddq\030\004 \001(\0132\024."
-  "messaging.Motor_msg\022\014\n\004time\030\005 \001(\001\"\345\001\n\tMo"
-  "tor_msg\022\016\n\006FR_Hip\030\001 \001(\001\022\020\n\010FR_Thigh\030\002 \001("
-  "\001\022\017\n\007FR_Calf\030\003 \001(\001\022\016\n\006FL_Hip\030\004 \001(\001\022\020\n\010FL"
-  "_Thigh\030\005 \001(\001\022\017\n\007FL_Calf\030\006 \001(\001\022\016\n\006RR_Hip\030"
-  "\007 \001(\001\022\020\n\010RR_Thigh\030\010 \001(\001\022\017\n\007RR_Calf\030\t \001(\001"
-  "\022\016\n\006RL_Hip\030\n \001(\001\022\020\n\010RL_Thigh\030\013 \001(\001\022\017\n\007RL"
-  "_Calf\030\014 \001(\001\022\014\n\004time\030\r \001(\001\"\204\002\n\007EKF_msg\022(\n"
-  "\010position\030\001 \001(\0132\026.messaging.Vector3_msg\022"
-  "-\n\nquaternion\030\002 \001(\0132\031.messaging.Quaterni"
-  "on_msg\022(\n\010velocity\030\003 \001(\0132\026.messaging.Vec"
-  "tor3_msg\0221\n\021acceleration_bias\030\004 \001(\0132\026.me"
-  "ssaging.Vector3_msg\0225\n\025angular_velocity_"
-  "bias\030\005 \001(\0132\026.messaging.Vector3_msg\022\014\n\004ti"
-  "me\030\006 \001(\001\"p\n\007IMU_msg\022,\n\014acceleration\030\001 \001("
-  "\0132\026.messaging.Vector3_msg\022)\n\tgyroscope\030\002"
-  " \001(\0132\026.messaging.Vector3_msg\022\014\n\004time\030\003 \001"
-  "(\001\"r\n\tVicon_msg\022(\n\010position\030\001 \001(\0132\026.mess"
-  "aging.Vector3_msg\022-\n\nquaternion\030\002 \001(\0132\031."
-  "messaging.Quaternion_msg\022\014\n\004time\030\003 \001(\001\"."
-  "\n\013Vector3_msg\022\t\n\001x\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\t\n\001z"
-  "\030\003 \001(\001\"<\n\016Quaternion_msg\022\t\n\001w\030\001 \001(\001\022\t\n\001x"
-  "\030\002 \001(\001\022\t\n\001y\030\003 \001(\001\022\t\n\001z\030\004 \001(\001b\006proto3"
+  "\n\rmessage.proto\022\tmessaging\"\225\004\n\rMotorCmds"
+  "_msg\022\'\n\006FR_Hip\030\001 \001(\0132\027.messaging.MotorCm"
+  "d_msg\022)\n\010FR_Thigh\030\002 \001(\0132\027.messaging.Moto"
+  "rCmd_msg\022(\n\007FR_Calf\030\003 \001(\0132\027.messaging.Mo"
+  "torCmd_msg\022\'\n\006FL_Hip\030\004 \001(\0132\027.messaging.M"
+  "otorCmd_msg\022)\n\010FL_Thigh\030\005 \001(\0132\027.messagin"
+  "g.MotorCmd_msg\022(\n\007FL_Calf\030\006 \001(\0132\027.messag"
+  "ing.MotorCmd_msg\022\'\n\006RR_Hip\030\007 \001(\0132\027.messa"
+  "ging.MotorCmd_msg\022)\n\010RR_Thigh\030\010 \001(\0132\027.me"
+  "ssaging.MotorCmd_msg\022(\n\007RR_Calf\030\t \001(\0132\027."
+  "messaging.MotorCmd_msg\022\'\n\006RL_Hip\030\n \001(\0132\027"
+  ".messaging.MotorCmd_msg\022)\n\010RL_Thigh\030\013 \001("
+  "\0132\027.messaging.MotorCmd_msg\022(\n\007RL_Calf\030\014 "
+  "\001(\0132\027.messaging.MotorCmd_msg\022\014\n\004time\030\r \001"
+  "(\001\"M\n\014MotorCmd_msg\022\n\n\002Kp\030\001 \001(\001\022\n\n\002Kd\030\002 \001"
+  "(\001\022\013\n\003pos\030\003 \001(\001\022\013\n\003vel\030\004 \001(\001\022\013\n\003tau\030\005 \001("
+  "\001\"\233\001\n\021MotorReadings_msg\022%\n\007torques\030\001 \001(\013"
+  "2\024.messaging.Motor_msg\022\'\n\tpositions\030\002 \001("
+  "\0132\024.messaging.Motor_msg\022(\n\nvelocities\030\003 "
+  "\001(\0132\024.messaging.Motor_msg\022\014\n\004time\030\005 \001(\001\""
+  "\345\001\n\tMotor_msg\022\016\n\006FR_Hip\030\001 \001(\001\022\020\n\010FR_Thig"
+  "h\030\002 \001(\001\022\017\n\007FR_Calf\030\003 \001(\001\022\016\n\006FL_Hip\030\004 \001(\001"
+  "\022\020\n\010FL_Thigh\030\005 \001(\001\022\017\n\007FL_Calf\030\006 \001(\001\022\016\n\006R"
+  "R_Hip\030\007 \001(\001\022\020\n\010RR_Thigh\030\010 \001(\001\022\017\n\007RR_Calf"
+  "\030\t \001(\001\022\016\n\006RL_Hip\030\n \001(\001\022\020\n\010RL_Thigh\030\013 \001(\001"
+  "\022\017\n\007RL_Calf\030\014 \001(\001\022\014\n\004time\030\r \001(\001\"\266\002\n\007EKF_"
+  "msg\022(\n\010position\030\001 \001(\0132\026.messaging.Vector"
+  "3_msg\022-\n\nquaternion\030\002 \001(\0132\031.messaging.Qu"
+  "aternion_msg\022(\n\010velocity\030\003 \001(\0132\026.messagi"
+  "ng.Vector3_msg\0221\n\021acceleration_bias\030\004 \001("
+  "\0132\026.messaging.Vector3_msg\0225\n\025angular_vel"
+  "ocity_bias\030\005 \001(\0132\026.messaging.Vector3_msg"
+  "\0220\n\020angular_velocity\030\006 \001(\0132\026.messaging.V"
+  "ector3_msg\022\014\n\004time\030\007 \001(\001\"p\n\007IMU_msg\022,\n\014a"
+  "cceleration\030\001 \001(\0132\026.messaging.Vector3_ms"
+  "g\022)\n\tgyroscope\030\002 \001(\0132\026.messaging.Vector3"
+  "_msg\022\014\n\004time\030\003 \001(\001\"r\n\tVicon_msg\022(\n\010posit"
+  "ion\030\001 \001(\0132\026.messaging.Vector3_msg\022-\n\nqua"
+  "ternion\030\002 \001(\0132\031.messaging.Quaternion_msg"
+  "\022\014\n\004time\030\003 \001(\001\".\n\013Vector3_msg\022\t\n\001x\030\001 \001(\001"
+  "\022\t\n\001y\030\002 \001(\001\022\t\n\001z\030\003 \001(\001\"<\n\016Quaternion_msg"
+  "\022\t\n\001w\030\001 \001(\001\022\t\n\001x\030\002 \001(\001\022\t\n\001y\030\003 \001(\001\022\t\n\001z\030\004"
+  " \001(\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_message_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_message_2eproto = {
-  false, false, 1276, descriptor_table_protodef_message_2eproto, "message.proto", 
-  &descriptor_table_message_2eproto_once, nullptr, 0, 10,
+  false, false, 1692, descriptor_table_protodef_message_2eproto, "message.proto", 
+  &descriptor_table_message_2eproto_once, nullptr, 0, 9,
   schemas, file_default_instances, TableStruct_message_2eproto::offsets,
   file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto, file_level_service_descriptors_message_2eproto,
 };
@@ -347,91 +364,333 @@ namespace messaging {
 
 // ===================================================================
 
-class MotorPos_msg::_Internal {
+class MotorCmds_msg::_Internal {
  public:
-  static const ::messaging::Motor_msg& positions(const MotorPos_msg* msg);
+  static const ::messaging::MotorCmd_msg& fr_hip(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& fr_thigh(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& fr_calf(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& fl_hip(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& fl_thigh(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& fl_calf(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& rr_hip(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& rr_thigh(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& rr_calf(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& rl_hip(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& rl_thigh(const MotorCmds_msg* msg);
+  static const ::messaging::MotorCmd_msg& rl_calf(const MotorCmds_msg* msg);
 };
 
-const ::messaging::Motor_msg&
-MotorPos_msg::_Internal::positions(const MotorPos_msg* msg) {
-  return *msg->positions_;
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::fr_hip(const MotorCmds_msg* msg) {
+  return *msg->fr_hip_;
 }
-MotorPos_msg::MotorPos_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::fr_thigh(const MotorCmds_msg* msg) {
+  return *msg->fr_thigh_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::fr_calf(const MotorCmds_msg* msg) {
+  return *msg->fr_calf_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::fl_hip(const MotorCmds_msg* msg) {
+  return *msg->fl_hip_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::fl_thigh(const MotorCmds_msg* msg) {
+  return *msg->fl_thigh_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::fl_calf(const MotorCmds_msg* msg) {
+  return *msg->fl_calf_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::rr_hip(const MotorCmds_msg* msg) {
+  return *msg->rr_hip_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::rr_thigh(const MotorCmds_msg* msg) {
+  return *msg->rr_thigh_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::rr_calf(const MotorCmds_msg* msg) {
+  return *msg->rr_calf_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::rl_hip(const MotorCmds_msg* msg) {
+  return *msg->rl_hip_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::rl_thigh(const MotorCmds_msg* msg) {
+  return *msg->rl_thigh_;
+}
+const ::messaging::MotorCmd_msg&
+MotorCmds_msg::_Internal::rl_calf(const MotorCmds_msg* msg) {
+  return *msg->rl_calf_;
+}
+MotorCmds_msg::MotorCmds_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:messaging.MotorPos_msg)
+  // @@protoc_insertion_point(arena_constructor:messaging.MotorCmds_msg)
 }
-MotorPos_msg::MotorPos_msg(const MotorPos_msg& from)
+MotorCmds_msg::MotorCmds_msg(const MotorCmds_msg& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_positions()) {
-    positions_ = new ::messaging::Motor_msg(*from.positions_);
+  if (from._internal_has_fr_hip()) {
+    fr_hip_ = new ::messaging::MotorCmd_msg(*from.fr_hip_);
   } else {
-    positions_ = nullptr;
+    fr_hip_ = nullptr;
+  }
+  if (from._internal_has_fr_thigh()) {
+    fr_thigh_ = new ::messaging::MotorCmd_msg(*from.fr_thigh_);
+  } else {
+    fr_thigh_ = nullptr;
+  }
+  if (from._internal_has_fr_calf()) {
+    fr_calf_ = new ::messaging::MotorCmd_msg(*from.fr_calf_);
+  } else {
+    fr_calf_ = nullptr;
+  }
+  if (from._internal_has_fl_hip()) {
+    fl_hip_ = new ::messaging::MotorCmd_msg(*from.fl_hip_);
+  } else {
+    fl_hip_ = nullptr;
+  }
+  if (from._internal_has_fl_thigh()) {
+    fl_thigh_ = new ::messaging::MotorCmd_msg(*from.fl_thigh_);
+  } else {
+    fl_thigh_ = nullptr;
+  }
+  if (from._internal_has_fl_calf()) {
+    fl_calf_ = new ::messaging::MotorCmd_msg(*from.fl_calf_);
+  } else {
+    fl_calf_ = nullptr;
+  }
+  if (from._internal_has_rr_hip()) {
+    rr_hip_ = new ::messaging::MotorCmd_msg(*from.rr_hip_);
+  } else {
+    rr_hip_ = nullptr;
+  }
+  if (from._internal_has_rr_thigh()) {
+    rr_thigh_ = new ::messaging::MotorCmd_msg(*from.rr_thigh_);
+  } else {
+    rr_thigh_ = nullptr;
+  }
+  if (from._internal_has_rr_calf()) {
+    rr_calf_ = new ::messaging::MotorCmd_msg(*from.rr_calf_);
+  } else {
+    rr_calf_ = nullptr;
+  }
+  if (from._internal_has_rl_hip()) {
+    rl_hip_ = new ::messaging::MotorCmd_msg(*from.rl_hip_);
+  } else {
+    rl_hip_ = nullptr;
+  }
+  if (from._internal_has_rl_thigh()) {
+    rl_thigh_ = new ::messaging::MotorCmd_msg(*from.rl_thigh_);
+  } else {
+    rl_thigh_ = nullptr;
+  }
+  if (from._internal_has_rl_calf()) {
+    rl_calf_ = new ::messaging::MotorCmd_msg(*from.rl_calf_);
+  } else {
+    rl_calf_ = nullptr;
   }
   time_ = from.time_;
-  // @@protoc_insertion_point(copy_constructor:messaging.MotorPos_msg)
+  // @@protoc_insertion_point(copy_constructor:messaging.MotorCmds_msg)
 }
 
-void MotorPos_msg::SharedCtor() {
+void MotorCmds_msg::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&positions_) - reinterpret_cast<char*>(this)),
+    reinterpret_cast<char*>(&fr_hip_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&time_) -
-    reinterpret_cast<char*>(&positions_)) + sizeof(time_));
+    reinterpret_cast<char*>(&fr_hip_)) + sizeof(time_));
 }
 
-MotorPos_msg::~MotorPos_msg() {
-  // @@protoc_insertion_point(destructor:messaging.MotorPos_msg)
+MotorCmds_msg::~MotorCmds_msg() {
+  // @@protoc_insertion_point(destructor:messaging.MotorCmds_msg)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void MotorPos_msg::SharedDtor() {
+void MotorCmds_msg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete positions_;
+  if (this != internal_default_instance()) delete fr_hip_;
+  if (this != internal_default_instance()) delete fr_thigh_;
+  if (this != internal_default_instance()) delete fr_calf_;
+  if (this != internal_default_instance()) delete fl_hip_;
+  if (this != internal_default_instance()) delete fl_thigh_;
+  if (this != internal_default_instance()) delete fl_calf_;
+  if (this != internal_default_instance()) delete rr_hip_;
+  if (this != internal_default_instance()) delete rr_thigh_;
+  if (this != internal_default_instance()) delete rr_calf_;
+  if (this != internal_default_instance()) delete rl_hip_;
+  if (this != internal_default_instance()) delete rl_thigh_;
+  if (this != internal_default_instance()) delete rl_calf_;
 }
 
-void MotorPos_msg::ArenaDtor(void* object) {
-  MotorPos_msg* _this = reinterpret_cast< MotorPos_msg* >(object);
+void MotorCmds_msg::ArenaDtor(void* object) {
+  MotorCmds_msg* _this = reinterpret_cast< MotorCmds_msg* >(object);
   (void)_this;
 }
-void MotorPos_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void MotorCmds_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void MotorPos_msg::SetCachedSize(int size) const {
+void MotorCmds_msg::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void MotorPos_msg::Clear() {
-// @@protoc_insertion_point(message_clear_start:messaging.MotorPos_msg)
+void MotorCmds_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.MotorCmds_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && positions_ != nullptr) {
-    delete positions_;
+  if (GetArenaForAllocation() == nullptr && fr_hip_ != nullptr) {
+    delete fr_hip_;
   }
-  positions_ = nullptr;
+  fr_hip_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && fr_thigh_ != nullptr) {
+    delete fr_thigh_;
+  }
+  fr_thigh_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && fr_calf_ != nullptr) {
+    delete fr_calf_;
+  }
+  fr_calf_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && fl_hip_ != nullptr) {
+    delete fl_hip_;
+  }
+  fl_hip_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && fl_thigh_ != nullptr) {
+    delete fl_thigh_;
+  }
+  fl_thigh_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && fl_calf_ != nullptr) {
+    delete fl_calf_;
+  }
+  fl_calf_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rr_hip_ != nullptr) {
+    delete rr_hip_;
+  }
+  rr_hip_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rr_thigh_ != nullptr) {
+    delete rr_thigh_;
+  }
+  rr_thigh_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rr_calf_ != nullptr) {
+    delete rr_calf_;
+  }
+  rr_calf_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rl_hip_ != nullptr) {
+    delete rl_hip_;
+  }
+  rl_hip_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rl_thigh_ != nullptr) {
+    delete rl_thigh_;
+  }
+  rl_thigh_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rl_calf_ != nullptr) {
+    delete rl_calf_;
+  }
+  rl_calf_ = nullptr;
   time_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* MotorPos_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* MotorCmds_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .messaging.Motor_msg positions = 1;
+      // .messaging.MotorCmd_msg FR_Hip = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_positions(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_fr_hip(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // double time = 2;
+      // .messaging.MotorCmd_msg FR_Thigh = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_fr_thigh(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg FR_Calf = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_fr_calf(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg FL_Hip = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_fl_hip(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg FL_Thigh = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          ptr = ctx->ParseMessage(_internal_mutable_fl_thigh(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg FL_Calf = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_fl_calf(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg RR_Hip = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rr_hip(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg RR_Thigh = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rr_thigh(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg RR_Calf = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rr_calf(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg RL_Hip = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rl_hip(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg RL_Thigh = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 90)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rl_thigh(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .messaging.MotorCmd_msg RL_Calf = 12;
+      case 12:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 98)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rl_calf(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // double time = 13;
+      case 13:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 105)) {
           time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else goto handle_unusual;
@@ -459,50 +718,215 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* MotorPos_msg::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* MotorCmds_msg::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:messaging.MotorPos_msg)
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.MotorCmds_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .messaging.Motor_msg positions = 1;
-  if (this->has_positions()) {
+  // .messaging.MotorCmd_msg FR_Hip = 1;
+  if (this->has_fr_hip()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        1, _Internal::positions(this), target, stream);
+        1, _Internal::fr_hip(this), target, stream);
   }
 
-  // double time = 2;
+  // .messaging.MotorCmd_msg FR_Thigh = 2;
+  if (this->has_fr_thigh()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::fr_thigh(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg FR_Calf = 3;
+  if (this->has_fr_calf()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        3, _Internal::fr_calf(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg FL_Hip = 4;
+  if (this->has_fl_hip()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        4, _Internal::fl_hip(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg FL_Thigh = 5;
+  if (this->has_fl_thigh()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        5, _Internal::fl_thigh(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg FL_Calf = 6;
+  if (this->has_fl_calf()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        6, _Internal::fl_calf(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg RR_Hip = 7;
+  if (this->has_rr_hip()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        7, _Internal::rr_hip(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg RR_Thigh = 8;
+  if (this->has_rr_thigh()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        8, _Internal::rr_thigh(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg RR_Calf = 9;
+  if (this->has_rr_calf()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        9, _Internal::rr_calf(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg RL_Hip = 10;
+  if (this->has_rl_hip()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        10, _Internal::rl_hip(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg RL_Thigh = 11;
+  if (this->has_rl_thigh()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        11, _Internal::rl_thigh(this), target, stream);
+  }
+
+  // .messaging.MotorCmd_msg RL_Calf = 12;
+  if (this->has_rl_calf()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        12, _Internal::rl_calf(this), target, stream);
+  }
+
+  // double time = 13;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_time(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(13, this->_internal_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:messaging.MotorPos_msg)
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.MotorCmds_msg)
   return target;
 }
 
-size_t MotorPos_msg::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:messaging.MotorPos_msg)
+size_t MotorCmds_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.MotorCmds_msg)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .messaging.Motor_msg positions = 1;
-  if (this->has_positions()) {
+  // .messaging.MotorCmd_msg FR_Hip = 1;
+  if (this->has_fr_hip()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *positions_);
+        *fr_hip_);
   }
 
-  // double time = 2;
+  // .messaging.MotorCmd_msg FR_Thigh = 2;
+  if (this->has_fr_thigh()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *fr_thigh_);
+  }
+
+  // .messaging.MotorCmd_msg FR_Calf = 3;
+  if (this->has_fr_calf()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *fr_calf_);
+  }
+
+  // .messaging.MotorCmd_msg FL_Hip = 4;
+  if (this->has_fl_hip()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *fl_hip_);
+  }
+
+  // .messaging.MotorCmd_msg FL_Thigh = 5;
+  if (this->has_fl_thigh()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *fl_thigh_);
+  }
+
+  // .messaging.MotorCmd_msg FL_Calf = 6;
+  if (this->has_fl_calf()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *fl_calf_);
+  }
+
+  // .messaging.MotorCmd_msg RR_Hip = 7;
+  if (this->has_rr_hip()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rr_hip_);
+  }
+
+  // .messaging.MotorCmd_msg RR_Thigh = 8;
+  if (this->has_rr_thigh()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rr_thigh_);
+  }
+
+  // .messaging.MotorCmd_msg RR_Calf = 9;
+  if (this->has_rr_calf()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rr_calf_);
+  }
+
+  // .messaging.MotorCmd_msg RL_Hip = 10;
+  if (this->has_rl_hip()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rl_hip_);
+  }
+
+  // .messaging.MotorCmd_msg RL_Thigh = 11;
+  if (this->has_rl_thigh()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rl_thigh_);
+  }
+
+  // .messaging.MotorCmd_msg RL_Calf = 12;
+  if (this->has_rl_calf()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rl_calf_);
+  }
+
+  // double time = 13;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     total_size += 1 + 8;
   }
@@ -516,66 +940,99 @@ size_t MotorPos_msg::ByteSizeLong() const {
   return total_size;
 }
 
-void MotorPos_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:messaging.MotorPos_msg)
+void MotorCmds_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:messaging.MotorCmds_msg)
   GOOGLE_DCHECK_NE(&from, this);
-  const MotorPos_msg* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MotorPos_msg>(
+  const MotorCmds_msg* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MotorCmds_msg>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.MotorPos_msg)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.MotorCmds_msg)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.MotorPos_msg)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.MotorCmds_msg)
     MergeFrom(*source);
   }
 }
 
-void MotorPos_msg::MergeFrom(const MotorPos_msg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:messaging.MotorPos_msg)
+void MotorCmds_msg::MergeFrom(const MotorCmds_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.MotorCmds_msg)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.has_positions()) {
-    _internal_mutable_positions()->::messaging::Motor_msg::MergeFrom(from._internal_positions());
+  if (from.has_fr_hip()) {
+    _internal_mutable_fr_hip()->::messaging::MotorCmd_msg::MergeFrom(from._internal_fr_hip());
+  }
+  if (from.has_fr_thigh()) {
+    _internal_mutable_fr_thigh()->::messaging::MotorCmd_msg::MergeFrom(from._internal_fr_thigh());
+  }
+  if (from.has_fr_calf()) {
+    _internal_mutable_fr_calf()->::messaging::MotorCmd_msg::MergeFrom(from._internal_fr_calf());
+  }
+  if (from.has_fl_hip()) {
+    _internal_mutable_fl_hip()->::messaging::MotorCmd_msg::MergeFrom(from._internal_fl_hip());
+  }
+  if (from.has_fl_thigh()) {
+    _internal_mutable_fl_thigh()->::messaging::MotorCmd_msg::MergeFrom(from._internal_fl_thigh());
+  }
+  if (from.has_fl_calf()) {
+    _internal_mutable_fl_calf()->::messaging::MotorCmd_msg::MergeFrom(from._internal_fl_calf());
+  }
+  if (from.has_rr_hip()) {
+    _internal_mutable_rr_hip()->::messaging::MotorCmd_msg::MergeFrom(from._internal_rr_hip());
+  }
+  if (from.has_rr_thigh()) {
+    _internal_mutable_rr_thigh()->::messaging::MotorCmd_msg::MergeFrom(from._internal_rr_thigh());
+  }
+  if (from.has_rr_calf()) {
+    _internal_mutable_rr_calf()->::messaging::MotorCmd_msg::MergeFrom(from._internal_rr_calf());
+  }
+  if (from.has_rl_hip()) {
+    _internal_mutable_rl_hip()->::messaging::MotorCmd_msg::MergeFrom(from._internal_rl_hip());
+  }
+  if (from.has_rl_thigh()) {
+    _internal_mutable_rl_thigh()->::messaging::MotorCmd_msg::MergeFrom(from._internal_rl_thigh());
+  }
+  if (from.has_rl_calf()) {
+    _internal_mutable_rl_calf()->::messaging::MotorCmd_msg::MergeFrom(from._internal_rl_calf());
   }
   if (!(from.time() <= 0 && from.time() >= 0)) {
     _internal_set_time(from._internal_time());
   }
 }
 
-void MotorPos_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:messaging.MotorPos_msg)
+void MotorCmds_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:messaging.MotorCmds_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MotorPos_msg::CopyFrom(const MotorPos_msg& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:messaging.MotorPos_msg)
+void MotorCmds_msg::CopyFrom(const MotorCmds_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.MotorCmds_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MotorPos_msg::IsInitialized() const {
+bool MotorCmds_msg::IsInitialized() const {
   return true;
 }
 
-void MotorPos_msg::InternalSwap(MotorPos_msg* other) {
+void MotorCmds_msg::InternalSwap(MotorCmds_msg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(MotorPos_msg, time_)
-      + sizeof(MotorPos_msg::time_)
-      - PROTOBUF_FIELD_OFFSET(MotorPos_msg, positions_)>(
-          reinterpret_cast<char*>(&positions_),
-          reinterpret_cast<char*>(&other->positions_));
+      PROTOBUF_FIELD_OFFSET(MotorCmds_msg, time_)
+      + sizeof(MotorCmds_msg::time_)
+      - PROTOBUF_FIELD_OFFSET(MotorCmds_msg, fr_hip_)>(
+          reinterpret_cast<char*>(&fr_hip_),
+          reinterpret_cast<char*>(&other->fr_hip_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata MotorPos_msg::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata MotorCmds_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
       file_level_metadata_message_2eproto[0]);
@@ -583,92 +1040,102 @@ void MotorPos_msg::InternalSwap(MotorPos_msg* other) {
 
 // ===================================================================
 
-class MotorVelocities_msg::_Internal {
+class MotorCmd_msg::_Internal {
  public:
-  static const ::messaging::Motor_msg& velocities(const MotorVelocities_msg* msg);
 };
 
-const ::messaging::Motor_msg&
-MotorVelocities_msg::_Internal::velocities(const MotorVelocities_msg* msg) {
-  return *msg->velocities_;
-}
-MotorVelocities_msg::MotorVelocities_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+MotorCmd_msg::MotorCmd_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:messaging.MotorVelocities_msg)
+  // @@protoc_insertion_point(arena_constructor:messaging.MotorCmd_msg)
 }
-MotorVelocities_msg::MotorVelocities_msg(const MotorVelocities_msg& from)
+MotorCmd_msg::MotorCmd_msg(const MotorCmd_msg& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_velocities()) {
-    velocities_ = new ::messaging::Motor_msg(*from.velocities_);
-  } else {
-    velocities_ = nullptr;
-  }
-  time_ = from.time_;
-  // @@protoc_insertion_point(copy_constructor:messaging.MotorVelocities_msg)
+  ::memcpy(&kp_, &from.kp_,
+    static_cast<size_t>(reinterpret_cast<char*>(&tau_) -
+    reinterpret_cast<char*>(&kp_)) + sizeof(tau_));
+  // @@protoc_insertion_point(copy_constructor:messaging.MotorCmd_msg)
 }
 
-void MotorVelocities_msg::SharedCtor() {
+void MotorCmd_msg::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&velocities_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&time_) -
-    reinterpret_cast<char*>(&velocities_)) + sizeof(time_));
+    reinterpret_cast<char*>(&kp_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&tau_) -
+    reinterpret_cast<char*>(&kp_)) + sizeof(tau_));
 }
 
-MotorVelocities_msg::~MotorVelocities_msg() {
-  // @@protoc_insertion_point(destructor:messaging.MotorVelocities_msg)
+MotorCmd_msg::~MotorCmd_msg() {
+  // @@protoc_insertion_point(destructor:messaging.MotorCmd_msg)
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-void MotorVelocities_msg::SharedDtor() {
+void MotorCmd_msg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete velocities_;
 }
 
-void MotorVelocities_msg::ArenaDtor(void* object) {
-  MotorVelocities_msg* _this = reinterpret_cast< MotorVelocities_msg* >(object);
+void MotorCmd_msg::ArenaDtor(void* object) {
+  MotorCmd_msg* _this = reinterpret_cast< MotorCmd_msg* >(object);
   (void)_this;
 }
-void MotorVelocities_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void MotorCmd_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void MotorVelocities_msg::SetCachedSize(int size) const {
+void MotorCmd_msg::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void MotorVelocities_msg::Clear() {
-// @@protoc_insertion_point(message_clear_start:messaging.MotorVelocities_msg)
+void MotorCmd_msg::Clear() {
+// @@protoc_insertion_point(message_clear_start:messaging.MotorCmd_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && velocities_ != nullptr) {
-    delete velocities_;
-  }
-  velocities_ = nullptr;
-  time_ = 0;
+  ::memset(&kp_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&tau_) -
+      reinterpret_cast<char*>(&kp_)) + sizeof(tau_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* MotorVelocities_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* MotorCmd_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .messaging.Motor_msg velocities = 1;
+      // double Kp = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_velocities(), ptr);
-          CHK_(ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 9)) {
+          kp_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // double time = 2;
+      // double Kd = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
-          time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          kd_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double pos = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
+          pos_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double vel = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 33)) {
+          vel_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          ptr += sizeof(double);
+        } else goto handle_unusual;
+        continue;
+      // double tau = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 41)) {
+          tau_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
@@ -695,51 +1162,80 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* MotorVelocities_msg::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* MotorCmd_msg::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:messaging.MotorVelocities_msg)
+  // @@protoc_insertion_point(serialize_to_array_start:messaging.MotorCmd_msg)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .messaging.Motor_msg velocities = 1;
-  if (this->has_velocities()) {
+  // double Kp = 1;
+  if (!(this->kp() <= 0 && this->kp() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        1, _Internal::velocities(this), target, stream);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(1, this->_internal_kp(), target);
   }
 
-  // double time = 2;
-  if (!(this->time() <= 0 && this->time() >= 0)) {
+  // double Kd = 2;
+  if (!(this->kd() <= 0 && this->kd() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_time(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_kd(), target);
+  }
+
+  // double pos = 3;
+  if (!(this->pos() <= 0 && this->pos() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_pos(), target);
+  }
+
+  // double vel = 4;
+  if (!(this->vel() <= 0 && this->vel() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(4, this->_internal_vel(), target);
+  }
+
+  // double tau = 5;
+  if (!(this->tau() <= 0 && this->tau() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(5, this->_internal_tau(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:messaging.MotorVelocities_msg)
+  // @@protoc_insertion_point(serialize_to_array_end:messaging.MotorCmd_msg)
   return target;
 }
 
-size_t MotorVelocities_msg::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:messaging.MotorVelocities_msg)
+size_t MotorCmd_msg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:messaging.MotorCmd_msg)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .messaging.Motor_msg velocities = 1;
-  if (this->has_velocities()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *velocities_);
+  // double Kp = 1;
+  if (!(this->kp() <= 0 && this->kp() >= 0)) {
+    total_size += 1 + 8;
   }
 
-  // double time = 2;
-  if (!(this->time() <= 0 && this->time() >= 0)) {
+  // double Kd = 2;
+  if (!(this->kd() <= 0 && this->kd() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double pos = 3;
+  if (!(this->pos() <= 0 && this->pos() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double vel = 4;
+  if (!(this->vel() <= 0 && this->vel() >= 0)) {
+    total_size += 1 + 8;
+  }
+
+  // double tau = 5;
+  if (!(this->tau() <= 0 && this->tau() >= 0)) {
     total_size += 1 + 8;
   }
 
@@ -752,66 +1248,75 @@ size_t MotorVelocities_msg::ByteSizeLong() const {
   return total_size;
 }
 
-void MotorVelocities_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:messaging.MotorVelocities_msg)
+void MotorCmd_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:messaging.MotorCmd_msg)
   GOOGLE_DCHECK_NE(&from, this);
-  const MotorVelocities_msg* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MotorVelocities_msg>(
+  const MotorCmd_msg* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MotorCmd_msg>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.MotorVelocities_msg)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.MotorCmd_msg)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.MotorVelocities_msg)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.MotorCmd_msg)
     MergeFrom(*source);
   }
 }
 
-void MotorVelocities_msg::MergeFrom(const MotorVelocities_msg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:messaging.MotorVelocities_msg)
+void MotorCmd_msg::MergeFrom(const MotorCmd_msg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:messaging.MotorCmd_msg)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.has_velocities()) {
-    _internal_mutable_velocities()->::messaging::Motor_msg::MergeFrom(from._internal_velocities());
+  if (!(from.kp() <= 0 && from.kp() >= 0)) {
+    _internal_set_kp(from._internal_kp());
   }
-  if (!(from.time() <= 0 && from.time() >= 0)) {
-    _internal_set_time(from._internal_time());
+  if (!(from.kd() <= 0 && from.kd() >= 0)) {
+    _internal_set_kd(from._internal_kd());
+  }
+  if (!(from.pos() <= 0 && from.pos() >= 0)) {
+    _internal_set_pos(from._internal_pos());
+  }
+  if (!(from.vel() <= 0 && from.vel() >= 0)) {
+    _internal_set_vel(from._internal_vel());
+  }
+  if (!(from.tau() <= 0 && from.tau() >= 0)) {
+    _internal_set_tau(from._internal_tau());
   }
 }
 
-void MotorVelocities_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:messaging.MotorVelocities_msg)
+void MotorCmd_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:messaging.MotorCmd_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MotorVelocities_msg::CopyFrom(const MotorVelocities_msg& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:messaging.MotorVelocities_msg)
+void MotorCmd_msg::CopyFrom(const MotorCmd_msg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:messaging.MotorCmd_msg)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MotorVelocities_msg::IsInitialized() const {
+bool MotorCmd_msg::IsInitialized() const {
   return true;
 }
 
-void MotorVelocities_msg::InternalSwap(MotorVelocities_msg* other) {
+void MotorCmd_msg::InternalSwap(MotorCmd_msg* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(MotorVelocities_msg, time_)
-      + sizeof(MotorVelocities_msg::time_)
-      - PROTOBUF_FIELD_OFFSET(MotorVelocities_msg, velocities_)>(
-          reinterpret_cast<char*>(&velocities_),
-          reinterpret_cast<char*>(&other->velocities_));
+      PROTOBUF_FIELD_OFFSET(MotorCmd_msg, tau_)
+      + sizeof(MotorCmd_msg::tau_)
+      - PROTOBUF_FIELD_OFFSET(MotorCmd_msg, kp_)>(
+          reinterpret_cast<char*>(&kp_),
+          reinterpret_cast<char*>(&other->kp_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata MotorVelocities_msg::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata MotorCmd_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
       file_level_metadata_message_2eproto[1]);
@@ -819,248 +1324,11 @@ void MotorVelocities_msg::InternalSwap(MotorVelocities_msg* other) {
 
 // ===================================================================
 
-class MotorTorqueCommands_msg::_Internal {
- public:
-  static const ::messaging::Motor_msg& torques(const MotorTorqueCommands_msg* msg);
-};
-
-const ::messaging::Motor_msg&
-MotorTorqueCommands_msg::_Internal::torques(const MotorTorqueCommands_msg* msg) {
-  return *msg->torques_;
-}
-MotorTorqueCommands_msg::MotorTorqueCommands_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:messaging.MotorTorqueCommands_msg)
-}
-MotorTorqueCommands_msg::MotorTorqueCommands_msg(const MotorTorqueCommands_msg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_torques()) {
-    torques_ = new ::messaging::Motor_msg(*from.torques_);
-  } else {
-    torques_ = nullptr;
-  }
-  time_ = from.time_;
-  // @@protoc_insertion_point(copy_constructor:messaging.MotorTorqueCommands_msg)
-}
-
-void MotorTorqueCommands_msg::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&torques_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&time_) -
-    reinterpret_cast<char*>(&torques_)) + sizeof(time_));
-}
-
-MotorTorqueCommands_msg::~MotorTorqueCommands_msg() {
-  // @@protoc_insertion_point(destructor:messaging.MotorTorqueCommands_msg)
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-void MotorTorqueCommands_msg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete torques_;
-}
-
-void MotorTorqueCommands_msg::ArenaDtor(void* object) {
-  MotorTorqueCommands_msg* _this = reinterpret_cast< MotorTorqueCommands_msg* >(object);
-  (void)_this;
-}
-void MotorTorqueCommands_msg::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void MotorTorqueCommands_msg::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-
-void MotorTorqueCommands_msg::Clear() {
-// @@protoc_insertion_point(message_clear_start:messaging.MotorTorqueCommands_msg)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  if (GetArenaForAllocation() == nullptr && torques_ != nullptr) {
-    delete torques_;
-  }
-  torques_ = nullptr;
-  time_ = 0;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* MotorTorqueCommands_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .messaging.Motor_msg torques = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_torques(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // double time = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 17)) {
-          time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else goto handle_unusual;
-        continue;
-      default: {
-      handle_unusual:
-        if ((tag == 0) || ((tag & 7) == 4)) {
-          CHK_(ptr);
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
-    }  // switch
-  }  // while
-success:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto success;
-#undef CHK_
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* MotorTorqueCommands_msg::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:messaging.MotorTorqueCommands_msg)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // .messaging.Motor_msg torques = 1;
-  if (this->has_torques()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        1, _Internal::torques(this), target, stream);
-  }
-
-  // double time = 2;
-  if (!(this->time() <= 0 && this->time() >= 0)) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(2, this->_internal_time(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:messaging.MotorTorqueCommands_msg)
-  return target;
-}
-
-size_t MotorTorqueCommands_msg::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:messaging.MotorTorqueCommands_msg)
-  size_t total_size = 0;
-
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // .messaging.Motor_msg torques = 1;
-  if (this->has_torques()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *torques_);
-  }
-
-  // double time = 2;
-  if (!(this->time() <= 0 && this->time() >= 0)) {
-    total_size += 1 + 8;
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void MotorTorqueCommands_msg::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:messaging.MotorTorqueCommands_msg)
-  GOOGLE_DCHECK_NE(&from, this);
-  const MotorTorqueCommands_msg* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MotorTorqueCommands_msg>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:messaging.MotorTorqueCommands_msg)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:messaging.MotorTorqueCommands_msg)
-    MergeFrom(*source);
-  }
-}
-
-void MotorTorqueCommands_msg::MergeFrom(const MotorTorqueCommands_msg& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:messaging.MotorTorqueCommands_msg)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from.has_torques()) {
-    _internal_mutable_torques()->::messaging::Motor_msg::MergeFrom(from._internal_torques());
-  }
-  if (!(from.time() <= 0 && from.time() >= 0)) {
-    _internal_set_time(from._internal_time());
-  }
-}
-
-void MotorTorqueCommands_msg::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:messaging.MotorTorqueCommands_msg)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MotorTorqueCommands_msg::CopyFrom(const MotorTorqueCommands_msg& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:messaging.MotorTorqueCommands_msg)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MotorTorqueCommands_msg::IsInitialized() const {
-  return true;
-}
-
-void MotorTorqueCommands_msg::InternalSwap(MotorTorqueCommands_msg* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(MotorTorqueCommands_msg, time_)
-      + sizeof(MotorTorqueCommands_msg::time_)
-      - PROTOBUF_FIELD_OFFSET(MotorTorqueCommands_msg, torques_)>(
-          reinterpret_cast<char*>(&torques_),
-          reinterpret_cast<char*>(&other->torques_));
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata MotorTorqueCommands_msg::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
-      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[2]);
-}
-
-// ===================================================================
-
 class MotorReadings_msg::_Internal {
  public:
   static const ::messaging::Motor_msg& torques(const MotorReadings_msg* msg);
-  static const ::messaging::Motor_msg& q(const MotorReadings_msg* msg);
-  static const ::messaging::Motor_msg& dq(const MotorReadings_msg* msg);
-  static const ::messaging::Motor_msg& ddq(const MotorReadings_msg* msg);
+  static const ::messaging::Motor_msg& positions(const MotorReadings_msg* msg);
+  static const ::messaging::Motor_msg& velocities(const MotorReadings_msg* msg);
 };
 
 const ::messaging::Motor_msg&
@@ -1068,16 +1336,12 @@ MotorReadings_msg::_Internal::torques(const MotorReadings_msg* msg) {
   return *msg->torques_;
 }
 const ::messaging::Motor_msg&
-MotorReadings_msg::_Internal::q(const MotorReadings_msg* msg) {
-  return *msg->q_;
+MotorReadings_msg::_Internal::positions(const MotorReadings_msg* msg) {
+  return *msg->positions_;
 }
 const ::messaging::Motor_msg&
-MotorReadings_msg::_Internal::dq(const MotorReadings_msg* msg) {
-  return *msg->dq_;
-}
-const ::messaging::Motor_msg&
-MotorReadings_msg::_Internal::ddq(const MotorReadings_msg* msg) {
-  return *msg->ddq_;
+MotorReadings_msg::_Internal::velocities(const MotorReadings_msg* msg) {
+  return *msg->velocities_;
 }
 MotorReadings_msg::MotorReadings_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -1093,20 +1357,15 @@ MotorReadings_msg::MotorReadings_msg(const MotorReadings_msg& from)
   } else {
     torques_ = nullptr;
   }
-  if (from._internal_has_q()) {
-    q_ = new ::messaging::Motor_msg(*from.q_);
+  if (from._internal_has_positions()) {
+    positions_ = new ::messaging::Motor_msg(*from.positions_);
   } else {
-    q_ = nullptr;
+    positions_ = nullptr;
   }
-  if (from._internal_has_dq()) {
-    dq_ = new ::messaging::Motor_msg(*from.dq_);
+  if (from._internal_has_velocities()) {
+    velocities_ = new ::messaging::Motor_msg(*from.velocities_);
   } else {
-    dq_ = nullptr;
-  }
-  if (from._internal_has_ddq()) {
-    ddq_ = new ::messaging::Motor_msg(*from.ddq_);
-  } else {
-    ddq_ = nullptr;
+    velocities_ = nullptr;
   }
   time_ = from.time_;
   // @@protoc_insertion_point(copy_constructor:messaging.MotorReadings_msg)
@@ -1128,9 +1387,8 @@ MotorReadings_msg::~MotorReadings_msg() {
 void MotorReadings_msg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete torques_;
-  if (this != internal_default_instance()) delete q_;
-  if (this != internal_default_instance()) delete dq_;
-  if (this != internal_default_instance()) delete ddq_;
+  if (this != internal_default_instance()) delete positions_;
+  if (this != internal_default_instance()) delete velocities_;
 }
 
 void MotorReadings_msg::ArenaDtor(void* object) {
@@ -1153,18 +1411,14 @@ void MotorReadings_msg::Clear() {
     delete torques_;
   }
   torques_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && q_ != nullptr) {
-    delete q_;
+  if (GetArenaForAllocation() == nullptr && positions_ != nullptr) {
+    delete positions_;
   }
-  q_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && dq_ != nullptr) {
-    delete dq_;
+  positions_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && velocities_ != nullptr) {
+    delete velocities_;
   }
-  dq_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && ddq_ != nullptr) {
-    delete ddq_;
-  }
-  ddq_ = nullptr;
+  velocities_ = nullptr;
   time_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1182,24 +1436,17 @@ const char* MotorReadings_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .messaging.Motor_msg q = 2;
+      // .messaging.Motor_msg positions = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_q(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_positions(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .messaging.Motor_msg dq = 3;
+      // .messaging.Motor_msg velocities = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_dq(), ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // .messaging.Motor_msg ddq = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_ddq(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_velocities(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1247,28 +1494,20 @@ failure:
         1, _Internal::torques(this), target, stream);
   }
 
-  // .messaging.Motor_msg q = 2;
-  if (this->has_q()) {
+  // .messaging.Motor_msg positions = 2;
+  if (this->has_positions()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        2, _Internal::q(this), target, stream);
+        2, _Internal::positions(this), target, stream);
   }
 
-  // .messaging.Motor_msg dq = 3;
-  if (this->has_dq()) {
+  // .messaging.Motor_msg velocities = 3;
+  if (this->has_velocities()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        3, _Internal::dq(this), target, stream);
-  }
-
-  // .messaging.Motor_msg ddq = 4;
-  if (this->has_ddq()) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        4, _Internal::ddq(this), target, stream);
+        3, _Internal::velocities(this), target, stream);
   }
 
   // double time = 5;
@@ -1300,25 +1539,18 @@ size_t MotorReadings_msg::ByteSizeLong() const {
         *torques_);
   }
 
-  // .messaging.Motor_msg q = 2;
-  if (this->has_q()) {
+  // .messaging.Motor_msg positions = 2;
+  if (this->has_positions()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *q_);
+        *positions_);
   }
 
-  // .messaging.Motor_msg dq = 3;
-  if (this->has_dq()) {
+  // .messaging.Motor_msg velocities = 3;
+  if (this->has_velocities()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *dq_);
-  }
-
-  // .messaging.Motor_msg ddq = 4;
-  if (this->has_ddq()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *ddq_);
+        *velocities_);
   }
 
   // double time = 5;
@@ -1360,14 +1592,11 @@ void MotorReadings_msg::MergeFrom(const MotorReadings_msg& from) {
   if (from.has_torques()) {
     _internal_mutable_torques()->::messaging::Motor_msg::MergeFrom(from._internal_torques());
   }
-  if (from.has_q()) {
-    _internal_mutable_q()->::messaging::Motor_msg::MergeFrom(from._internal_q());
+  if (from.has_positions()) {
+    _internal_mutable_positions()->::messaging::Motor_msg::MergeFrom(from._internal_positions());
   }
-  if (from.has_dq()) {
-    _internal_mutable_dq()->::messaging::Motor_msg::MergeFrom(from._internal_dq());
-  }
-  if (from.has_ddq()) {
-    _internal_mutable_ddq()->::messaging::Motor_msg::MergeFrom(from._internal_ddq());
+  if (from.has_velocities()) {
+    _internal_mutable_velocities()->::messaging::Motor_msg::MergeFrom(from._internal_velocities());
   }
   if (!(from.time() <= 0 && from.time() >= 0)) {
     _internal_set_time(from._internal_time());
@@ -1406,7 +1635,7 @@ void MotorReadings_msg::InternalSwap(MotorReadings_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata MotorReadings_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[3]);
+      file_level_metadata_message_2eproto[2]);
 }
 
 // ===================================================================
@@ -1858,7 +2087,7 @@ void Motor_msg::InternalSwap(Motor_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Motor_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[4]);
+      file_level_metadata_message_2eproto[3]);
 }
 
 // ===================================================================
@@ -1870,6 +2099,7 @@ class EKF_msg::_Internal {
   static const ::messaging::Vector3_msg& velocity(const EKF_msg* msg);
   static const ::messaging::Vector3_msg& acceleration_bias(const EKF_msg* msg);
   static const ::messaging::Vector3_msg& angular_velocity_bias(const EKF_msg* msg);
+  static const ::messaging::Vector3_msg& angular_velocity(const EKF_msg* msg);
 };
 
 const ::messaging::Vector3_msg&
@@ -1891,6 +2121,10 @@ EKF_msg::_Internal::acceleration_bias(const EKF_msg* msg) {
 const ::messaging::Vector3_msg&
 EKF_msg::_Internal::angular_velocity_bias(const EKF_msg* msg) {
   return *msg->angular_velocity_bias_;
+}
+const ::messaging::Vector3_msg&
+EKF_msg::_Internal::angular_velocity(const EKF_msg* msg) {
+  return *msg->angular_velocity_;
 }
 EKF_msg::EKF_msg(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
@@ -1926,6 +2160,11 @@ EKF_msg::EKF_msg(const EKF_msg& from)
   } else {
     angular_velocity_bias_ = nullptr;
   }
+  if (from._internal_has_angular_velocity()) {
+    angular_velocity_ = new ::messaging::Vector3_msg(*from.angular_velocity_);
+  } else {
+    angular_velocity_ = nullptr;
+  }
   time_ = from.time_;
   // @@protoc_insertion_point(copy_constructor:messaging.EKF_msg)
 }
@@ -1950,6 +2189,7 @@ void EKF_msg::SharedDtor() {
   if (this != internal_default_instance()) delete velocity_;
   if (this != internal_default_instance()) delete acceleration_bias_;
   if (this != internal_default_instance()) delete angular_velocity_bias_;
+  if (this != internal_default_instance()) delete angular_velocity_;
 }
 
 void EKF_msg::ArenaDtor(void* object) {
@@ -1988,6 +2228,10 @@ void EKF_msg::Clear() {
     delete angular_velocity_bias_;
   }
   angular_velocity_bias_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && angular_velocity_ != nullptr) {
+    delete angular_velocity_;
+  }
+  angular_velocity_ = nullptr;
   time_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -2033,9 +2277,16 @@ const char* EKF_msg::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // double time = 6;
+      // .messaging.Vector3_msg angular_velocity = 6;
       case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 49)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_angular_velocity(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // double time = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 57)) {
           time_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else goto handle_unusual;
@@ -2109,10 +2360,18 @@ failure:
         5, _Internal::angular_velocity_bias(this), target, stream);
   }
 
-  // double time = 6;
+  // .messaging.Vector3_msg angular_velocity = 6;
+  if (this->has_angular_velocity()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        6, _Internal::angular_velocity(this), target, stream);
+  }
+
+  // double time = 7;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(6, this->_internal_time(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(7, this->_internal_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2166,7 +2425,14 @@ size_t EKF_msg::ByteSizeLong() const {
         *angular_velocity_bias_);
   }
 
-  // double time = 6;
+  // .messaging.Vector3_msg angular_velocity = 6;
+  if (this->has_angular_velocity()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *angular_velocity_);
+  }
+
+  // double time = 7;
   if (!(this->time() <= 0 && this->time() >= 0)) {
     total_size += 1 + 8;
   }
@@ -2217,6 +2483,9 @@ void EKF_msg::MergeFrom(const EKF_msg& from) {
   if (from.has_angular_velocity_bias()) {
     _internal_mutable_angular_velocity_bias()->::messaging::Vector3_msg::MergeFrom(from._internal_angular_velocity_bias());
   }
+  if (from.has_angular_velocity()) {
+    _internal_mutable_angular_velocity()->::messaging::Vector3_msg::MergeFrom(from._internal_angular_velocity());
+  }
   if (!(from.time() <= 0 && from.time() >= 0)) {
     _internal_set_time(from._internal_time());
   }
@@ -2254,7 +2523,7 @@ void EKF_msg::InternalSwap(EKF_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EKF_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[5]);
+      file_level_metadata_message_2eproto[4]);
 }
 
 // ===================================================================
@@ -2530,7 +2799,7 @@ void IMU_msg::InternalSwap(IMU_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IMU_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[6]);
+      file_level_metadata_message_2eproto[5]);
 }
 
 // ===================================================================
@@ -2806,7 +3075,7 @@ void Vicon_msg::InternalSwap(Vicon_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Vicon_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[7]);
+      file_level_metadata_message_2eproto[6]);
 }
 
 // ===================================================================
@@ -3048,7 +3317,7 @@ void Vector3_msg::InternalSwap(Vector3_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Vector3_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[8]);
+      file_level_metadata_message_2eproto[7]);
 }
 
 // ===================================================================
@@ -3311,20 +3580,17 @@ void Quaternion_msg::InternalSwap(Quaternion_msg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Quaternion_msg::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[9]);
+      file_level_metadata_message_2eproto[8]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace messaging
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::messaging::MotorPos_msg* Arena::CreateMaybeMessage< ::messaging::MotorPos_msg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::messaging::MotorPos_msg >(arena);
+template<> PROTOBUF_NOINLINE ::messaging::MotorCmds_msg* Arena::CreateMaybeMessage< ::messaging::MotorCmds_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::MotorCmds_msg >(arena);
 }
-template<> PROTOBUF_NOINLINE ::messaging::MotorVelocities_msg* Arena::CreateMaybeMessage< ::messaging::MotorVelocities_msg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::messaging::MotorVelocities_msg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::messaging::MotorTorqueCommands_msg* Arena::CreateMaybeMessage< ::messaging::MotorTorqueCommands_msg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::messaging::MotorTorqueCommands_msg >(arena);
+template<> PROTOBUF_NOINLINE ::messaging::MotorCmd_msg* Arena::CreateMaybeMessage< ::messaging::MotorCmd_msg >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::messaging::MotorCmd_msg >(arena);
 }
 template<> PROTOBUF_NOINLINE ::messaging::MotorReadings_msg* Arena::CreateMaybeMessage< ::messaging::MotorReadings_msg >(Arena* arena) {
   return Arena::CreateMessageInternal< ::messaging::MotorReadings_msg >(arena);

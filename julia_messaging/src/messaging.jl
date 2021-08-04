@@ -33,11 +33,12 @@ function subscriber_thread(ctx::ZMQ.Context, proto_msg::ProtoBuf.ProtoType, port
             # time consuming step
         end 
     catch e 
-        println(stacktrace())
-        println(e)
-    finally 
         close(sub)
-        close(ctx)
+        if e isa InterruptException
+            println("sub terminated by interruption")
+        else
+            rethrow(e)
+        end 
     end 
 end 
 
