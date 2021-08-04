@@ -1,3 +1,5 @@
+using Pkg 
+Pkg.activate(".")
 using Revise
 using StaticArrays
 using quadruped_control
@@ -143,13 +145,13 @@ function main()
 
             ################# Safety ###############
             if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
-                println("Position out of bounds!!")
+                # println("Position out of bounds!!")
                 u_now .= 0 
             end 
 
             # Command safety 
             if any(abs.(u_fb) .> 15) 
-                println("Control out of bounds!!")
+                # println("Control out of bounds!!")
                 u_now .= 0 
             end 
              
@@ -175,7 +177,7 @@ function main()
 
             sleep(h)        
             GC.gc(false) # collect garbage 
-        end 
+         end 
     catch e
         # Base.throwto(command_thread, InterruptException())
         # Base.throwto(ekf_thread, InterruptException())
