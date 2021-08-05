@@ -1,5 +1,5 @@
-using Pkg 
-Pkg.activate(".")
+# using Pkg 
+# Pkg.activate(".")
 using Revise
 using julia_messaging
 using quadruped_control
@@ -7,8 +7,8 @@ using quadruped_control: UnitQuaternion, RotXYZ
 using LinearAlgebra
 using EKF
 using julia_messaging: writeproto, ZMQ
-include("../EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
-include("proto_utils.jl")
+include("EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
+include("jetson/proto_utils.jl")
 ## Subscribing example with ZMQ and Protobuf 
 function main()
     ##### Subscribe to Vicon topics #####
@@ -84,6 +84,10 @@ function main()
             ekf_msg.time = time()
             publish(ekf_pub, ekf_msg, iob)                
 
+            if Main.COMMAND[1] == "kill ekf"
+                Main.COMMAND[1] = "waiting"
+                throw(InterruptException())
+            end 
             sleep(h)
         end    
     catch e

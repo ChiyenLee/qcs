@@ -1,12 +1,12 @@
 ## This noddoublee drive the motor, listen for commands, and publish IMU + motor data 
-using Pkg 
-Pkg.activate(".")
+# using Pkg 
+# Pkg.activate(".")
 using Revise
 using quadruped_control
 using julia_messaging
 using julia_messaging: ZMQ
 using StaticArrays
-include("proto_utils.jl")
+include("jetson/proto_utils.jl")
 
 # interface = A1Robot.RobotInterface() 
 # A1Robot.InitSend(interface)

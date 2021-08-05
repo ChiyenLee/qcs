@@ -172,7 +172,6 @@ function main()
             setproperty!(motorCmds_msg, :time, time())
             publish(motor_pub, motorCmds_msg, iob)
 
-
             sleep(h)        
             GC.gc(false) # collect garbage 
         end 

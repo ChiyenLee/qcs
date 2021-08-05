@@ -49,28 +49,28 @@ try :
     while True: 
         socks = dict(poller.poll())
         # Update plots 
-        # if ekf_sub in socks.keys() and socks[ekf_sub] == zmq.POLLIN:
-        #     if time.time() - t > dt:  
-        #         data = ekf_sub.recv(zmq.DONTWAIT)
-        #         ekf_msg.ParseFromString(data)
-        #         ptr += 1 
-        #         update_plot(vx, vx_list, ekf_msg.velocity.x, ptr)
-        #         update_plot(vy, vy_list, ekf_msg.velocity.y, ptr) 
-        #         update_plot(vz, vz_list, ekf_msg.velocity.z, ptr)
-        #         t = time.time()
-
-        #     app.processEvents()
-        if imu_sub in socks.keys() and socks[imu_sub] == zmq.POLLIN:
+        if ekf_sub in socks.keys() and socks[ekf_sub] == zmq.POLLIN:
             if time.time() - t > dt:  
-                data = imu_sub.recv(zmq.DONTWAIT)
-                imu_msg.ParseFromString(data)
+                data = ekf_sub.recv(zmq.DONTWAIT)
+                ekf_msg.ParseFromString(data)
                 ptr += 1 
-                update_plot(vx, vx_list, imu_msg.gyroscope.x, ptr)
-                update_plot(vy, vy_list, imu_msg.gyroscope.y, ptr) 
-                update_plot(vz, vz_list, imu_msg.gyroscope.z, ptr)
+                update_plot(vx, vx_list, ekf_msg.velocity.x, ptr)
+                update_plot(vy, vy_list, ekf_msg.velocity.y, ptr) 
+                update_plot(vz, vz_list, ekf_msg.velocity.z, ptr)
                 t = time.time()
 
             app.processEvents()
+        # if imu_sub in socks.keys() and socks[imu_sub] == zmq.POLLIN:
+        #     if time.time() - t > dt:  
+        #         data = imu_sub.recv(zmq.DONTWAIT)
+        #         imu_msg.ParseFromString(data)
+        #         ptr += 1 
+        #         update_plot(vx, vx_list, imu_msg.gyroscope.x, ptr)
+        #         update_plot(vy, vy_list, imu_msg.gyroscope.y, ptr) 
+        #         update_plot(vz, vz_list, imu_msg.gyroscope.z, ptr)
+        #         t = time.time()
+
+        #     app.processEvents()
         
 except KeyboardInterrupt:
     app.quit()
