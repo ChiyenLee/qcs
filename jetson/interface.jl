@@ -8,9 +8,6 @@ using julia_messaging: ZMQ
 using StaticArrays
 include("jetson/proto_utils.jl")
 
-# interface = A1Robot.RobotInterface() 
-# A1Robot.InitSend(interface)
-
 function main() 
 	ctx = ZMQ.Context(1)	
 	# Publisher 
@@ -29,25 +26,24 @@ function main()
 	motorCmds_sub() = subscriber_thread(ctx, motorCmds_msg,5005)
 	motorCmds_thread = Task(motorCmds_sub)
 	schedule(motorCmds_thread)
-	qs = zeros(12)
-	dqs = zeros(12)
-	τs = zeros(12)
 
+	# Control timeout 
+	controlTimeout = false 
+	posStopF = 2.146e9
 	h = 0.002
 	try 
 		while true 
 			############### Reading data for pubslihing ##############
 			# IMU publishing
-			# A1Robot.getAcceleration(interface, accel_imu);
-			# A1Robot.getGyroscope(interface, gyro_imu);
-			accel_imu[:] = randn(3)
+			A1Robot.getAcceleration(interface, accel_imu);
+			A1Robot.getGyroscope(interface, gyro_imu);
 			imu_msg.gyroscope.x, imu_msg.gyroscope.y, imu_msg.gyroscope.z = gyro_imu
 			imu_msg.acceleration.x, imu_msg.acceleration.y, imu_msg.acceleration.z = accel_imu
 			imu_msg.time = time()
 			publish(imu_pub, imu_msg, iob)
 
 			# motor publishing 
-			# qs, dqs, τs =  A1Robot.getMotorReadings(interface)
+			qs, dqs, τs =  A1Robot.getMotorReadings(interface)
 			for (i, field) in enumerate(propertynames(motorReadings_msg.positions)[1:12])
 				setproperty!(motorReadings_msg.positions, field, qs[i]) 
 				setproperty!(motorReadings_msg.velocities, field, dqs[i])
@@ -59,17 +55,25 @@ function main()
 			############### Controlling the motors #################### 
 			for (i, motor) in enumerate(propertynames(motorCmds_msg)[1:12])
 				m = getproperty(motorCmds_msg, motor)
-				# A1Robot.setMotorCmd(interface, i-1, m.pos, m.vel, m.Kp, m.Kd, m.tau)
+				A1Robot.setMotorCmd(interface, i-1, m.pos, m.vel, m.Kp, m.Kd, m.tau)
 			end 
 
 			# Make sure the robot have the latest command. If not, just drop
 			recieve_time = getproperty(motorCmds_msg, :time)
-			if time() - recieve_time >= 0.05
-				println("time out!")
-					# A1Robot.setPositionCommands(interface, SVector{12}(zeros(12)), 0, 0)
+			if time() - recieve_time >= 0.1
+				if controlTimeout == false 
+					println("control time out! ")
+				end 
+				controlTimeout = true 
+				A1Robot.setPositionCommands(interface, SVector{12}(ones(12) * posStopF), 0, 5) # pure damping 
+			else 
+				if controlTimeout == true 
+					println("starting control!")
+				end 
+				controlTimeout = false 
 			end 
-			# println(recieve_time)
-			# A1Robot.SendCommand(interface)
+
+			A1Robot.SendCommand(interface)
 
 			sleep(0.002)
 			GC.gc(false)

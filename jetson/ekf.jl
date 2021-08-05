@@ -37,9 +37,13 @@ function main()
 
     P = Matrix(1.0I(length(TrunkError))) * 1e10; 
     W = Matrix(1.0I(length(TrunkError))) * 1e-3;
-    W[4:6, 4:6] .= I(3) * 1e-2 * h^2 
+    W[1:3, 1:3] .= I(3) * 1e-2
+    W[4:6, 4:6] .= I(3) * 1e-3
+    W[7:9, 7:9] .= I(3) * 1e-4
     W[end-5:end,end-5:end] = I(6)*1e2
-    R = Matrix(1.0I(length(ViconError))) * 1e-3;
+    R = Matrix(1.0I(length(ViconError))) * 1e-5;
+    R[1:3,1:3] = I(3) * 1e-3 
+    R[4:6,4:6] = I(3) * 1e-3 
     ekf = ErrorStateFilter{TrunkState, TrunkError, ImuInput, Vicon, ViconError}(state, P, W, R) 
 
     # Publisher 
@@ -56,7 +60,6 @@ function main()
             gyro = getproperty(imu_msg, :gyroscope)
             input = ImuInput(acc.x, acc.y, acc.z, gyro.x, gyro.y, gyro.z)
             prediction!(ekf, input, h)
-            println(acc.x)
 
             # Update 
             if hasproperty(vicon, :quaternion)
