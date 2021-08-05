@@ -1,5 +1,5 @@
-# using Pkg 
-# Pkg.activate(".")
+using Pkg 
+Pkg.activate(".")
 using Revise
 using julia_messaging
 using quadruped_control
@@ -7,8 +7,11 @@ using quadruped_control: UnitQuaternion, RotXYZ
 using LinearAlgebra
 using EKF
 using julia_messaging: writeproto, ZMQ
-include("EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
-include("jetson/proto_utils.jl")
+# include("EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
+# include("jetson/proto_utils.jl")
+include("../EKF.jl/test/imu_grav_comp/imu_dynamics_discrete.jl")
+include("proto_utils.jl")
+# COMMAND = [".."]
 ## Subscribing example with ZMQ and Protobuf 
 function main()
     ##### Subscribe to Vicon topics #####
@@ -28,7 +31,7 @@ function main()
     h = 0.005
     vicon_time = 0.0
 
-    # Initialize EKF
+    # # Initialize EKF
     state_init = zeros(length(TrunkState)); state_init[7] = 1.0 
     state = TrunkState(state_init)
     vicon_init = zeros(7); vicon_init[4] = 1.0
@@ -61,7 +64,7 @@ function main()
             input = ImuInput(acc.x, acc.y, acc.z, gyro.x, gyro.y, gyro.z)
             prediction!(ekf, input, h)
 
-            # Update 
+            Update 
             if hasproperty(vicon, :quaternion)
                if vicon.time != vicon_time 
                     vicon_measurement = Vicon(vicon.position.x, vicon.position.y, vicon.position.z, vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z)
@@ -87,11 +90,12 @@ function main()
             ekf_msg.time = time()
             publish(ekf_pub, ekf_msg, iob)                
 
-            if Main.COMMAND[1] == "kill ekf"
-                Main.COMMAND[1] = "waiting"
-                throw(InterruptException())
-            end 
+            # if Main.COMMAND[1] == "kill ekf"
+            #     Main.COMMAND[1] = "waiting"
+            #     throw(InterruptException())
+            # end 
             sleep(h)
+            GC.gc(false)
         end    
     catch e
         close(ekf_pub)

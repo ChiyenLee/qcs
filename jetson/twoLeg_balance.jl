@@ -25,15 +25,15 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     posStopF = 2.146e9
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
-        m = getproperty(cmds_msg, motor)
-        m.Kp = 0.0 
-        m.Kd = 0.0
-        m.pos = posStopF 
-        m.vel = velStopF 
-        m.tau = torques[i]
-    end 
-end 
-
+    	    m = getproperty(cmds_msg, motor)
+    	    m.Kp = 0.0 
+    	    m.Kd = 0.0
+    	    m.pos = posStopF 
+    	    m.vel = velStopF 
+    	    m.tau = torques[i]
+    	end 
+end 	
+	
 function getMotorReadings(motorR_msg::MotorReadings_msg)
     vs = SVector{12}([getproperty(motorR_msg.velocities, motor) for motor in fieldnames(MotorIDs)]) # MotorIDs is exported from quadruped control
     qs = SVector{12}([getproperty(motorR_msg.positions, motor) for motor in fieldnames(MotorIDs)]) # MotorIDs is exported from quadruped control
@@ -173,6 +173,11 @@ function main()
             end 
             setproperty!(motorCmds_msg, :time, time())
             publish(motor_pub, motorCmds_msg, iob)
+
+            if command[1] == "kill control"
+                command[1] = "waiting"
+                throw(InterruptException())
+            end 
 
             sleep(h)        
             GC.gc(false) # collect garbage 
