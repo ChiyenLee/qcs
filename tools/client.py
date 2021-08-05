@@ -7,8 +7,8 @@ import time
 import pymessaging.message_pb2 as msg
 
 ctx = zmq.Context()
-host = "127.0.0.1"
-# host = "192.168.3.123"
+# host = "127.0.0.1"
+host = "192.168.3.123"
 vicon_sub = messaging.create_sub(ctx, "5001", host=host)
 imu_sub = messaging.create_sub(ctx, "5002", host=host)
 ekf_sub = messaging.create_sub(ctx, "5003", host=host)
@@ -40,7 +40,8 @@ try:
             data = imu_sub.recv(zmq.DONTWAIT) 
             imu.ParseFromString(data)
             # print(imu)
-            print(imu)
+            # print(1/(time.time() - t))
+            # t = time.time()
 
         if vicon_sub in socks.keys() and socks[vicon_sub] == zmq.POLLIN:
             data = vicon_sub.recv(zmq.DONTWAIT)
@@ -49,13 +50,13 @@ try:
             # print(vicon)
         
         if ekf_sub in socks.keys() and socks[ekf_sub] == zmq.POLLIN:
-            # print(1/(time.time() - t_vicon))
+            # print(1/(time.time() - t))
             data = ekf_sub.recv(zmq.DONTWAIT)
             ekf.ParseFromString(data)
-            t_vicon = time.time()
+            # t_vicon = time.time()
             # print(ekf)
-            # print(time.time() - t)
-            # t = time.time()
+            print(time.time() - t)
+            t = time.time()
         
         if motor_sub in socks.keys() and socks[motor_sub] == zmq.POLLIN:
             # print(1/(time.time() - t_vicon))
