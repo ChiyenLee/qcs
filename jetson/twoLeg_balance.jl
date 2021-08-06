@@ -180,7 +180,7 @@ function main()
             end 
 
             sleep(h)        
-            GC.gc(false) # collect garbage 
+            # GC.gc(false) # collect garbage 
          end 
     catch e
         # Base.throwto(command_thread, InterruptException())

@@ -28,8 +28,10 @@ function main()
     schedule(imu_thread)
 
     # Timing 
-    h = 0.005
+    h = 0.002
     vicon_time = 0.0
+    gc_interval = 0.01 / h 
+    gc_counter = 0 
 
     # # Initialize EKF
     state_init = zeros(length(TrunkState)); state_init[7] = 1.0 
@@ -40,12 +42,12 @@ function main()
 
     P = Matrix(1.0I(length(TrunkError))) * 1e10; 
     W = Matrix(1.0I(length(TrunkError))) * 1e-3;
-    W[1:3, 1:3] .= I(3) * 1e-2
-    W[4:6, 4:6] .= I(3) * 1e-3
+    W[1:3, 1:3] .= I(3) * 1e-4
+    W[4:6, 4:6] .= I(3) * 1e-5
     W[7:9, 7:9] .= I(3) * 1e-4
     W[end-5:end,end-5:end] = I(6)*1e2
     R = Matrix(1.0I(length(ViconError))) * 1e-5;
-    R[1:3,1:3] = I(3) * 1e-3 
+    R[1:3,1:3] = I(3) * 1e-3
     R[4:6,4:6] = I(3) * 1e-3 
     ekf = ErrorStateFilter{TrunkState, TrunkError, ImuInput, Vicon, ViconError}(state, P, W, R) 
 
@@ -96,15 +98,22 @@ function main()
             #     throw(InterruptException())
             # end 
             sleep(h)
-            GC.gc(false)
+            
+            # if gc_counter > gc_interval
+            #     GC.gc(false)
+            #     gc_counter = 0
+            #     println("collecting")
+            # end 
+            # gc_counter += 1
+            # GC.gc(false)
         end    
     catch e
+        schedule(imu_thread, InterruptException(), error=true)
+        schedule(vicon_thread, InterruptException(), error=true)
         close(ekf_pub)
         close(vicon_pub)
         # Base.throwto(imu_thread, InterruptException())
         # Base.throwto(vicon_thread, InterruptException())
-        schedule(imu_thread, InterruptException(), error=true)
-        schedule(vicon_thread, InterruptException(), error=true)
         close(ctx)
         if e isa InterruptException
             # clean up 

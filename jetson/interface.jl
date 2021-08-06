@@ -40,7 +40,7 @@ function main()
 	controlTimeout = false 
 	posStopF = 2.146e9
 	h = 0.002
-
+	
 	try 
 		while true 
 			t = time()
@@ -91,7 +91,7 @@ function main()
 			# 	throw(InterruptException())
 			# end 
 			sleep(0.002)
-			GC.gc(false)
+			# GC.gc(false)
 		end
 	catch e  
 		close(imu_pub)

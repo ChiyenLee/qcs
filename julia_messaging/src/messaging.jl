@@ -20,20 +20,36 @@ function subscriber_thread(ctx::ZMQ.Context, proto_msg::ProtoBuf.ProtoType, port
     # setproperty!(proto_msg, :time, 0.)
     try 
         println("waiting..")
+        gc_interval = 100
+        gc_counter = 0
         while true 
             bin_data = recv(sub)
             io = seek(convert(IOStream, bin_data),0)
             readproto(io, proto_msg)
-            GC.gc(false) # does incremental garbage collection
+
+            if gc_counter > gc_interval 
+                GC.gc(false) # does incremental garbage collection 
+                gc_counter = 0
+            end
+            gc_counter += 1
 
             # not sure if this is the right way to do it. 
             # readproto isn't allocation free, so instead of 
             # letting the allocation accumulate, we're just clearing it 
             # every step to avoid having it do gc in one single 
             # time consuming step
+
+            # edit: ok that's messing up. If we run it every single 
+            # time step, it will clog up the script and cause the 
+            # queue to build up 
+
+            # if we do a clean up everyone 100 cycle (100 is a sketchy
+            # heuristic), then it seems to be a sweet middle ground between
+            # speed and garbage collection 
         end 
     catch e 
         close(sub)
+        GC.gc()
         if e isa InterruptException
             println("sub terminated by interruption")
         else
