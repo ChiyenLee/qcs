@@ -9,7 +9,7 @@ import random
 # Creating a publisher
 ctx = zmq.Context() 
 pub = messaging.create_pub(ctx, "5002")
-vicon_pub = messaging.create_pub(ctx, "5000")
+# vicon_pub = messaging.create_pub(ctx, "5000")
 
 # Creating a message 
 imu = msg.IMU_msg()
@@ -18,7 +18,7 @@ imu.gyroscope.x = 1.0
 imu.gyroscope.y = 2.0 
 imu.gyroscope.z = 3.0 
 imu.acceleration.x = 1.0 
-imu.accelertaion.y = 2.0 
+imu.acceleration.y = 2.0 
 imu.acceleration.z = 3.0 
 imu.time= 0.0
 
@@ -40,8 +40,8 @@ while True:
     pub.send(data) 
 
     # vicon.quaternion.y = random.normalvariate(0,1)
-    vicon.time = time.time()
-    data = vicon.SerializeToString()
-    vicon_pub.send(data)
+    # vicon.time = time.time()
+    # data = vicon.SerializeToString()
+    # vicon_pub.send(data)
 
     time.sleep(0.002)

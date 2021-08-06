@@ -64,7 +64,7 @@ function main()
             input = ImuInput(acc.x, acc.y, acc.z, gyro.x, gyro.y, gyro.z)
             prediction!(ekf, input, h)
 
-            Update 
+            # Update 
             if hasproperty(vicon, :quaternion)
                if vicon.time != vicon_time 
                     vicon_measurement = Vicon(vicon.position.x, vicon.position.y, vicon.position.z, vicon.quaternion.w, vicon.quaternion.x, vicon.quaternion.y, vicon.quaternion.z)
@@ -90,6 +90,7 @@ function main()
             ekf_msg.time = time()
             publish(ekf_pub, ekf_msg, iob)                
 
+            
             # if Main.COMMAND[1] == "kill ekf"
             #     Main.COMMAND[1] = "waiting"
             #     throw(InterruptException())
