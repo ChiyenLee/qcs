@@ -84,7 +84,7 @@ function main()
 				controlTimeout = false 
 			end 
 
-			# A1Robot.SendCommand(interface)
+			A1Robot.SendCommand(interface)
 
 			# if Main.COMMAND[1] == "kill interface"
 			# 	Main.COMMAND[1] = "waiting"

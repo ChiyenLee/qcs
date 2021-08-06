@@ -25,12 +25,22 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     posStopF = 2.146e9
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
-    	    m = getproperty(cmds_msg, motor)
-    	    m.Kp = 0.0 
-    	    m.Kd = 0.0
-    	    m.pos = posStopF 
-    	    m.vel = velStopF 
-    	    m.tau = torques[i]
+            m = getproperty(cmds_msg, motor)
+            if motor in [:FR_Hip, :FR_Thigh, :FR_Calf, :FL_Hip, :FL_Thigh, :FL_Calf]
+                println(motor, round(torques[i], digits=3))
+                m.Kp = 0.0 
+                m.Kd = 0.0
+                m.pos = posStopF 
+                m.vel = velStopF 
+                m.tau = torques[i]
+            # else 
+            #     m.Kp = 0.0 
+            #     m.Kd = 0.0
+            #     m.pos = posStopF 
+            #     m.vel = velStopF 
+            #     m.tau = 0.0
+            end
+
     	end 
 end 	
 	
@@ -142,7 +152,7 @@ function main()
             # if qs[9] < -1.2 
             #     @info joint_pos_c 
             # end 
-            # println(round.(Δx[19:21], digits=3 ))
+            # println(round.(Δx[4:6], digits=3 )) # position error
              
             if command[1] == "position"
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
@@ -150,31 +160,36 @@ function main()
                 # Convert calculation to C indices and set the command! 
                 println("entering torque mode!!")
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
-                setTorqueCmds!(motorCmds_msg, u_now)
+                setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
+                setTorqueCmds!(motorCmds_msg, torques)
             elseif command[1] == "capture"
                 xf[5:7] .= copy(r)
                 # capture the current equilibrium point 
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 command[1] = "position"
                 println("Position captured. Returning to position hold")
+            elseif command[1] == "reset"
+                Kp = 0                
+                command[1] = "position"
+			    setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, 0)
             else 
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
             end 
             setproperty!(motorCmds_msg, :time, time())
 
             ################## Safety for Balance Mode ##############3
-            if command[1] == "balance"
-                if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
-                    println("Position out of bounds!!")
-                    setPositionCmds!(motorCmds_msg, stop_pos, 0, 10) # pure damping 
-                end 
+            # if command[1] == "balance"
+            #     if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
+            #         println("Position out of bounds!!")
+            #         setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+            #     end 
 
-                # Command safety 
-                if any(abs.(u_fb) .> 15) 
-                    println("Control out of bounds!!")
-                    setPositionCmds!(motorCmds_msg, stop_pos, 0, 10) # pure damping 
-                end 
-            end 
+            #     # Command safety 
+            #     if any(abs.(u_fb) .> 15) 
+            #         println("Control out of bounds!!")
+            #         setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+            #     end 
+            # end 
             publish(motor_pub, motorCmds_msg, iob)
 
 
@@ -191,10 +206,10 @@ function main()
         # Base.throwto(command_thread, InterruptException())
         # Base.throwto(ekf_thread, InterruptException())
         # Base.throwto(motor_thread, InterruptException())
+        close(motor_pub)
         schedule(command_thread, ErrorException("stop"), error=true)
         schedule(ekf_thread, InterruptException(), error=true)
         schedule(motor_thread, InterruptException(), error=true)
-        close(motor_pub) # sub is closed with the thread
         close(ctx)
         println("EVERYTHING TERMINATED CORRECTLY")
         if e isa InterruptException

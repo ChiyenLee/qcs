@@ -51,6 +51,7 @@ function subscriber_thread(ctx::ZMQ.Context, proto_msg::ProtoBuf.ProtoType, port
         close(sub)
         GC.gc()
         if e isa InterruptException
+            println(typeof(proto_msg))
             println("sub terminated by interruption")
         else
             rethrow(e)
