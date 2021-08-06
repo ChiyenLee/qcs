@@ -55,13 +55,25 @@ try:
             ekf.ParseFromString(data)
             # t_vicon = time.time()
             # print(ekf)
-            print(time.time() - t)
+            # hz = 1/(time.time() - t)
+            # print(hz)
+            # if hz < 100:
+                # print(hz)
+            #     print("!!!!!")
+
             t = time.time()
         
         if motor_sub in socks.keys() and socks[motor_sub] == zmq.POLLIN:
             # print(1/(time.time() - t_vicon))
             data = motor_sub.recv(zmq.DONTWAIT)
             motor_msg.ParseFromString(data)
+            hz = 1/(time.time() - t)
+            print(hz)
+            if hz < 100:
+                print(hz)
+                print("!!!!!!!!!!!!!!!!!!!!!!")
+
+            t = time.time()
             # print(motor_msg)
 
         # if v3_sub in socks.keys() and socks[v3_sub] == zmq.POLLIN:

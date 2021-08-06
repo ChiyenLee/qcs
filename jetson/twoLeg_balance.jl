@@ -50,6 +50,8 @@ function main()
     u_now = zero(uf)  # control signal 
 	u_fb = zero(uf)   # feedback signal 
     joint_pos_rgb = copy(xf[8:19]) # rigidbody indexing
+    stop_pos = SVector{12}(ones(12) * 2.146e9)
+
 
     Kp = 0 # gains for position hold 
     Kd = 5
@@ -141,19 +143,6 @@ function main()
             #     @info joint_pos_c 
             # end 
             # println(round.(Δx[19:21], digits=3 ))
-            # Positional Safety
-
-            ################# Safety ###############
-            if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
-                # println("Position out of bounds!!")
-                u_now .= 0 
-            end 
-
-            # Command safety 
-            if any(abs.(u_fb) .> 15) 
-                # println("Control out of bounds!!")
-                u_now .= 0 
-            end 
              
             if command[1] == "position"
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
@@ -172,7 +161,23 @@ function main()
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
             end 
             setproperty!(motorCmds_msg, :time, time())
+
+            ################## Safety for Balance Mode ##############3
+            if command[1] == "balance"
+                if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
+                    println("Position out of bounds!!")
+                    setPositionCmds!(motorCmds_msg, stop_pos, 0, 10) # pure damping 
+                end 
+
+                # Command safety 
+                if any(abs.(u_fb) .> 15) 
+                    println("Control out of bounds!!")
+                    setPositionCmds!(motorCmds_msg, stop_pos, 0, 10) # pure damping 
+                end 
+            end 
             publish(motor_pub, motorCmds_msg, iob)
+
+
 
             if command[1] == "kill control"
                 command[1] = "waiting"
