@@ -26,7 +26,8 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
             m = getproperty(cmds_msg, motor)
-            if motor in [:FR_Hip, :FR_Thigh, :FR_Calf, :FL_Hip, :FL_Thigh, :FL_Calf]
+            # if motor in [:FR_Hip, :FR_Thigh, :FR_Calf, :FL_Hip, :FL_Thigh, :FL_Calf]
+            if motor in [:RR_Hip, :RR_Thigh, :RR_Calf, :RL_Hip, :RL_Thigh, :RL_Calf]
                 println(motor, round(torques[i], digits=3))
                 m.Kp = 0.0 
                 m.Kd = 0.0
@@ -178,18 +179,23 @@ function main()
             setproperty!(motorCmds_msg, :time, time())
 
             ################## Safety for Balance Mode ##############3
-            # if command[1] == "balance"
-            #     if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
-            #         println("Position out of bounds!!")
-            #         setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
-            #     end 
+            if command[1] == "balance"
+                # if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
+                #     println("Position out of bounds!!")
+                #     setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+                # end 
 
-            #     # Command safety 
-            #     if any(abs.(u_fb) .> 15) 
-            #         println("Control out of bounds!!")
-            #         setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
-            #     end 
-            # end 
+                if any(abs.(Δx[8:19]) .> deg2rad(30)) || any(abs.(Δx[1:3]) .> deg2rad(30))  
+                    println("Position out of bounds!!")
+                    setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+                end 
+
+                # Command safety 
+                # if any(abs.(u_fb) .> 15) 
+                #     println("Control out of bounds!!")
+                #     setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+                # end 
+            end 
             publish(motor_pub, motorCmds_msg, iob)
 
 

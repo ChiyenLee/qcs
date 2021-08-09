@@ -69,11 +69,11 @@ try:
             motor_msg.ParseFromString(data)
             hz = 1/(time.time() - t)
             print(hz)
-            if hz < 100:
-                print(hz)
-                print("!!!!!!!!!!!!!!!!!!!!!!")
+            # if hz < 100:
+            #     print(hz)
+            #     print("!!!!!!!!!!!!!!!!!!!!!!")
 
-            t = time.time()
+            # t = time.time()
             # print(motor_msg)
 
         # if v3_sub in socks.keys() and socks[v3_sub] == zmq.POLLIN:
