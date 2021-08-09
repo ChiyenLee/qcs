@@ -36,14 +36,19 @@ function main()
 	motorCmds_thread = Task(motorCmd_sub)
 	schedule(motorCmds_thread)
 
+	command = ["run"]
+    command_reader() = while true command[1] = readline() end 
+    command_thread = Task(command_reader)
+    schedule(command_thread)
+    
+
 	# Control timeout 
 	controlTimeout = false 
 	posStopF = 2.146e9
-	h = 0.002
-	
+	h = 0.008
+	t = time()
 	try 
 		while true 
-			t = time()
 			############### Reading data for pubslihing ##############
 			# IMU publishing
 			A1Robot.getAcceleration(Main.interface, accel_imu);
@@ -83,14 +88,20 @@ function main()
 				end 
 				controlTimeout = false 
 			end 
-
-			A1Robot.SendCommand(interface)
+			
+			
+			if command[1] != "reset"
+				A1Robot.SendCommand(interface)
+			end
 
 			# if Main.COMMAND[1] == "kill interface"
 			# 	Main.COMMAND[1] = "waiting"
 			# 	throw(InterruptException())
 			# end 
-			sleep(0.002)
+			# println(1/(time() - t))
+			# t = time() 
+			sleep(0.008)
+
 			# GC.gc(false)
 		end
 	catch e  
@@ -98,6 +109,7 @@ function main()
 		close(motor_pub)
 		close(ctx)
 		# Base.throwto(motorCmds_thread, InterruptException)
+		        schedule(command_thread, ErrorException("stop"), error=true)
 		schedule(motorCmds_thread, InterruptException(), error=true)
 		if e isa InterruptException
             println("control loop terminated by the user")

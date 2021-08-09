@@ -26,7 +26,8 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
             m = getproperty(cmds_msg, motor)
-            if motor in [:FR_Hip, :FR_Thigh, :FR_Calf, :FL_Hip, :FL_Thigh, :FL_Calf]
+            # if motor in [:FR_Hip, :FR_Thigh, :FR_Calf, :FL_Hip, :FL_Thigh, :FL_Calf]
+            # if motor in [:RR_Hip, :RR_Thigh, :RR_Calf, :RL_Hip, :RL_Thigh, :RL_Calf]
                 # println(motor, round(torques[i], digits=3))
                 m.Kp = 0.0 
                 m.Kd = 0.0
@@ -39,7 +40,7 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
             #     m.pos = posStopF 
             #     m.vel = velStopF 
             #     m.tau = 0.0
-            end
+            
 
     	end 
 end 	
@@ -94,7 +95,7 @@ function main()
     ############ Control loop ###########
     t_Kp = 0. 
     dKp_dt = 5
-    command = ["position"]
+    command = ["reset"]
     command_reader() = while true command[1] = readline() end 
     command_thread = Task(command_reader)
     schedule(command_thread)
@@ -134,14 +135,27 @@ function main()
             end 
 
             # Calculate state difference 
-            Δx[1:3] .= -rotation_error(UnitQuaternion(q), UnitQuaternion(xf[1:4]), CayleyMap())
+            Δx[1:3] .= rotation_error(UnitQuaternion(q), UnitQuaternion(xf[1:4]), CayleyMap())
             Δx[4:6] .= r - xf[5:7]
             Δx[19:21] .= ω # NOTE: \omega and velocity should both in body frame 
             Δx[22:24] .= UnitQuaternion(q) * v  # in the KF, v is in world frame. 
             Δx[7:18] .= mapMotorArrays(q_motor, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
             Δx[25:end] .= mapMotorArrays(v_motor, MotorIDs_c, MotorIDs_rgb) 
             u_fb[:] .= -K * Δx 
+
+            u_lim = 10
+            if any(abs.(u_fb) .> u_lim) 
+                for i in 1:length(u_fb)
+                    if u_fb[i] > u_lim 
+                        u_fb[i] = u_lim
+                    elseif u_fb[i] < -u_lim
+                        u_fb[i] = -u_lim
+                    end
+                end 
+            end
             u_now[:] .= uf + u_fb 
+
+
            
             ############### Debug Logging #####################
             # println(round.(u_fb[[1,2,3,4]], digits=3)) # hip
@@ -159,41 +173,60 @@ function main()
                 # Convert calculation to C indices and set the command! 
                 # println("entering torque mode!!")
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
-                setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
+                @info Δx
                 setTorqueCmds!(motorCmds_msg, torques)
             elseif command[1] == "capture"
                 xf[5:7] .= copy(r)
+                xf[1:4] .= copy(q)
                 # capture the current equilibrium point 
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 command[1] = "position"
                 println("Position captured. Returning to position hold")
             elseif command[1] == "test"
-                println(round.(u_fb[[1,5,9]], digits=3))
-                # println(round.(Δx[1:3], digits=3))
+                # println(round.(u_fb[[1,5,9]], digits=3))
+                println(round.(u_fb[[3,7,11]], digits=3))
+                # println(round.(Δx[1:6], digits=3))
+                torques[:] .= 0
+                # setTorqueCmds!(motorCmds_msg, torques)
 			    setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, 0)
             elseif command[1] == "reset"
-                Kp = 15
+                Kp = 0
                 t_Kp = time()
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, 0)
+            elseif command[1] == "start"
+                Kp = 10
+                t_Kp = time() 
+                setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
+                command[1] = "position"
             else 
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
             end 
             setproperty!(motorCmds_msg, :time, time())
 
             ################## Safety for Balance Mode ##############3
-            if command[1] == "balance" || command[1] == "test"
-                if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(20)) || any(abs.(Δx[4:6]) .> 0.075) 
-                    println("Position out of bounds!!")
-                    # setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
-                end 
-            end
+            if command[1] == "balance"
+                # if any(abs.(Δx[8:19]) .> deg2rad(20)) || any(abs.(Δx[1:3]) .> deg2rad(15)) || any(abs.(Δx[4:6]) .> 0.05) 
+                #     println("Position out of bounds!!")
+                #     setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+                # end 
 
-            #     # Command safety 
-            #     if any(abs.(u_fb) .> 15) 
-            #         println("Control out of bounds!!")
-            #         setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
-            #     end 
-            # end 
+                if any(abs.(Δx[8:19]) .> deg2rad(30)) || any(abs.(Δx[1:3]) .> deg2rad(30)) 
+                    println("Position out of bounds!!")
+                    command[1] = "reset"
+                    setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+                end 
+
+                # Command safety 
+
+                    # println("Control out of bounds!!")
+                    # setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
+             end 
+
+            
+            if (any(abs.(Δx[8:19]) .> deg2rad(30)) || any(abs.(Δx[1:3]) .> deg2rad(30))) && command[1] == "test"
+                println("Position out of bounds!!")
+            end 
+
             publish(motor_pub, motorCmds_msg, iob)
 
 
