@@ -26,24 +26,23 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
             m = getproperty(cmds_msg, motor)
-            # if motor in [:FR_Hip, :FR_Thigh, :FR_Calf, :FL_Hip, :FL_Thigh, :FL_Calf]
-            # if motor in [:RR_Hip, :RR_Thigh, :RR_Calf, :RL_Hip, :RL_Thigh, :RL_Calf]
-                # println(motor, round(torques[i], digits=3))
-                m.Kp = 0.0 
-                m.Kd = 0.0
-                m.pos = posStopF 
-                m.vel = velStopF 
-                m.tau = torques[i]
-            # else 
-            #     m.Kp = 0.0 
-            #     m.Kd = 0.0
-            #     m.pos = posStopF 
-            #     m.vel = velStopF 
-            #     m.tau = 0.0
-            
-
+            m.Kp = 0.0 
+            m.Kd = 0.0
+            m.pos = posStopF 
+            m.vel = velStopF 
+            m.tau = torques[i]
     	end 
 end 	
+
+function setErrorMsg!(error_msg::ErrorMsg, Δx::AbstractVector)
+    error_msg.orientation.x, error_msg.orientation.y, error_msg.orientation.z = Δx[1:3]
+    error_msg.position.x, error_msg.position.y, error_msg.position.z = Δx[4:6]
+    for (i, motor) in enumerate(fieldnames(MotorIDs))
+        ind = getproperty(MotorIDs_rgb, motor)
+        setproperty!(error_msg.motor_pos, motor, Δx[6+ind])
+        setproperty!(error_msg.motor_vel, motor, Δx[24+ind])
+    end 
+end 
 	
 function getMotorReadings(motorR_msg::MotorReadings_msg)
     vs = SVector{12}([getproperty(motorR_msg.velocities, motor) for motor in fieldnames(MotorIDs)]) # MotorIDs is exported from quadruped control
@@ -89,7 +88,9 @@ function main()
     h = 0.002
     ################## Publisher ###################
     motorCmds_msg = init_motor_commands()
+    error_msg = init_error_msg()
     motor_pub = create_pub(ctx, 5005, "*")
+    error_pub = create_pub(ctx, 5006, "*")
     iob = IOBuffer()
 
     ############ Control loop ###########
@@ -222,23 +223,20 @@ function main()
                     # setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
              end 
 
-            
             if (any(abs.(Δx[8:19]) .> deg2rad(30)) || any(abs.(Δx[1:3]) .> deg2rad(30))) && command[1] == "test"
                 println("Position out of bounds!!")
             end 
-
             publish(motor_pub, motorCmds_msg, iob)
+    
+            # 
 
-
-
-            if command[1] == "kill control"
-                command[1] = "waiting"
-                throw(InterruptException())
-            end 
+            # if command[1] == "kill control"
+            #     command[1] = "waiting"
+            #     throw(InterruptException())
+            # end 
 
             sleep(h)        
-            # GC.gc(false) # collect garbage 
-         end 
+          end 
     catch e
         # Base.throwto(command_thread, InterruptException())
         # Base.throwto(ekf_thread, InterruptException())
@@ -259,4 +257,4 @@ function main()
     end
 end 
 
-main()
+# main()

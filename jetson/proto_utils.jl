@@ -55,3 +55,18 @@ function init_motor_commands()
 	return motor_cmds_msg
 
 end 
+
+function init_error_msg()
+	error_msg = ErrorMsg() 
+	motor_pos = Motor_msg() 
+	motor_vel = Motor_msg()
+	
+    [setproperty!(motor_vel, field,0) for field in propertynames(motor_vel)] # motor erros 
+    [setproperty!(motor_pos, field,0) for field in propertynames(motor_pos)]
+	setproperty!(error_msg, :position, Vector3_msg(x=0., y=0., z=0.))
+	setproperty!(error_msg, :orientation, Vector3_msg(x=0., y=0., z=0.))
+	setproperty!(error_msg, :motor_pos, motor_pos)
+	setproperty!(error_msg, :motor_vel, motor_vel)
+
+	return error_msg
+end 

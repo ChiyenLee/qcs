@@ -15,21 +15,29 @@ def main():
     imu_sub = messaging.create_sub(ctx, "5002", host="192.168.3.123")
     ekf_sub = messaging.create_sub(ctx, "5003", host="192.168.3.123")
     motor_state_sub = messaging.create_sub(ctx, "5004", host="192.168.3.123")
+    motor_cmd_sub = messaging.create_sub(ctx, "5005", host="192.168.3.123")
+    error_sub = messaging.create_sub(ctx,"5006", host="192.168.3.123")
 
     poller = zmq.Poller()
     poller.register(imu_sub, zmq.POLLIN)    
     poller.register(ekf_sub, zmq.POLLIN)
     poller.register(vicon_sub, zmq.POLLIN)
     poller.register(motor_state_sub, zmq.POLLIN)
+    poller.register(motor_cmd_sub, zmq.POLLIN)
+    poller.register(error_sub, zmq.POLLIN)
+
 
     # Main loop for logging data 
     now = datetime.now()
     foldername = now.strftime("A1data-%Y-%m-%d--%H-%M-%S")
     os.mkdir(foldername)
-    imu_f = open(os.path.join(foldername,"imu.bin"), "wb")
-    ekf_f = open(os.path.join(foldername,"ekf.bin"), "wb")
-    vicon_f = open(os.path.join(foldername,"vicon.bin"), "wb")
-    motor_state_f = open(os.path.join(foldername, "motor_state.bin"), "wb")
+    imu_f = open(os.path.join(foldername,"IMU_msg.bin"), "wb")
+    ekf_f = open(os.path.join(foldername,"EKF_msg.bin"), "wb")
+    vicon_f = open(os.path.join(foldername,"Vicon_msg.bin"), "wb")
+    motor_state_f = open(os.path.join(foldername, "MotorReadings_msg.bin"), "wb")
+    motor_cmd_f = open(os.path.join(foldername, "MotorCmds_msg.bin"), "wb")
+    error_f = open(os.path.join(foldername, "ErrorMsg.bin"), "wb")
+    
 
     try:
         while True: 
@@ -60,6 +68,17 @@ def main():
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
                 motor_state_f.write(msg_size_b + data)
 
+            if motor_cmd_sub in socks.keys() and socks[motor_cmd_sub] == zmq.POLLIN: 
+                data = motor_cmd_sub.recv(zmq.DONTWAIT)
+                msg_size = len(data)
+                msg_size_b = (msg_size).to_bytes(4, byteorder="big")
+                motor_cmd_f.write(msg_size_b + data)
+
+            if error_sub in socks.keys() and socks[error_sub] == zmq.POLLIN: 
+                data = error_sub.recv(zmq.DONTWAIT)
+                msg_size = len(data)
+                msg_size_b = (msg_size).to_bytes(4, byteorder="big")
+                motor_cmd_f.write(msg_size_b + data)
             
 
     except KeyboardInterrupt:
@@ -67,6 +86,9 @@ def main():
         vicon_f.close()
         ekf_f.close()
         motor_state_f.close() 
+        motor_cmd_f.close()
+        error_f.close()
+
         print("interrupted!")
 
 

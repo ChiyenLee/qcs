@@ -13,6 +13,8 @@ vicon_sub = messaging.create_sub(ctx, "5001", host=host)
 imu_sub = messaging.create_sub(ctx, "5002", host=host)
 ekf_sub = messaging.create_sub(ctx, "5003", host=host)
 motor_sub = messaging.create_sub(ctx, "5004", host=host)
+motor_cmd_sub = messaging.create_sub(ctx, "5005", host=host)
+
 # motor_sub = messaging.create_sub(ctx, "5055")
 # v3_sub = messaging.create_sub(ctx, "5003", host="192.168.3.191")
 
@@ -20,6 +22,7 @@ vicon = msg.Vicon_msg()
 imu = msg.IMU_msg()
 ekf = msg.EKF_msg()
 motor_msg = msg.MotorReadings_msg()
+motor_cmd_msg = msg.MotorCmds_msg()
 v3 = msg.Vector3_msg()
 
 print("waiting for data")
@@ -28,6 +31,8 @@ poller.register(imu_sub, zmq.POLLIN)
 poller.register(vicon_sub, zmq.POLLIN)
 poller.register(ekf_sub, zmq.POLLIN)
 poller.register(motor_sub, zmq.POLLIN)
+poller.register(motor_cmd_sub, zmq.POLLIN)
+
 # poller.register(v3_sub, zmq.POLLIN)
 
 t_vicon = 0
@@ -69,6 +74,19 @@ try:
             motor_msg.ParseFromString(data)
             hz = 1/(time.time() - t)
             print(hz)
+            # if hz < 100:
+            #     print(hz)
+            #     print("!!!!!!!!!!!!!!!!!!!!!!")
+
+            # t = time.time()
+            # print(motor_msg)
+
+        if motor_cmd_sub in socks.keys() and socks[motor_cmd_sub] == zmq.POLLIN:
+            # print(1/(time.time() - t_vicon))
+            data = motor_cmd_sub.recv(zmq.DONTWAIT)
+            motor_cmd_msg.ParseFromString(data)
+            hz = 1/(time.time() - t)
+            print(motor_cmd_msg)
             # if hz < 100:
             #     print(hz)
             #     print("!!!!!!!!!!!!!!!!!!!!!!")

@@ -1,8 +1,18 @@
 syntax = "proto3";
 package messaging;
 
-/////////// Motor Messages /////////////////
+/////////// Controller /////////////////////
+message ErrorMsg {
+    Vector3_msg position = 1; 
+    Vector3_msg orientation = 2; 
+    Vector3_msg vel = 3; 
+    Vector3_msg angular_vel = 4; 
+    Motor_msg motor_pos = 5; 
+    Motor_msg motor_vel = 6;
+    double time = 7; 
+}
 
+/////////// Motor Messages /////////////////
 /// Command 
 message MotorCmds_msg { 
     MotorCmd_msg FR_Hip = 1;

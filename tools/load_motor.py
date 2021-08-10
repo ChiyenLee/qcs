@@ -28,36 +28,26 @@ class DataPack:
         self.f.close()
 
 # Initialize message 
-motor_msg = messaging.MotorReadings_msg()
+bag_name = "A1data-2021-08-09--17-00-04"
+files = os.listdir(bag_name)
+msg_dict = {}
 
-file = os.path.join("A1data-2021-07-27--17-23-25", "motor_state.bin")
-bag = DataPack(file, motor_msg)
+for f in files: 
+    msg_name = f.split(".")[0] # automate this and actually use the message name 
+    msg_class = getattr(messaging, msg_name)
+    msg_dict[msg_name] = DataPack(f, msg_class())
 
-motor_pos = []
-motor_v = []
-motor_torques = []
+error_bag = msg_dict["ErrorMsg"]
+cmd_bsg = msg_dict["MotorCmds_msg"]
+errors = []
 
-pos = np.zeros(12)
-vel = np.zeros(12)
-torques = np.zeros(12)
-for m in bag:
-    for i, descriptor in enumerate(m.q.DESCRIPTOR.fields[:12]):
-        
-        pos[i] = getattr(m.q, descriptor.name)
-        vel[i] = getattr(m.dq, descriptor.name)
-        torques[i] = getattr(m.torques, descriptor.name)
-    motor_pos.append(np.copy(pos))
-    motor_v.append(np.copy(vel))
-    motor_torques.append(np.copy(torques))
-
-# pdb.set_trace()
-qs = np.array(motor_pos)
-dqs = np.array(motor_v)
-taus = np.array(motor_torques)
-# plt.plot(qs)
-plt.plot(qs)
-# plt.plot(dqs[:,0])
-# plt.legend()
-plt.show()
-
-# pdb.set_trace()
+# load 
+# for m in bag: 
+    # for i, descriptor in enumerate(m.DESCRIPTOR.fields[:12]): 
+#         # print(descriptor.name)
+#         # pos[i] = getattr(m.q, descriptor.name)
+#         # vel[i] = getattr(m.dq, descriptor.name)
+#         torques[i] = getattr(m, descriptor.name).tau
+#     # motor_pos.append(np.copy(pos))
+#     # motor_v.append(np.copy(vel))
+#     motor_torques.append(np.copy(torques))

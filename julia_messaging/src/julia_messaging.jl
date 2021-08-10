@@ -9,6 +9,5 @@ ProtoBuf.protoc(`-I=$dir_path/../../ --julia_out=. message.proto`);
 include("../message_pb.jl")
 include("messaging.jl")
 export create_pub, create_sub, subscriber_thread, publish
-# println("?")
 
 end # module

@@ -307,6 +307,57 @@ function Base.getproperty(obj::IMU_msg, name::Symbol)
     end
 end
 
+mutable struct ErrorMsg <: ProtoType
+    __protobuf_jl_internal_meta::ProtoMeta
+    __protobuf_jl_internal_values::Dict{Symbol,Any}
+    __protobuf_jl_internal_defaultset::Set{Symbol}
+
+    function ErrorMsg(; kwargs...)
+        obj = new(meta(ErrorMsg), Dict{Symbol,Any}(), Set{Symbol}())
+        values = obj.__protobuf_jl_internal_values
+        symdict = obj.__protobuf_jl_internal_meta.symdict
+        for nv in kwargs
+            fldname, fldval = nv
+            fldtype = symdict[fldname].jtyp
+            (fldname in keys(symdict)) || error(string(typeof(obj), " has no field with name ", fldname))
+            if fldval !== nothing
+                values[fldname] = isa(fldval, fldtype) ? fldval : convert(fldtype, fldval)
+            end
+        end
+        obj
+    end
+end # mutable struct ErrorMsg
+const __meta_ErrorMsg = Ref{ProtoMeta}()
+function meta(::Type{ErrorMsg})
+    ProtoBuf.metalock() do
+        if !isassigned(__meta_ErrorMsg)
+            __meta_ErrorMsg[] = target = ProtoMeta(ErrorMsg)
+            allflds = Pair{Symbol,Union{Type,String}}[:position => Vector3_msg, :orientation => Vector3_msg, :vel => Vector3_msg, :angular_vel => Vector3_msg, :motor_pos => Motor_msg, :motor_vel => Motor_msg, :time => Float64]
+            meta(target, ErrorMsg, allflds, ProtoBuf.DEF_REQ, ProtoBuf.DEF_FNUM, ProtoBuf.DEF_VAL, ProtoBuf.DEF_PACK, ProtoBuf.DEF_WTYPES, ProtoBuf.DEF_ONEOFS, ProtoBuf.DEF_ONEOF_NAMES)
+        end
+        __meta_ErrorMsg[]
+    end
+end
+function Base.getproperty(obj::ErrorMsg, name::Symbol)
+    if name === :position
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :orientation
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :vel
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :angular_vel
+        return (obj.__protobuf_jl_internal_values[name])::Vector3_msg
+    elseif name === :motor_pos
+        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
+    elseif name === :motor_vel
+        return (obj.__protobuf_jl_internal_values[name])::Motor_msg
+    elseif name === :time
+        return (obj.__protobuf_jl_internal_values[name])::Float64
+    else
+        getfield(obj, name)
+    end
+end
+
 mutable struct Quaternion_msg <: ProtoType
     __protobuf_jl_internal_meta::ProtoMeta
     __protobuf_jl_internal_values::Dict{Symbol,Any}
@@ -446,4 +497,4 @@ function Base.getproperty(obj::EKF_msg, name::Symbol)
     end
 end
 
-export MotorCmds_msg, MotorCmd_msg, MotorReadings_msg, Motor_msg, EKF_msg, IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg
+export ErrorMsg, MotorCmds_msg, MotorCmd_msg, MotorReadings_msg, Motor_msg, EKF_msg, IMU_msg, Vicon_msg, Vector3_msg, Quaternion_msg
