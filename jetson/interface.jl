@@ -59,7 +59,7 @@ function main()
 			publish(imu_pub, imu_msg, iob)
 
 			# motor publishing 
-			qs, dqs, τs =  A1Robot.getMotorReadings(Main.interface)
+			qs, dqs, _, τs =  A1Robot.getMotorReadings(Main.interface)
 			for (i, field) in enumerate(propertynames(motorRead_msg.positions)[1:12])
 				setproperty!(motorRead_msg.positions, field, qs[i]) 
 				setproperty!(motorRead_msg.velocities, field, dqs[i])
@@ -88,8 +88,7 @@ function main()
 				end 
 				controlTimeout = false 
 			end 
-			
-			
+				
 			if command[1] != "reset"
 				A1Robot.SendCommand(interface)
 			end
@@ -100,7 +99,7 @@ function main()
 			# end 
 			# println(1/(time() - t))
 			# t = time() 
-			sleep(0.008)
+			sleep(0.005)
 
 			# GC.gc(false)
 		end

@@ -126,13 +126,13 @@ function main()
             ################ Controller #################
             joint_pos_c = mapMotorArrays(joint_pos_rgb, MotorIDs_rgb, MotorIDs_c)
             # Gradually upping the position gain 
-            if Kp < 200 
+            if Kp < 100 
                 if t_Kp == 0
                     t_Kp = time() 
                 end 
                 Kp = (time() - t_Kp) * dKp_dt 
             else
-                Kp = 200
+                Kp = 100
             end 
 
             # Calculate state difference 
@@ -144,7 +144,7 @@ function main()
             Δx[25:end] .= mapMotorArrays(v_motor, MotorIDs_c, MotorIDs_rgb) 
             u_fb[:] .= -K * Δx 
 
-            u_lim = 10
+            u_lim = 8
             if any(abs.(u_fb) .> u_lim) 
                 for i in 1:length(u_fb)
                     if u_fb[i] > u_lim 
@@ -154,7 +154,7 @@ function main()
                     end
                 end 
             end
-            u_now[:] .= uf + u_fb 
+            u_now[:] .= uf #+ u_fb 
 
 
            
@@ -179,6 +179,7 @@ function main()
             elseif command[1] == "capture"
                 xf[5:7] .= copy(r)
                 xf[1:4] .= copy(q)
+                xf[8:19] .= copy(mapMotorArrays(q_motor, MotorIDs_c, MotorIDs_rgb))
                 # capture the current equilibrium point 
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 command[1] = "position"
@@ -228,7 +229,8 @@ function main()
             end 
             publish(motor_pub, motorCmds_msg, iob)
     
-            # 
+            setErrorMsg!(error_msg, Δx)
+            publish(error_pub, error_msg, iob) 
 
             # if command[1] == "kill control"
             #     command[1] = "waiting"
@@ -242,6 +244,7 @@ function main()
         # Base.throwto(ekf_thread, InterruptException())
         # Base.throwto(motor_thread, InterruptException())
         close(motor_pub)
+        close(error_pub)
         schedule(command_thread, ErrorException("stop"), error=true)
         schedule(ekf_thread, InterruptException(), error=true)
         schedule(motor_thread, InterruptException(), error=true)
@@ -257,4 +260,4 @@ function main()
     end
 end 
 
-# main()
+main()
