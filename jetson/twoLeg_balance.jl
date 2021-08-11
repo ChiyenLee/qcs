@@ -25,14 +25,15 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     posStopF = 2.146e9
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
-            if motor in [:RR_Calf]
-                m = getproperty(cmds_msg, motor)
-                m.Kp = 0.0 
-                m.Kd = 0.0
-                m.pos = posStopF 
-                m.vel = velStopF 
-                m.tau = torques[i]
-    	end 
+        # if motor in [:RR_Thigh, :RL_Thigh]
+            m = getproperty(cmds_msg, motor)
+            m.Kp = 0.0 
+            m.Kd = 0.0
+            m.pos = posStopF 
+            m.vel = velStopF 
+            m.tau = torques[i]
+        # end
+    end 
 end 	
 
 function setErrorMsg!(error_msg::ErrorMsg, Δx::AbstractVector)
@@ -55,8 +56,12 @@ end
 function main()
     ################## Controller stuff ##########
     # Equilibrium pose 
-    xf = [0.9250087650676135, 0.00820427564681016, -0.3797694610033162, -0.00816277516843245, 0.11172124479696591, -0.0008058608042655944, 0.44969568972519774, -0.011312524917513934, 0.00612999960696473, -0.026098431577256127, -0.026300826444390895, 0.29186645738457084, 0.3011565891540206, 0.8355314412321065, 0.8526119637361341, -0.916297857297, -0.916297857297, -0.9825729401405727, -0.9826692125518477, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    # xf = [0.9250087650676135, 0.00820427564681016, -0.3797694610033162, -0.00816277516843245, 0.11172124479696591, -0.0008058608042655944, 0.44969568972519774, -0.011312524917513934, 0.00612999960696473, -0.026098431577256127, -0.026300826444390895, 0.29186645738457084, 0.3011565891540206, 0.8355314412321065, 0.8526119637361341, -0.916297857297, -0.916297857297, -0.9825729401405727, -0.9826692125518477, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    xf = [0.9250087650676135, 0.00820427564681016, -0.3797694610033162, -0.00816277516843245, 0.11172124479696591, -0.0008058608042655944, 0.44969568972519774, -0.011312524917513934, 0.00612999960696473, -0.026098431577256127, -0.026300826444390895, 0.29186645738457084, 0.3011565891540206, 0.8355314412321065, 0.8526119637361341, -0.916297857297, -0.916297857297, -0.9, -0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     uf = [-0.5687407426035559, 0.6038632976405194, 3.0620134375539556, -3.1685288124879816, -0.5963893983544176, -0.5900199238480763, 8.903600886868457, 8.584255474441395, -0.2902253141866037, -0.28979532471656183, 9.52330678392854, 9.400048025157087]
+    u_low = ones(12) * 1.0
+    u_high = ones(12) * 1.0
+   
     Δx = zeros(36)    # Errors 
     u_now = zero(uf)  # control signal 
 	u_fb = zero(uf)   # feedback signal 
@@ -143,20 +148,30 @@ function main()
             Δx[22:24] .= UnitQuaternion(q) * v  # in the KF, v is in world frame. 
             Δx[7:18] .= mapMotorArrays(q_motor, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
             Δx[25:end] .= mapMotorArrays(v_motor, MotorIDs_c, MotorIDs_rgb) 
-            Δx[1:6] .= 0 
+            # Δx[6+9] = mapMotorArrays(q_motor, MotorIDs_c, MotorIDs_rgb)[9] - xf[7+9]
             u_fb[:] .= -K * Δx 
-
-            u_lim = 8
+             u_lim = 8
             if any(abs.(u_fb) .> u_lim) 
                 for i in 1:length(u_fb)
+                    # thresholding 
                     if u_fb[i] > u_lim 
                         u_fb[i] = u_lim
                     elseif u_fb[i] < -u_lim
                         u_fb[i] = -u_lim
                     end
-                end 
+                end
             end
-            u_now[:] .= uf #+ u_fb 
+
+            # dead banding 
+            u_now[:] .= uf + u_fb
+            # for i in 1:length(u_now)
+            #         # Dead banding 
+            #         if sign(u_now[i]) == -1 && u_now[i] > u_low[i]
+            #             u_now[i] += u_low[i]
+            #         elseif sign(u_fb[i]) == 1 && u_now[i] < u_high[i]
+            #             u_now[i] += u_high[i]
+            #         end
+            # end
  
             ############### Debug Logging #####################
             # println(round.(u_fb[[1,2,3,4]], digits=3)) # hip
@@ -172,21 +187,23 @@ function main()
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
             elseif command[1] == "balance"
                 # Convert calculation to C indices and set the command! 
-                # println("entering torque mode!!")
+                @info round.(u_now, digits=3) 
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
-                setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
+                # setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 setTorqueCmds!(motorCmds_msg, torques)
+                # println(round.(Δx[[6+9]], digits=3), " ", round.(u_fb[[9]], digits=3))
             elseif command[1] == "capture"
+                # capture the current equilibrium point 
                 xf[5:7] .= copy(r)
                 xf[1:4] .= copy(q)
                 xf[8:19] .= copy(mapMotorArrays(q_motor, MotorIDs_c, MotorIDs_rgb))
-                # capture the current equilibrium point 
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 command[1] = "position"
                 println("Position captured. Returning to position hold")
             elseif command[1] == "test"
-                # println(round.(u_fb[[1,5,9]], digits=3))
                 println(round.(u_fb[[3,7,11]], digits=3))
+                # println(round.(u_fb[[9]], digits=3))
+                # println(round.(u_fb, digits=3))
                 # println(round.(Δx[1:6], digits=3))
                 torques[:] .= 0
                 setTorqueCmds!(motorCmds_msg, torques)
@@ -197,7 +214,7 @@ function main()
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, 0)
             elseif command[1] == "start"
                 Kp = 10
-                t_Kp = time() 
+                t_Kp = time()
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 command[1] = "position"
             else 
