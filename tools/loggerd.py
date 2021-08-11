@@ -78,7 +78,7 @@ def main():
                 data = error_sub.recv(zmq.DONTWAIT)
                 msg_size = len(data)
                 msg_size_b = (msg_size).to_bytes(4, byteorder="big")
-                motor_cmd_f.write(msg_size_b + data)
+                error_f.write(msg_size_b + data)
             
 
     except KeyboardInterrupt:

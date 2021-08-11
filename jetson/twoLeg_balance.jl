@@ -25,12 +25,13 @@ function setTorqueCmds!(cmds_msg::MotorCmds_msg, torques::AbstractVector)
     posStopF = 2.146e9
     velStopF = 16000.0e0
     for (i, motor) in enumerate(fieldnames(MotorIDs))
-            m = getproperty(cmds_msg, motor)
-            m.Kp = 0.0 
-            m.Kd = 0.0
-            m.pos = posStopF 
-            m.vel = velStopF 
-            m.tau = torques[i]
+            if motor in [:RR_Calf]
+                m = getproperty(cmds_msg, motor)
+                m.Kp = 0.0 
+                m.Kd = 0.0
+                m.pos = posStopF 
+                m.vel = velStopF 
+                m.tau = torques[i]
     	end 
 end 	
 
@@ -142,6 +143,7 @@ function main()
             Δx[22:24] .= UnitQuaternion(q) * v  # in the KF, v is in world frame. 
             Δx[7:18] .= mapMotorArrays(q_motor, MotorIDs_c, MotorIDs_rgb) - xf[8:19]
             Δx[25:end] .= mapMotorArrays(v_motor, MotorIDs_c, MotorIDs_rgb) 
+            Δx[1:6] .= 0 
             u_fb[:] .= -K * Δx 
 
             u_lim = 8
@@ -155,9 +157,7 @@ function main()
                 end 
             end
             u_now[:] .= uf #+ u_fb 
-
-
-           
+ 
             ############### Debug Logging #####################
             # println(round.(u_fb[[1,2,3,4]], digits=3)) # hip
             # println(round.(u_fb[[5,6,7,8]], digits=3)) # thigh 
@@ -174,7 +174,7 @@ function main()
                 # Convert calculation to C indices and set the command! 
                 # println("entering torque mode!!")
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
-                @info Δx
+                setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 setTorqueCmds!(motorCmds_msg, torques)
             elseif command[1] == "capture"
                 xf[5:7] .= copy(r)
@@ -189,7 +189,7 @@ function main()
                 println(round.(u_fb[[3,7,11]], digits=3))
                 # println(round.(Δx[1:6], digits=3))
                 torques[:] .= 0
-                # setTorqueCmds!(motorCmds_msg, torques)
+                setTorqueCmds!(motorCmds_msg, torques)
 			    setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, 0)
             elseif command[1] == "reset"
                 Kp = 0
