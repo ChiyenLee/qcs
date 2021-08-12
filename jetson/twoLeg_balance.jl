@@ -71,6 +71,8 @@ function main()
 
     Kp = 0 # gains for position hold 
     Kd = 5
+    Kp_balance = 50
+    K_diff = 20
     K_dict = JLD.load("jetson/LQR_gain2.jld") # gains for equilibrium 
     K = K_dict["K"]
     torques = zeros(12)
@@ -164,6 +166,8 @@ function main()
 
             # dead banding 
             u_now[:] .= uf + u_fb
+            u_now[7] = -Kp_balance * Δx[2] + uf[7]
+            u_now[8] = -Kp_balance * Δx[2] + uf[8] 
             # for i in 1:length(u_now)
             #         # Dead banding 
             #         if sign(u_now[i]) == -1 && u_now[i] > u_low[i]
@@ -187,10 +191,18 @@ function main()
                 setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
             elseif command[1] == "balance"
                 # Convert calculation to C indices and set the command! 
-                @info round.(u_now, digits=3) 
+                # @info round.(u_now, digits=3) 
+
+                # simple PD 
+                # u_diff = Δx[3] * K_diff
+                # u_now[7] = uf[7] - u_diff  + Kp_balance * Δx[2] 
+                # u_now[8] = uf[8] + u_diff  + Kp_balance * Δx[2] 
+
                 torques[:] .= mapMotorArrays(u_now, MotorIDs_rgb, MotorIDs_c) # map to c control indices 
                 # setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, Kd)
                 setTorqueCmds!(motorCmds_msg, torques)
+                # println(round.(Δx[1:6], digits=3))
+                # println(round.(u_fb[[3,7,11]], digits=3))
                 # println(round.(Δx[[6+9]], digits=3), " ", round.(u_fb[[9]], digits=3))
             elseif command[1] == "capture"
                 # capture the current equilibrium point 
@@ -201,10 +213,13 @@ function main()
                 command[1] = "position"
                 println("Position captured. Returning to position hold")
             elseif command[1] == "test"
-                println(round.(u_fb[[3,7,11]], digits=3))
+                # println(round.(u_fb[[3,7,11]], digits=3))
                 # println(round.(u_fb[[9]], digits=3))
                 # println(round.(u_fb, digits=3))
-                # println(round.(Δx[1:6], digits=3))
+                # println(round.(Δx[22:24], digits=3))
+                # u_diff = Δx[3] * K_diff
+                # u_now[7] = -Kp_balance * Δx[2] + uf[7] + u_diff
+                # u_now[8] = -Kp_balance * Δx[2] + uf[8] - u_diff
                 torques[:] .= 0
                 setTorqueCmds!(motorCmds_msg, torques)
 			    setPositionCmds!(motorCmds_msg, joint_pos_c, Kp, 0)
@@ -229,8 +244,16 @@ function main()
                 #     setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
                 # end 
 
-                if any(abs.(Δx[8:19]) .> deg2rad(30)) || any(abs.(Δx[1:3]) .> deg2rad(30)) 
-                    println("Position out of bounds!!")
+                if any(abs.(Δx[7:19]) .> deg2rad(70)) || any(abs.(Δx[1:3]) .> deg2rad(40))  ||  any(abs.(Δx[4:6]) .> 0.2 ) 
+                    if any(abs.(Δx[4:6]) .> 0.2 ) 
+                        println("pos out of bounds ")
+                    elseif  any(abs.(Δx[1:3]) .> deg2rad(70))
+                        println("orientation out of bounds ")
+                    elseif any(abs.(Δx[7:19]) .> deg2rad(60))
+                        println("motor out of bounds!!")
+                    else 
+                        println("???")
+                    end 
                     command[1] = "reset"
                     setPositionCmds!(motorCmds_msg, stop_pos, 0, 5) # pure damping 
                 end 
